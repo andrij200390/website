@@ -1,0 +1,41 @@
+# yii console command
+/yii
+/frontend/runtime
+/frontend/web/images
+/frontend/web/assets
+/backend/runtime
+/backend/web/images
+/backend/web/assets
+/console
+/tests
+/frontend/config
+/backend/config
+/common/config
+
+# phpstorm project files
+.idea
+.htaccess
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor
+/update.php
+
+# composer itself is not needed
+composer.phar
+composer.json
+composer.lock
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+
+# local phpunit config
+/phpunit.xml
+
+# robots.txt
+/robots.txt
