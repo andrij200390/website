@@ -3,9 +3,11 @@
 /frontend/runtime
 /frontend/web/images
 /frontend/web/assets
+/frontend/web/index.php
 /backend/runtime
 /backend/web/images
 /backend/web/assets
+/backend/web/index.php
 /console
 /tests
 /frontend/config
