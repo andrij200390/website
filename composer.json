@@ -8,6 +8,7 @@
     "support": {
         "source": "https://github.com/outstyle"
     },
+    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs",
