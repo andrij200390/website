@@ -14,6 +14,9 @@
 /backend/config
 /common/config
 
+#misc
+/webstat
+
 # phpstorm project files
 .idea
 .htaccess
