@@ -48,7 +48,7 @@ class News extends ActiveRecord
      * @var int    $recommendedPageSize    How much recommended news do we show per page?
      * @var string $newsOrderBy            Default order of news shown
      */
-    public static $defaultPageSize = 6;
+    public static $defaultPageSize = 15;
     public static $similarPageSize = 6;
     public static $recommendedPageSize = 6;
     public static $newsOrderBy = 'id desc';

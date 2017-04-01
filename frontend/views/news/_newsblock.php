@@ -106,6 +106,9 @@ if (isset($modelNews)) {
       if ($outstyle_news_height) {
         $outstyle_news_height = $outstyle_news_height-500;
       }
+      if ($page == 1) {
+        $outstyle_news_height = 250;
+      }
         echo
         Html::tag('div',
           ElementsHelper::loadMore(Url::toRoute('news/show'), '#outstyle_news .news', '{"page":'.(int) $page.',"category":'.(int) $category.'}'),
