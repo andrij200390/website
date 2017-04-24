@@ -57,4 +57,9 @@ $(function() {
     $('.modal-close').click(function(e) {
 		$('.modal').trigger('closeModal');
 	});
+    
+    if(window.location.hash) {
+        var hash = window.location.hash;
+        $(hash).trigger('openModal');
+    }
 });

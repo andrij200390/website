@@ -92,26 +92,30 @@ header .login-form__doubleicon .login-form__icon {
 
 
 /* --- FORMS --- */
-#content .form-group {
+.form-group {
   margin: 5px 0 5px 0;
   clear:both;
 }
-#content .form-group .control-label {
+.form-separate {
+  margin-top: 20px;
+}
+#content .form-group .control-label,
+.modal .form-group .control-label {
   display: block;
   float: left;
-  margin: 4px 0 0 0;
   clear: both;
   white-space: nowrap;
-  width: 20%;
+  width: 30%;
 }
-#content .form-control {
-  width:79%;
+#content .form-control,
+.modal .form-control {
+  width:69%;
 }
-#content .form-group .help-block {
+.form-group .help-block {
   font-size:10px;
   margin-top:2px;
 }
-#content .form-group input {
+.form-group input {
   border: 1px solid #c7c7c7;
   color: #747474;
   -webkit-transition: all ease-in-out 0.15s;
@@ -120,20 +124,20 @@ header .login-form__doubleicon .login-form__icon {
   font-size: 11px;
   padding: 3px;
 }
-#content .form-group label {
+.form-group label {
   color: #747474;
 }
-#content .form-group label sup {
+.form-group label sup {
   color: #f00;
 }
-#content .form-group input:focus {
+.form-group input:focus {
   outline: none;
   box-shadow: 0 0 3px #bbb;
 }
-#content .form-group.has-error .help-block {
+.form-group.has-error .help-block {
   color: #ed1f24;
 }
-#content .form-group.has-error input {
+.form-group.has-error input {
   border: 1px solid #ed1f24;
   box-shadow: 0 0 3px #ed1f24;
 }
@@ -1381,7 +1385,6 @@ ul {
   font-size: 13px;
   color: #374045;
 }
-
 .modal__footer--centered {
   text-align: center;
 }
@@ -1402,17 +1405,32 @@ ul {
 .alert-red {
   background-color: #DA4453;
 }
+.c-red {
+  color: #DA4453;
+}
 .alert-green {
   background-color: #37BC9B;
+}
+.c-green {
+  color: #37BC9B;
 }
 .alert-blue {
   background-color: #4A89DC;
 }
+.c-blue {
+  color: #4A89DC;
+}
 .alert-yellow {
   background-color: #F6BB42;
 }
+.c-yellow {
+  color: #F6BB42;
+}
 .alert-orange {
   background-color: #E9573F;
+}
+.c-orange {
+  color: #E9573F;
 }
 #ohsnap {
   position: fixed;

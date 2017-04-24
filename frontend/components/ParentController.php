@@ -3,7 +3,7 @@ namespace frontend\components;
 
 use Yii;
 use yii\web\Controller;
-use app\models\User;
+use common\models\User;
 
 class ParentController extends Controller
 {

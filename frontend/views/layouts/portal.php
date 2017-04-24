@@ -95,7 +95,7 @@ $this->beginBody();
         if (!Yii::$app->user->id) {
             echo $this->render('@modals/passwordRestore');
             echo $this->render('@modals/loginRequire');
-            //echo $this->render('@modals/register');
+            echo $this->render('@modals/register');
         }
 
     echo Html::endTag('div');

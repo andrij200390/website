@@ -42,7 +42,7 @@ if (!Yii::$app->user->isGuest) {
                             class="zmdi-icon--hoverable"
                             ic-indicator="#outstyle_loader"
                             ic-include="#username,#password"
-                            ic-post-to="/api/main/login">
+                            ic-post-to="/api/site/login">
                         <i class="zmdi zmdi-arrow-right zmdi-hc-lg"></i>
                     </button>
                 </div>
