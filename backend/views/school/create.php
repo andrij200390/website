@@ -7,9 +7,9 @@ use yii\helpers\Url;
  * School backend view.
  *
  * @var yii\web\View
- * @var $model       backend\models\School   School model with necessary data
- * @var $categories  backend\models\School   School categories array
- * @var $status      backend\models\School   School post publish statuses array
+ * @var $model       common\models\School   School model with necessary data
+ * @var $categories  common\models\School   School categories array
+ * @var $status      common\models\School   School post publish statuses array
  */
 $controllerId = Yii::$app->controller->id;
 
@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
         'categories' => $categories,
+        'photoalbum' => '',
         'status' => $status,
         'errors' => $errors,
     ]) ?>
