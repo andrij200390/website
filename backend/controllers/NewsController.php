@@ -96,7 +96,7 @@ class NewsController extends Controller
         $searchModel = new NewsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, Yii::$app->controller->id);
 
-        return $this->render('../news/index', [
+        return $this->render('//news/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -111,7 +111,7 @@ class NewsController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('../news/view', [
+        return $this->render('//news/view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -155,7 +155,7 @@ class NewsController extends Controller
         }
 
         /* Default view */
-        return $this->render('../news/create', [
+        return $this->render('//news/create', [
             'model' => $model,
             'categories' => $categories,
             'status' => $status,
@@ -203,7 +203,7 @@ class NewsController extends Controller
         }
 
         /* Default view */
-        return $this->render('../news/update', [
+        return $this->render('//news/update', [
             'model' => $model,
             'categories' => $categories,
             'status' => $status,
