@@ -88,6 +88,7 @@ class Geolocation extends \yii\db\ActiveRecord
 
                 /* if we need our data to be accepted by Select2, we need to properly format it */
                 if ($formatted) {
+                    $response = array();
                     foreach ($parsedjson['results'] as $address) {
                         $response[] = [
                           'id' => $address['place_id'],
