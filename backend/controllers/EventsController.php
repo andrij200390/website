@@ -137,7 +137,7 @@ class EventsController extends Controller
             /* If our model passes the validation, redirecting to view - otherwise showing JSON error output */
             if ($model->validate()) {
                 $model->events_date = date('Y-m-d H:i:s', strtotime($model->events_date));
-                $model->save();
+                $model->save(false);
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }
