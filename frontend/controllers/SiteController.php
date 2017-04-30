@@ -25,7 +25,7 @@ use frontend\components\ParentController;
 class SiteController extends ParentController
 {
 
-    public $layout = false;
+    public $layout = 'portal';
 
     public function behaviors()
     {
@@ -34,12 +34,12 @@ class SiteController extends ParentController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'login'],
+                        'actions' => ['signup', 'login', 'error'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'error'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -196,6 +196,18 @@ class SiteController extends ParentController
 
         return $response;
 
+    }
+
+    /**
+     * Shows a 404 error
+     * @return array
+     */
+    public function actionError()
+    {
+        $exception = Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            return $this->render('error', ['exception' => $exception]);
+        }
     }
 
 
