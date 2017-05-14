@@ -131,7 +131,7 @@ echo Html::endTag('div');
 jQuery(document).ready(function () {
 
   /* Masked input: phone */
-  $("#school-phone").mask("(999)999-99-99");
+  $("#school-phone").mask("+9(999)999-99-99?99");
 
 
 });

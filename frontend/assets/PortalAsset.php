@@ -28,6 +28,7 @@ class PortalAsset extends AssetBundle
 
         'css/owlcarousel/owl.carousel.min.css',
         'css/owlcarousel/owl.theme.default.min.css',
+        'css/fancybox/jquery.fancybox.min.css',
     ];
     public $js = [
         '//maps.googleapis.com/maps/api/js?key=AIzaSyA0_VDB748HU0g2x8QjuemKdXbcNuwbKj0&amp;extension=.js',
@@ -36,12 +37,15 @@ class PortalAsset extends AssetBundle
         'js/intercooler-1.0.3.min.js',
         'js/select2/select2.full.min.js',
         'js/owlcarousel/owl.carousel.min.js',
+        'js/fancybox/jquery.fancybox.min.js',
 
         'js/misc/autosize.min.js',
         'js/misc/ohsnap.min.js',
         'js/misc/echo.min.js',
         'js/misc/preciseTextResize.js',
         'js/misc/way.min.js',
+
+        'js/outstyle.analytics.js',
 
     ];
     public $depends = [

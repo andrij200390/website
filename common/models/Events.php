@@ -12,6 +12,7 @@ use app\models\UserDescription;
 use app\models\UserAvatar;
 use common\models\geolocation\Geolocation;
 use common\components\helpers\PriceHelper;
+use common\components\helpers\PhoneHelper;
 
 /**
  * This is the model class for table "{{%events}}".
@@ -94,7 +95,7 @@ class Events extends ActiveRecord
             ['price_visual', 'in', 'range' => PriceHelper::getPriceVisualListKeys()],
             ['email', 'email'],
             ['price', 'integer', 'min' => 1, 'max' => 10000],
-            ['phones', 'match', 'pattern' => '/\(?([0-9]{3})\)([0-9]{3})([-])([0-9]{2})([-])([0-9]{1})/'],
+            ['phones', 'match', 'pattern' => PhoneHelper::PHONE_INTERNATIONAL_REGEX],
             ['events_date', 'match', 'pattern' => '/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/'],
             ['site', 'url', 'defaultScheme' => 'http'],
             [['img'], 'file', 'extensions' => ['png', 'jpg', 'jpeg', 'gif']],
@@ -244,7 +245,7 @@ class Events extends ActiveRecord
              */
             if (isset($where['id'])) {
                 $modelEvents[$i]['description'] = $events[$i]->description;
-                $modelEvents[$i]['userName'] = $events[$i]->userDescription->nickname;
+                $modelEvents[$i]['userName'] = UserDescription::getNickname($events[$i]->user);
                 $modelEvents[$i]['userAvatar'] = UserAvatar::getAvatarPath($events[$i]->user);
                 $modelEvents[$i]['userCulture'] = UserDescription::getCulture($events[$i]->user, true);
                 $modelEvents[$i]['comments'] = Comments::getComments(['elem_type' => 'events', 'elem_id' => $events[$i]->id]);

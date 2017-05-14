@@ -149,7 +149,7 @@ Html::tag('div',
       Html::tag('div',
         Html::tag('div',
           ElementsHelper::linkElement('views', 0, false, 'zmdi-eye').
-          ElementsHelper::linkElement('comment', $modelNews[0]['countComments'], Url::toRoute($modelNews[0]['url']), 'zmdi-comment-text-alt').
+          ElementsHelper::linkElement('comment', $modelNews[0]['countComments'], '#comments_section', 'zmdi-comment-text-alt').
           ElementsHelper::likeButton(Yii::$app->controller->id, $modelNews[0]['id'], $modelNews[0]['likesCount'], $modelNews[0]['myLike']),
           ['class' => 'news__actions u-pull-left']
         ).

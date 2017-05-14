@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%photo}}". TODO: work with 'photo' MVC.
+ * This is the model class for table "{{%photo}}".
  *
  * @property string $id
  * @property string $user
@@ -35,8 +35,8 @@ class Photo extends \yii\db\ActiveRecord
               '150x150_' => 150, /* 1/1 aspect ratio */
             ],
             'imageValidatorParams' => [
-              'minWidth' => 500,
-              'minHeight' => 500,
+              'minWidth' => 150,
+              'minHeight' => 150,
               'maxWidth' => 2000,
               'maxHeight' => 2000,
             ],
@@ -93,6 +93,45 @@ class Photo extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Gets all photos by album ID
+     *
+     * @param string $album_id  ID of an album containing photos
+     *
+     * @return array Array containing all the links
+     */
+    public static function getByAlbumId($album_id)
+    {
+        $photos = self::find()->where(array('album' => $album_id))->select('img')->asArray()->all();
+        foreach ($photos as $i => $photo) {
+            $photos[$i]['img_thumbnail'] = self::addPrefixToPhoto($photo['img'], '150x150_');
+        }
+
+        return $photos;
+    }
+
+    /**
+     * Adds a prefix to photo for getting thumbnails
+     * @param string $path   Path to image (original)
+     * @param string $prefix Needed prefix (size)
+     *
+     * @return string Modified path to file
+     */
+    public static function addPrefixToPhoto($path, $prefix = null)
+    {
+        if ($prefix === null || $prefix == '') {
+            return $path;
+        }
+
+        $path = str_replace('\\', '/', $path);
+        $dir = explode('/', $path);
+        $lastIndex = count($dir) - 1;
+        $dir[$lastIndex] = $prefix.$dir[$lastIndex];
+
+        return implode('/', $dir);
+    }
+
+    /* ? */
     public static function getPhotoName($name, $userID, $in = '')
     {
         $url = Url::home(true).'images/photo/'.$userID.'/';
@@ -105,18 +144,10 @@ class Photo extends \yii\db\ActiveRecord
         return $url.''.$name.'.jpg';
     }
 
+    /* Relations */
     public function getPhotoalbum()
     {
         return $this->hasOne(Photoalbum::className(), ['id' => 'album']);
     }
 
-    public function comments()
-    {
-        return $this->hasMany(Comments::className(), ['elem_id' => 'id'])->andWhere(['elem_type' => 'photo']);
-    }
-
-    public static function getUserNickname($id)
-    {
-        return UserDescription::findOne(['id' => $id])->nickname;
-    }
 }

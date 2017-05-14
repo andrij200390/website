@@ -320,7 +320,7 @@ class UserDescription extends \yii\db\ActiveRecord
         if (!empty($userNickname)) {
             return $userNickname->nickname;
         }
-        return false;
+        return 'USER DELETED';
     }
 
 

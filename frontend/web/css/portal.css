@@ -1068,6 +1068,9 @@ a.article__title:hover {
 a.innactive {
   color:#7d7d7d;
 }
+.authorbox__hashtags {
+  display:none;
+}
 
 /* --- DATEBOX --- */
 .datebox__wrap {
@@ -1652,6 +1655,7 @@ filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><
 }
 .c-diamond.c-diamond__border--small {
   margin-bottom:10px;
+  margin-top: 10px;
 }
 .c-diamond__label>span {
   display: inline-block;

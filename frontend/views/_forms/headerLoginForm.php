@@ -3,6 +3,8 @@
      * User login form
      * Used in portal.php layout, header section
      * Questions? Feel free to ask: <scsmash3r@gmail.com> or skype: smash3rs
+     *
+     * TODO: redo form with Yii's HTML helpers and vars
      */
 
 /*
@@ -21,7 +23,7 @@ if (!Yii::$app->user->isGuest) {
     </div>
 <?php
 /*
-    Using http://intercoolerjs.org/docs.html to POST data to controller 'Main'
+    Using http://intercoolerjs.org/docs.html to POST data to controller 'Site'
     Here I tried not to use Yii's ActiveForm instance to avoid certain pitfalls with more complicated code chunks
     <form> wrap is needed for enter key to be usable for submission
 */
@@ -33,7 +35,7 @@ if (!Yii::$app->user->isGuest) {
                 <i class="u-center-block__content zmdi zmdi-account-o zmdi-hc-lg"></i>
             </div>
             <div class="o-grid__cell o-grid__cell--width-70 login-form__input">
-                <input type="text" id="username" name="username" class="c-field c-field--xtra" placeholder="<?=Yii::t('app', 'Логин'); ?>" tabindex="1" autofocus>
+                <input type="text" id="email" name="email" class="c-field c-field--xtra" placeholder="<?=Yii::t('app', 'Email'); ?>" tabindex="1" autofocus>
             </div>
             <div class="u-center-block o-grid__cell o-grid__cell--width-20 login-form__doubleicon">
                 <div class="u-center-block__content u-center-block__content--vertical login-form__icon">
@@ -41,7 +43,7 @@ if (!Yii::$app->user->isGuest) {
                             id="login-form__submit"
                             class="zmdi-icon--hoverable"
                             ic-indicator="#outstyle_loader"
-                            ic-include="#username,#password"
+                            ic-include="#email,#password"
                             ic-post-to="/api/site/login">
                         <i class="zmdi zmdi-arrow-right zmdi-hc-lg"></i>
                     </button>

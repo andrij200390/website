@@ -57,12 +57,6 @@ Html::tag('div',
     ['class' => 'u-letter-box--small']
     ).
 
-    /* Description block body */
-    Html::tag('div',
-      isset($school[0]['description']) ? $school[0]['description'] : '',
-      ['class' => "{$controllerId}__body block__body u-pillar-box--medium c-text--darkshadow"]
-    ).
-
     /* Block footer */
     Html::tag('div',
 
@@ -116,6 +110,18 @@ echo
 Html::tag('div',
   Html::tag('div',
 
+    /* Description block body */
+    Html::tag('div',
+      Html::tag('div',
+        isset($school[0]['description']) ? $school[0]['description'] : '',
+        ['class' => "u-window-box--super"]
+      ),
+      ['class' => "{$controllerId}-single__body c-text--usual"]
+    ).
+
+    /* Separator */
+    ElementsHelper::separatorDiamond($school[0]['title'], 'super', true).
+
     /* School geolocation and phone/site */
     Html::ul(
       [
@@ -141,7 +147,7 @@ Html::tag('div',
       Html::tag('div',
         Html::ul(
           [
-            isset($school[0]['price']) ? Yii::t('app', 'Price').': '.$school[0]['price'] : '',
+            isset($school[0]['price']) ? Yii::t('app', 'Price').': от '.$school[0]['price'].' '.$school[0]['price_currency'] : Yii::t('app', 'Price').': '.Yii::t('app', 'Specify'),
             isset($school[0]['square']) ? Yii::t('app', 'Training room size').': '.$school[0]['square'] : '',
             isset($school[0]['floor']) ? Yii::t('app', 'Floor surface').': '.$school[0]['floor'] : '',
             isset($school[0]['mirrors']) ? Yii::t('app', 'Mirrors').': '.$school[0]['mirrors'] : '',
@@ -160,7 +166,7 @@ Html::tag('div',
       /* School gallery */
       Html::tag('div',
         Html::tag('div',
-          ElementsHelper::galleryBlock(32, 24),
+          isset($school[0]['gallery']) ? ElementsHelper::galleryBlock($school[0]['gallery']) : '',
           ['class' => 'owl-carousel owl-theme']
         ),
         ['class' => 'o-grid__cell o-grid__cell--width-60 o-grid__cell--center school__gallery']

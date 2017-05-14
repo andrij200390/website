@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
   var currentTime = new Date();
 
   /* Masked input: phone */
-  jQuery("#phone").mask("(999)999-99-99");
+  jQuery("#phone").mask("+9(999)999-99-99?99");
 
   /* Datetimepicker */
   jQuery.datetimepicker.setLocale('ru');

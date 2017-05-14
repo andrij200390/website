@@ -17,9 +17,10 @@
 #misc
 /webstat
 
-# phpstorm project files
+# phpstorm project files and other root files
 .idea
 .htaccess
+googlea581296eba58e8a7.html
 
 # windows thumbnail cache
 Thumbs.db

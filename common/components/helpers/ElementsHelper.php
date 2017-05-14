@@ -193,13 +193,15 @@ class ElementsHelper extends Html
         /*
          * If our link has actual URL (href)
          */
-        if ($url) {
+        if ($url && strpos($url, "#") === false) {
             $attr['ic-get-from'] = $url;
             $attr['ic-indicator'] = self::DEFAULT_AJAX_LOADER;
             $attr['ic-target'] = '#'.self::DEFAULT_TARGET_ID;
             $attr['ic-push-url'] = 'true';
             $attr['ic-select-from-response'] = '#'.self::DEFAULT_AJAX_ID;
-        } else {
+        }
+        
+        if (!$url) {
             $url = 'javascript:void(0)';
             $elem_name .= ' innactive';
         }
@@ -514,25 +516,31 @@ class ElementsHelper extends Html
     /**
      * Generates blocks for gallery.
      *
-     * @param int $galleryId  Photo Gallery ID
-     * @param int $itemsCount How much items (blocks) to show? Defaults to 0 (show all)
+     * @param array $photosArray  Array of items, generated from Photo model query
+     * @see: Photo::getByAlbumId()
      *
      * @return html Generated HTML output
      */
-    public static function galleryBlock($galleryId = 0, $itemsCount = 0)
+    public static function galleryBlock($photos_array = [])
     {
         $response = '';
 
-        /* Gallery loop TEST CASE TODO: <---- */
-        for ($i = 0; $i < $itemsCount; ++$i) {
+        /* Gallery loop */
+        foreach ($photos_array as $k => $photo) {
             $response .=
             Html::tag('div',
 
-              /* Gallery image */
-              Html::img(
-                '/frontend/web/images/images/500x500_noimage.jpg',
+              /* Gallery image with lightbox */
+              Html::tag('a',
+                Html::img(
+                  '/frontend/web/images/photoalbum/'.$photo['img_thumbnail'],
+                  [
+                   'class' => 'gallery__image o-image',
+                  ]
+                ),
                 [
-                 'class' => 'gallery__image o-image',
+                  'data-fancybox' => 'gallery',
+                  'href' => '/frontend/web/images/photoalbum/'.$photo['img'],
                 ]
               ),
 

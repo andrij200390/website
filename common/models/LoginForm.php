@@ -14,22 +14,22 @@ use yii\helpers\Url;
  */
 class LoginForm extends Model
 {
-    public $username;
+    public $email;
     public $password;
     public $rememberMe = true;
 
     private $user = false;
-    
+
     /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app', 'Логин'),
-            'password' => Yii::t('app', 'Пароль'),
-            'rememberMe' => Yii::t('app', 'Запомнить меня'),
-            'captcha' => Yii::t('app', 'Код подтверждения'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'rememberMe' => Yii::t('app', 'Remember me'),
+            'captcha' => Yii::t('app', 'Captcha'),
 
         ];
     }
@@ -40,8 +40,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            ['username', 'required', 'message' => Yii::t('app', 'Пожалуйста, введите ваш логин')],
-            ['password', 'required', 'message' => Yii::t('app', 'Пожалуйста, введите ваш пароль')],
+            ['email', 'required', 'message' => Yii::t('app', 'Please enter your email')],
+            ['password', 'required', 'message' => Yii::t('app', 'Please enter your password')],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
         ];
@@ -59,13 +59,13 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('app', 'Логин или пароль введены неверно'));
+                $this->addError($attribute, Yii::t('app', 'Email or password are not correct!'));
             }
         }
     }
 
     /**
-     * Logs in a user using the provided username and password.
+     * Logs in a user using the provided email and password.
      *
      * @return boolean whether the user is logged in successfully
      */
@@ -73,20 +73,20 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 365 : 0);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds user by [[email]]
+     * @see: private $user = false
      *
      * @return User|null
      */
     public function getUser()
     {
         if ($this->user === false) {
-            $this->user = User::findByUsername($this->username);
+            $this->user = User::findByEmail($this->email);
         }
 
         return $this->user;

@@ -358,7 +358,11 @@ class Geolocation extends \yii\db\ActiveRecord
             $geodata = $geolocation = [];
 
             /* Getting all the countries, that is related to our specified model */
-            $geolocation = self::find()->with($model)->where($where)->select('id,country,city')->all();
+            $geolocation = self::find()->with([
+              $model => function (\yii\db\ActiveQuery $query) {
+                $query->select('id, geolocation_id');
+              }
+            ])->where($where)->select('id,country,city')->all();
 
             for ($i = 0; $i < count($geolocation); ++$i) {
                 $countryISO = $geolocation[$i]->country;
@@ -368,11 +372,11 @@ class Geolocation extends \yii\db\ActiveRecord
 
                 /* GEODATA: cities array */
                 $geolocation_id = $geolocation[$i]->id;
-                $geodata['cities'][$countryISO][$geolocation_id] = $geolocation[$i]->city;
+                $geodata['cities'][$countryISO][$geolocation[$i]->city][] = $geolocation_id;
 
                 /* GEODATA: $model array */
                 foreach ($geolocation[$i]->$model as $m) {
-                    $geodata[$model][$geolocation_id][] = $m->id;
+                    $geodata[$model][$countryISO][] = $m->id;
                 }
             }
 
@@ -385,7 +389,6 @@ class Geolocation extends \yii\db\ActiveRecord
 
                 /* if the country ISO code exists in our DB */
                 if ($country) {
-
                     /* sending list of available countries */
                     $response['countries'][] = [
                       'id' => $country->vk_country_id,
@@ -393,14 +396,15 @@ class Geolocation extends \yii\db\ActiveRecord
                     ];
 
                     /* sending a list of available cities for each countries */
-                    foreach ($geodata['cities'][$iso_code] as $geolocation_id => $city) {
+                    foreach ($geodata['cities'][$iso_code] as $city => $geolocation_id) {
+                        $city = GeolocationCities::find()->where(['name' => $city])->select('id,name')->one();
 
                         /* only show cities if there are any schools around */
-                        if (isset($geodata[$model][$geolocation_id])) {
+                        if (isset($geodata[$model][$iso_code])) {
                             $response['cities'][$country->vk_country_id][] = [
-                              'id' => $geolocation_id,
-                              'text' => $city,
-                              'objects' => $geodata[$model][$geolocation_id],
+                              'id' => $city->id,
+                              'text' => $city->name,
+                              'objects' => $geodata[$model][$iso_code],
                             ];
                         }
                     }
@@ -462,4 +466,5 @@ class Geolocation extends \yii\db\ActiveRecord
     {
         return $this->hasMany(School::className(), ['geolocation_id' => 'id']);
     }
+
 }

@@ -216,14 +216,14 @@ class News extends ActiveRecord
 
           /*
            * Additional stuff for single news page (or when news represented as an article)
-           * If we have URL parameter, let's also populate additional array with similar news from same category
+           * If we have URL parameter, lets also populate additional array with similar news from same category
            * Description key is needed for single news page (SEO purposes). You can add additional stuff for singles here
            */
           if (isset($where['url']) || $where['article'] == 1) {
               $modelNews[$i]['description'] = trim($news[$i]->description);
               $modelNews[$i]['text'] = trim($news[$i]->text);
               $modelNews[$i]['img'] = $news[$i]->getImageSrc('250x250_');
-              $modelNews[$i]['userName'] = $news[$i]->userDescription->nickname;
+              $modelNews[$i]['userName'] = UserDescription::getNickname($news[$i]->user);
               $modelNews[$i]['userAvatar'] = UserAvatar::getAvatarPath($news[$i]->user);
               $modelNews[$i]['userCulture'] = UserDescription::getCulture($news[$i]->user, true);
               $modelNews[$i]['comments'] = Comments::getComments(['elem_type' => 'news', 'elem_id' => $news[$i]->id]);

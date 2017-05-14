@@ -9,8 +9,10 @@ use common\models\geolocation\Geolocation;
 use backend\models\Category;
 use app\models\Comments;
 use app\models\Likes;
+use common\models\Photo;
 use common\components\helpers\StringHelper;
 use common\components\helpers\PriceHelper;
+use common\components\helpers\PhoneHelper;
 use common\components\helpers\BlocksHelper;
 use yii\helpers\Html;
 
@@ -118,7 +120,7 @@ class School extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category', 'phone', 'price', 'price_currency'], 'required'],
+            [['title', 'category'], 'required'],
             [['title'], 'unique'],
             [['user', 'category', 'geolocation_id'], 'integer'],
             [['user', 'created', 'additional'], 'safe'],
@@ -128,8 +130,8 @@ class School extends ActiveRecord
 
             ['img_block_size', 'integer', 'min' => 0, 'max' => 9],
             ['title', 'string', 'max' => 64],
-            ['price', 'integer', 'min' => 1, 'max' => 10000],
-            ['phone', 'match', 'pattern' => '/\(?([0-9]{3})\)([0-9]{3})([-])([0-9]{2})([-])([0-9]{1})/'],
+            ['price', 'integer', 'min' => 0, 'max' => 10000],
+            ['phone', 'match', 'pattern' => PhoneHelper::PHONE_INTERNATIONAL_REGEX],
             ['description', 'string', 'max' => 2048],
             ['site', 'url', 'defaultScheme' => 'http'],
             ['price_currency', 'in', 'range' => PriceHelper::getPriceCurrenciesISO()],
@@ -213,8 +215,8 @@ class School extends ActiveRecord
         /* Now to populate our School model with data */
         for ($i = 0; $i < count($schools); ++$i) {
             /* Other models data */
-            $likes = Likes::findLikesCount('schools', $schools[$i]->id);
-            $commentsCount = Comments::countComments('schools', $schools[$i]->id);
+            $likes = Likes::findLikesCount('school', $schools[$i]->id);
+            $commentsCount = Comments::countComments('school', $schools[$i]->id);
             $imagesize = BlocksHelper::getBlockSizeStatus($schools[$i]->img_block_size);
 
             $model[$i]['id'] = $schools[$i]->id;
@@ -223,7 +225,7 @@ class School extends ActiveRecord
             $model[$i]['description'] = (!isset($where['id'])) ? StringHelper::cutString($schools[$i]->description, 200) : $schools[$i]->description;
             $model[$i]['img'] = $schools[$i]->getImageSrc($imagesize.'_');
             $model[$i]['img_block_size'] = $imagesize;
-            $model[$i]['myLike'] = Likes::findMyLike('schools', $schools[$i]->id);
+            $model[$i]['myLike'] = Likes::findMyLike('school', $schools[$i]->id);
             $model[$i]['likesCount'] = ($likes) ? (int) $likes : 0;
             $model[$i]['countComments'] = (!empty($commentsCount)) ? (int) $commentsCount : 0;
             $model[$i]['category'] = $schools[$i]->categories->name;
@@ -236,19 +238,21 @@ class School extends ActiveRecord
             /*
              * Additional stuff for single school page
              * $schoolParams - stored as JSON array in DB
+             * $photoalbum - related to Photo model, getting a photos from particular school photoalbum
              */
             if (isset($where['id'])) {
                 $schoolParams = json_decode($schools[$i]->additional, true);
 
                 $model[$i]['comments'] = Comments::getComments(['elem_type' => 'school', 'elem_id' => $schools[$i]->id]);
                 $model[$i]['price'] = $schools[$i]->price;
+                $model[$i]['price_currency'] = $schools[$i]->price_currency;
                 $model[$i]['phone'] = $schools[$i]->phone;
                 $model[$i]['site'] = $schools[$i]->site;
                 $model[$i]['geolocation'] = $schools[$i]->geolocation;
                 $model[$i]['trainingTime'] = $schoolParams['trainingTime'];
                 $model[$i]['square'] = $schoolParams['square'];
                 $model[$i]['floor'] = $schoolParams['floor'];
-                $model[$i]['mirrors'] = ($schoolParams['mirrors']) ? Yii::t('app', 'Yes') : Yii::t('app', 'No');
+                $model[$i]['mirrors'] = ($schoolParams['mirrors']) ? Yii::t('app', 'Yes') : '';
                 $model[$i]['traininer'] = $schoolParams['traininer'];
                 $model[$i]['equipment'] = $schoolParams['equipment'];
                 $model[$i]['trains'] = $schoolParams['trains'];
@@ -259,6 +263,9 @@ class School extends ActiveRecord
                 $imagesize = '500x500';
                 $model[$i]['img'] = $schools[$i]->getImageSrc($imagesize.'_');
                 $model[$i]['img_block_size'] = $imagesize;
+
+                /* Gallery */
+                $model[$i]['gallery'] = Photo::getByAlbumId($schools[$i]->album);
             }
 
             /* Removing empty values, but keeping 0 - http://stackoverflow.com/a/3654309 */

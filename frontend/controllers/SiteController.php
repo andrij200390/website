@@ -61,8 +61,8 @@ class SiteController extends ParentController
 
         $data = Yii::$app->request->post();
 
-        $model->username = $data['username'];
-        $model->password = $data['password'];
+        $model->email = $data['email'] ?? '';
+        $model->password = $data['password'] ?? '';
 
            /* Check for attempts */
             $misstep = AuthMisstep::find()->where("ip = :ip", [':ip' => Yii::$app->request->userIP])->one();
