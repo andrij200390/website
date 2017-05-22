@@ -71,9 +71,12 @@ echo
           'pastePlainText' => true,
           'buttonSource' => true,
           'buttonAdvanced' => true,
-          'plugins' => ['clips', 'properties'],
           'imageUpload' => Url::to([Yii::$app->controller->id.'/imageupload']),
         ],
+        'plugins' => [
+          'videos' => 'backend\assets\RedactorAsset',
+          'imageuploader' => 'backend\assets\RedactorAsset'
+        ]
       ]);
 
     /* Event main photo */

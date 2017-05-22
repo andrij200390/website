@@ -108,6 +108,9 @@ class News extends ActiveRecord
   public function rules()
   {
       return [
+        [['date_redact'], 'default', 'value' => 0],
+        [['redactor_id'], 'default', 'value' => 0],
+
         [['name', 'category', 'small', 'text'], 'required'],
         [['user', 'category', 'article', 'redactor_id', 'status'], 'integer'],
         [['small'], 'string', 'max' => 520],

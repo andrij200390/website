@@ -35,7 +35,10 @@ echo
     $form->field($model, 'description')->textInput(['maxlength' => 255]),
     $form->field($model, 'small')->textarea(['rows' => 8]),
 
-    /* Main big text. Using imperavi widget: imperavi\Widget */
+    /**
+     * Main big text. Using imperavi widget: imperavi\Widget
+     * @see: https://imperavi.com/redactor/docs/
+     */
     $form->field($model, 'text', ['options' => ['class' => 'textarea--enhanced']])->textarea([
       'rows' => 12,
       'id' => Yii::$app->controller->id.'-textarea', ])->widget(Widget::className(), [
@@ -45,9 +48,13 @@ echo
           'pastePlainText' => true,
           'buttonSource' => true,
           'buttonAdvanced' => true,
-          'plugins' => ['clips', 'properties'],
+          'plugins' => ['fullscreen'],
           'imageUpload' => Url::to([Yii::$app->controller->id.'/imageupload']),
         ],
+        'plugins' => [
+          'videos' => 'backend\assets\RedactorAsset',
+          'imageuploader' => 'backend\assets\RedactorAsset'
+        ]
       ]);
 
     /* News main photo */
@@ -79,7 +86,6 @@ echo Html::endTag('div');
     JS stuff, that is related ONLY to this form
 */
 $script = <<< 'JS'
-$(function(){
 
         if ($(".redactor-box").height() >= 640) {
             $('.redactor-editor').slimScroll({
@@ -93,6 +99,7 @@ $(function(){
 
         $('#news-status option[value="1"]').attr("selected",true);
 
-});
+
+
 JS;
 $this->registerJs($script, yii\web\View::POS_READY);
