@@ -83,7 +83,6 @@ class Events extends ActiveRecord
             ['date_redact', 'default', 'value' => 0],
             ['redactor_id', 'default', 'value' => 0],
             [['user', 'category', 'album', 'redactor_id', 'status', 'geolocation_id'], 'integer'],
-            [['title'], 'unique'],
             [['created', 'date_redact'], 'safe'],
             [['events_date'], 'required'],
             [['geolocation_id'], 'default', 'value' => 0],

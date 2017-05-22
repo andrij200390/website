@@ -244,44 +244,51 @@ Html::tag('div',
     ['class' => 'u-window-box--super']
   ),
   ['class' => 'o-grid__cell o-grid__cell--width-100 c-text--usual']
-),
-
-// SEPARATOR
-ElementsHelper::separatorDiamond(Yii::t('app', 'Recommended events')),
-
-// SIMILAR EVENTS
-Html::beginTag('div',
-  [
-    'id' => Yii::$app->controller->id.'-single-recommended',
-    'class' => 'o-grid o-grid--wrap u-full-width u-window-box--medium recommended',
-    'ic-target' => '#'.ElementsHelper::DEFAULT_TARGET_ID,
-    'ic-push-url' => 'true',
-    'ic-select-from-response' => '#'.ElementsHelper::DEFAULT_AJAX_ID,
-  ]
 );
 
-foreach ($modelEvents[0]['recommended'] as $recommendedEvents) {
-    $url = Url::toRoute(Yii::$app->controller->id.'/'.$recommendedEvents['id']);
+/* RECOMMENDED EVENTS */
+if (isset($modelEvents[0]['recommended'])) {
 
-    //recommended events single instance
-    echo
-    Html::tag('div',
+  // SEPARATOR
+  echo ElementsHelper::separatorDiamond(Yii::t('app', 'Recommended events')),
+
+  // SIMILAR EVENTS WRAP BEGIN
+  Html::beginTag('div',
+    [
+      'id' => Yii::$app->controller->id.'-single-recommended',
+      'class' => 'o-grid o-grid--wrap u-full-width u-window-box--medium recommended',
+      'ic-target' => '#'.ElementsHelper::DEFAULT_TARGET_ID,
+      'ic-push-url' => 'true',
+      'ic-select-from-response' => '#'.ElementsHelper::DEFAULT_AJAX_ID,
+    ]
+  );
+
+  // Cycle through each recommended event to show it
+  foreach ($modelEvents[0]['recommended'] as $recommendedEvents) {
+      $url = Url::toRoute(Yii::$app->controller->id.'/'.$recommendedEvents['id']);
+
+      //recommended events single instance
+      echo
       Html::tag('div',
-        Html::a('<img class="o-image grayscale" src="'.$recommendedEvents['img'].'"><span class="recommended__title">'.$recommendedEvents['title'].'</span>',
-          $url,
-          [
-            'class' => 'recommended__link',
-            'ic-get-from' => $url,
-            'ic-indicator' => ElementsHelper::DEFAULT_AJAX_LOADER,
-          ]
+        Html::tag('div',
+          Html::a('<img class="o-image grayscale" src="'.$recommendedEvents['img'].'"><span class="recommended__title">'.$recommendedEvents['title'].'</span>',
+            $url,
+            [
+              'class' => 'recommended__link',
+              'ic-get-from' => $url,
+              'ic-indicator' => ElementsHelper::DEFAULT_AJAX_LOADER,
+            ]
+          ),
+          ['class' => 'u-window-box--small']
         ),
-        ['class' => 'u-window-box--small']
-      ),
-      ['class' => 'o-grid__cell o-grid__cell--no-gutter']
-    );
-}
+        ['class' => 'o-grid__cell o-grid__cell--no-gutter']
+      );
+  }
 
-echo Html::endTag('div');
+  // SIMILAR EVENTS WRAP END
+  echo Html::endTag('div');
+
+}
 
 // SHARE LINE
 echo
