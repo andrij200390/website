@@ -15,12 +15,13 @@ if (isset($modelComments)) {
     $comments_api_url_delete = Url::toRoute('comments/delete');
     $comments_api_url_show = Url::toRoute('comments/show');
 
-    $like_api_url = Url::toRoute('likes/like');
-
     $comments_loader_element = '#outstyle_loader'; // Intercooler indicator
-
+    $data = Yii::$app->request->get();
     /* --- Showing each comment from populated model --- */
     foreach ($modelComments as $comment) {
+        if (isset($data['elem_id'])) {
+          echo '<div id="new_comment">';
+        }
         ?>
         <div data-comment-id="<?=$comment['id']; ?>" class="o-grid o-grid--wrap o-grid--top comment">
             <div class="o-grid__cell o-grid__cell--width-fixed comment__avatar">
@@ -66,6 +67,8 @@ if (isset($modelComments)) {
             </div>
         </div>
     <?php
-
+      if (isset($data['elem_id'])) {
+        echo '</div>';
+      }
     }
 } ?>

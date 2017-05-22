@@ -198,8 +198,8 @@ class News extends ActiveRecord
       /* Now to populate our News model with data */
       for ($i = 0; $i < count($news); ++$i) {
           /* Other models data */
-          $likes = Likes::findLikesCount('news', $news[$i]->id);
-          $comments = Comments::countComments('news', $news[$i]->id);
+          $likes = Likes::findLikesCount(Yii::$app->controller->id, $news[$i]->id);
+          $comments = Comments::countComments(Yii::$app->controller->id, $news[$i]->id);
           $imagesize = BlocksHelper::getBlockSizeStatus($news[$i]->img_block_size);
 
           $modelNews[$i]['id'] = $news[$i]->id;
@@ -211,7 +211,7 @@ class News extends ActiveRecord
           $modelNews[$i]['img_block_size'] = $imagesize;
           $modelNews[$i]['created'] = StringHelper::convertTimestampToHuman(strtotime($news[$i]->created));
           $modelNews[$i]['userId'] = $news[$i]->user;
-          $modelNews[$i]['myLike'] = Likes::findMyLike('news', $news[$i]->id);
+          $modelNews[$i]['myLike'] = Likes::findMyLike(Yii::$app->controller->id, $news[$i]->id);
           $modelNews[$i]['likesCount'] = ($likes) ? (int) $likes : 0;
           $modelNews[$i]['countComments'] = (!empty($comments)) ? (int) $comments : 0;
           $modelNews[$i]['category'] = $news[$i]->categories->name;
@@ -229,7 +229,7 @@ class News extends ActiveRecord
               $modelNews[$i]['userName'] = UserDescription::getNickname($news[$i]->user);
               $modelNews[$i]['userAvatar'] = UserAvatar::getAvatarPath($news[$i]->user);
               $modelNews[$i]['userCulture'] = UserDescription::getCulture($news[$i]->user, true);
-              $modelNews[$i]['comments'] = Comments::getComments(['elem_type' => 'news', 'elem_id' => $news[$i]->id]);
+              $modelNews[$i]['comments'] = Comments::getComments(['elem_type' => Yii::$app->controller->id, 'elem_id' => $news[$i]->id]);
               $modelNews[$i]['categories'] = Category::getCategories(['id' => self::NEWS_CATEGORIES]);
 
               /* TODO: make it as a separate methods (getSimilarNews, getRecommendedNews)

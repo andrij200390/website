@@ -9,14 +9,11 @@ use app\models\UserAvatar;
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-/* --- Base vars for .comments_add element --- */
-$comments_api_url_add = Url::toRoute(['comments/add', 'elem_type' => Yii::$app->controller->id]);
-$comments_loader_element = '#outstyle_loader'; // Intercooler indicator
+use common\components\helpers\ElementsHelper;
 
 /* --- We are showing the comment form input only for registered users --- */
     if (!Yii::$app->user->isGuest) {
         ?>
-        <input type="hidden" name="elem_id" id="elem_id" value="<?=$modelElemId; ?>">
         <form class="o-grid o-grid--wrap o-grid--center u-letter-box--xlarge comments_add" way-data="comment" way-persistent>
             <div class="o-grid__cell o-grid__cell--top o-grid__cell--width-20 comments_add__avatar">
                 <?=UserAvatar::getImg(Yii::$app->user->id, 'small', 'roundborder u-pull-right avatar--smallest'); ?>
@@ -31,16 +28,7 @@ $comments_loader_element = '#outstyle_loader'; // Intercooler indicator
                 </div>
             </div>
             <div class="o-grid__cell o-grid__cell--width-20">
-                <button class="zmdi-icon--hoverable i-send"
-                        title="<?=Yii::t('app', 'Отправить'); ?>"
-                        ic-indicator="<?=$comments_loader_element; ?>"
-                        ic-include="#comments_message, #elem_id"
-                        ic-trigger-delay="200ms"
-                        ic-get-from="<?=$comments_api_url_add; ?>"
-                        ic-target="#outstyle_comments .comments_body"
-                        ic-prepend-from="<?=$comments_api_url_add; ?>">
-                    <i class="zmdi zmdi-arrow-right zmdi-hc-2x"></i>
-                </button>
+                <?=ElementsHelper::commentAddButton(Yii::$app->controller->id, $modelElemId);?>
             </div>
         </form>
     <?php
@@ -70,6 +58,9 @@ $comments_loader_element = '#outstyle_loader'; // Intercooler indicator
 <script>
 jQuery(document).ready(function () {
 
+    /* --- Restoring the values in case user side error (i.e. browser window refresh to prevent data loss) --- */
+    way.restore();
+
     /* --- Showing 'delete' icon on single comment area hover [ONLY FOR REGISTERED] --- */
     jQuery('.user-registered .comment__wrap').hover(function() {
          jQuery(this).find('.comment__delete').show();
@@ -87,12 +78,13 @@ jQuery(document).ready(function () {
     });
 
     jQuery("body").off("commentAdd").on("commentAdd", function(event, data) {
-        way.remove("comment"); /* Removing old comment contents from localStorage */
+
         jQuery('#comments_message').html(); /* Also clearing message textarea */
         jQuery('#ohsnap').empty();
 
         setTimeout(function(){
             if (jQuery.type(data) === "number") {
+                way.remove("comment"); /* Removing old comment contents from localStorage */
                 jQuery(".user-registered div[data-comment-id='"+data+"']")
                 .addClass('comment__added comment__highlight')
                 .hide()
@@ -110,8 +102,6 @@ jQuery(document).ready(function () {
     /* --- Autosizing for textareas: http://www.jacklmoore.com/autosize/ --- */
     autosize(jQuery('textarea'));
 
-    /* --- Restoring the values in case user side error (i.e. browser window refresh to prevent data loss) --- */
-    way.restore();
     var comment = way.get('comment.comments_message');
     if (comment) {
         jQuery('#comments_message').html(comment);
