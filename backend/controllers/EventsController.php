@@ -264,6 +264,10 @@ class EventsController extends Controller
         /* Saving geocode data */
         $model->geolocation_id = Geolocation::validateData($data) ?? $model->geolocation_id;
 
+        /* Setting geolocation name */
+        if (isset($data[$controllerId]['placename'])) {
+            Geolocation::setGeolocationName($model->geolocation_id, $data[$controllerId]['placename']);
+        }
         return $model;
     }
 }

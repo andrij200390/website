@@ -72,7 +72,7 @@ Html::beginTag('div', ['class' => 'geolocation__box']),
           'class' => 'form-control select-country',
         ]
       ),
-      ['class' => 'col-md-4 form-group field-country']
+      ['class' => 'col-md-3 field-country']
     ).
 
     /* City select (shows only after country is selected) */
@@ -89,7 +89,7 @@ Html::beginTag('div', ['class' => 'geolocation__box']),
           'class' => 'form-control select-city',
         ]
       ),
-      ['class' => 'col-md-4 form-group field-city']
+      ['class' => 'col-md-3 field-city']
     ).
 
     /* Address select (shows only after city is selected) */
@@ -106,7 +106,25 @@ Html::beginTag('div', ['class' => 'geolocation__box']),
           'class' => 'form-control select-address',
         ]
       ),
-      ['class' => 'col-md-4 form-group field-address']
+      ['class' => 'col-md-3 field-address']
+    ).
+
+    /* Geolocation name */
+    Html::tag('div',
+      Html::tag('label', Yii::t('app', 'Place name'),
+        [
+          'class' => 'control-label',
+          'for' => 'placename',
+        ]
+      ).
+
+      Html::textInput(ucfirst(Yii::$app->controller->id).'[placename]', $geolocation->name ?? '',
+        [
+          'id' => 'geolocation_placename',
+          'class' => 'form-control select-placename',
+        ]
+      ),
+      ['class' => 'col-md-3 field-placename']
     ),
 
   [
@@ -129,12 +147,14 @@ jQuery(document).ready(function () {
   /* Select2 country stuff */
   var country = jQuery('#geolocation_country'),
       city = jQuery("#geolocation_city"),
-      address = jQuery("#geolocation_address");
+      address = jQuery("#geolocation_address"),
+      placename = jQuery("#geolocation_placename");
 
   /* Initially everything is hidden */
   country.parent('.field-country').hide();
   city.parent('.field-city').hide();
   address.parent('.field-address').hide();
+  placename.parent('.field-placename').hide();
 
   /* Initial list of countries to work with */
   jQuery.ajax({
@@ -208,6 +228,7 @@ jQuery(document).ready(function () {
             };
           },
           processResults: function (data, params) {
+            placename.parent('.field-placename').show();
             return {
               results: data.google
             };
@@ -256,6 +277,7 @@ jQuery(document).ready(function () {
           jQuery(this).hide();
           jQuery('#geolocation__selected').hide();
           jQuery('#geolocation__new').show();
+          placename.parent('.field-placename').show();
         });
     }
   }

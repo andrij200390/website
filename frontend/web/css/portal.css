@@ -748,6 +748,7 @@ a.article__title:hover {
   font-size: 0.4em;
   letter-spacing: -1px;
   color: #000;
+  text-transform: uppercase;
 }
 
 /* EVENT PRICE: SPECIAL */

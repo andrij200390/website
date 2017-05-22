@@ -127,6 +127,7 @@ if (isset($modelEvents)) {
             Html::tag('div',
               Html::tag('div',
                 Html::tag('span',
+                  '<sup>'.Yii::t('app', 'from').'</sup>'.
                   $event['price'].
                   '<sup>'.$event['price_currency'].'</sup>',
                   ['class' => 'c-text__color--redshadow c-text--loud']
