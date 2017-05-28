@@ -8,6 +8,17 @@ use yii\helpers\Html;
 class UserAvatar extends UserDescription
 {
     /**
+     * Available sizes of a user avatars
+     * @var array
+     */
+    public static $userAvatarSizes = [
+      'small',
+      'medium',
+      'big',
+      'original'
+    ];
+
+    /**
      * {@inheritdoc}
      */
     public function attributeLabels()
@@ -27,33 +38,17 @@ class UserAvatar extends UserDescription
      */
     public static function getAvatarPath($userId, $avatarSize = 'small')
     {
+        /* Checking allowed avatar sizes */
+        if (!in_array($avatarSize, self::$userAvatarSizes)) {
+          $avatarSize = 'small';
+        }
+
+        /* Avatar for deleted or inactive user */
+        if (!$userId) {
+          return Yii::$app->params['imagesPathUrl'].'/images/54x54_avatar_deleted.png';
+        }
+
         return Yii::$app->params['avatarPathUrl'].$userId.'_'.$avatarSize.'.jpg';
     }
 
-    /**
-     * Gets an image of avatar.
-     *
-     * @param int    $userId     User ID
-     * @param string $avatarSize Avatar's size (small, medium, big) (?custom)
-     * @param string $tagClass   Custom classes for <img> tag
-     *
-     * @return string An HTML <img> tag with all the necessary parameters
-     *
-     * TODO: Caching
-     */
-    public static function getImg($userId, $avatarSize = 'small', $tagClass = '')
-    {
-        $user_avatar_path = Yii::$app->params['avatarPathUrl'].$userId.'_'.$avatarSize.'.jpg';
-        $user_nickname = UserDescription::getNickname($userId);
-        $user_culture = UserDescription::getCulture($userId);
-
-        $tagClass .= ' culture_'.$user_culture;
-
-        $user_avatar_img = Html::img($user_avatar_path, [
-            'class' => $tagClass,
-            'alt' => Yii::t('app', 'Аватар пользователя {user}', ['user' => $user_nickname]),
-        ]);
-
-        return $user_avatar_img;
-    }
 }

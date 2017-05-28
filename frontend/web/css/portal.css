@@ -913,6 +913,7 @@ a.article__title:hover {
 }
 .avatar--medium {
     width:54px;
+    height: 54px;
 }
 
 /* --- BREADCRUMBS --- */
@@ -1596,9 +1597,14 @@ similar__link:hover {
   font-size: 13px;
   vertical-align: middle;
   margin-right: 1.5em;
+  text-align: center;
 }
-.i-like i,
-.i-icon i {
+.news__actions .i-like i,
+.news__actions .i-icon i,
+.comment__actions .i-icon i,
+.comment__actions .i-like i,
+.comment__actions .icon-heart
+{
   margin-right: 3px;
 }
 .i-icon i.icon-megaphone {
@@ -1608,6 +1614,34 @@ similar__link:hover {
 
 .i-icon.views i.zmdi.zmdi-eye {
   vertical-align: -1px;
+}
+.i-icon--circle {
+    border-radius: 50%;
+    border: 1px solid #DDD;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    line-height: 1.4em;
+    display: block;
+    float: left;
+    margin-right: 0.2em;
+}
+.i-icon--circle:hover {
+    color:#7d7d7d;
+    border:1px solid #7d7d7d;
+}
+.i-icon--red {
+    border: 1px solid #f20;
+}
+.i-icon--red i {
+    color:#f20;
+}
+.i-icon--red:hover {
+    border: 0px;
+    background:#f20;
+}
+.i-icon--red:hover i {
+    color:#fff;
 }
 
 .u-r .u-pull-right:first-child {

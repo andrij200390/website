@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\models\Category;
 use common\models\News;
-use backend\models\User;
+use common\models\User;
 use backend\models\StatusPublication;
 
 /* @var $this yii\web\View */

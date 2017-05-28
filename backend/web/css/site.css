@@ -169,7 +169,10 @@ a.desc:after {
   color:#999;
 }
 
-
+/* STATUSES */
+.status_0 {
+  text-decoration:line-through;
+}
 /* --- CUSTOM BACKEND STYLES [SOURCE: http://v4-alpha.getbootstrap.com/examples/dashboard/ ] --- */
 /*
  * Base structure

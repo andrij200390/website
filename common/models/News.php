@@ -300,13 +300,13 @@ class News extends ActiveRecord
         return  '';
     }
 
-    public function getUsers()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user']);
-    }
-
     public function getCategories()
     {
         return $this->hasOne(Category::className(), ['id' => 'category']);
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(Comments::className(), ['user_id' => 'user']);
     }
 }

@@ -37,7 +37,7 @@ AppAsset::register($this);
             $menuItems[] = ['label' => Yii::t('app', 'Новости'), 'url' => ['/news/index']];
             $menuItems[] = ['label' => Yii::t('app', 'Школы'), 'url' => ['/school/index']];
             $menuItems[] = ['label' => Yii::t('app', 'Статьи'), 'url' => ['/article/index']];
-            $menuItems[] = ['label' => Yii::t('app', 'События'), 'url' => ['events/index']];
+            $menuItems[] = ['label' => Yii::t('app', 'События'), 'url' => ['/events/index']];
             $menuItems[] = [
                 'label' => Yii::t('app', 'Выход ({user})', ['user' => Yii::$app->user->identity->username]),
                 'url' => ['/site/logout'],

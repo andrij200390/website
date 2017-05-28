@@ -6,12 +6,14 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use common\models\user\UserDescription;
 
 /* https://github.com/developeruz/yii2-db-rbac */
 use developeruz\db_rbac\interfaces\UserRbacInterface;
 
 /**
  * This is the model class for table "{{%user}}".
+ * TODO: Optimize this model by splitting it into separate models
  *
  * @property string $id
  * @property string $username
@@ -267,9 +269,13 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
         return $this->username;
     }
 
-    public function getNews()
-    {
-        return $this->hasMany(News::className(), ['user' => 'id']);
+    public static function usersSelect(){
+         $model = self::find()->orderBy('username')->all();
+         $r = [];
+         foreach($model AS $v){
+             $r[$v->id] = $v->username;
+         }
+         return $r;
     }
 
 }

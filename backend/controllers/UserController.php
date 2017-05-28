@@ -6,8 +6,8 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use backend\models\User;
-use backend\models\search\UserSearch;
+use common\models\User;
+use common\models\user\UserSearch;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -106,8 +106,24 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        /* Data init: getting $_GET data */
+        $data = Yii::$app->request->get();
 
+        if (!isset($data['soft'])) return;
+
+        $user = $this->findModel($id);
+
+        /* Soft delete - changing status to 0 */
+        if ($data['soft'] == 'true') {
+          $user->status = User::STATUS_DELETED;
+          $user->update();
+        }
+
+        /* Soft restore - changing status to 10 */
+        if ($data['soft'] == 'restore') {
+          $user->status = User::STATUS_ACTIVE;
+          $user->update();
+        }
         return $this->redirect(['index']);
     }
 

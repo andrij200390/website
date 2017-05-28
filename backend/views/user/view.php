@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use backend\models\UserDescription;
+use common\models\user\UserDescription;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
@@ -70,11 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => Yii::t('app', 'Страна'),
-                'value'=> (isset($model->userdescriptions->countries->name))?$model->userdescriptions->countries->name:'',
+                'value'=> '',
             ],
             [
                 'label' => Yii::t('app', 'Город'),
-                'value'=> $model->userdescriptions->city,
+                'value'=> '',
             ],
             [
                 'label' => Yii::t('app', 'Сайт'),

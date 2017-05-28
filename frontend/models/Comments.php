@@ -185,16 +185,26 @@ class Comments extends \yii\db\ActiveRecord
  */
     public static function getComments($where = [], $page = null)
     {
+        /* Init values */
+        $modelComments = [];
 
         /**
          * Getting the comments: let's start partially, adding parameters in case we have pagination (not yet implemented)
          * Notice that we are adding query parameters one by one (chaining), checking additional conditions
          * Read more about QB syntax here: http://www.yiiframework.com/doc-2.0/guide-db-query-builder.html
+         *
+         * Since we're having greedy query with 'user' table, we need to set proper relation between 'user' <-> 'comments'
+         * 'User' query is needed to check whether user (and his data) is active or not.
+         *
+         * @see: http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relational-data.
+         * HACK: This approach with greedy 'user' query goes well, if you want to exclude comments from being populated, but violates SOLID principles
+         * 'user' => function ($query) {$query->andWhere(['!=', 'status', User::STATUS_DELETED])->select('id');}
          */
 
-
-
         $commentsQuery = self::find()->with([
+          'user' => function ($query) {
+              $query->andWhere(['!=', 'status', User::STATUS_DELETED])->select('id');
+          },
           'userDescription',
           'likes' => function ($query) {
               $query->andWhere(['elem_type' => 'comments']);
@@ -202,6 +212,7 @@ class Comments extends \yii\db\ActiveRecord
         ])->where($where)->orderBy('id desc');
 
         $comments = $commentsQuery->all();
+
 
         /* If we don't have any comments found, we won't populate comments model */
         if (!$comments) {
@@ -213,9 +224,9 @@ class Comments extends \yii\db\ActiveRecord
             $modelComments[$i]['type']               = $comments[$i]->elem_type;
             $modelComments[$i]['elemId']             = $comments[$i]->elem_id;
             $modelComments[$i]['userId']             = $comments[$i]->user_id;
-            $modelComments[$i]['userNickname']       = $comments[$i]->userDescription->nickname;
-            $modelComments[$i]['userAvatar']         = UserAvatar::getAvatarPath($comments[$i]->user_id);
-            $modelComments[$i]['userCulture']        = UserDescription::getCultureList($comments[$i]->userDescription->culture, true);
+            $modelComments[$i]['userNickname']       = $comments[$i]->user ? $comments[$i]->userDescription->nickname : 0;
+            $modelComments[$i]['userAvatar']         = UserAvatar::getAvatarPath($comments[$i]->user ? $comments[$i]->user->id : 0, 'medium');
+            $modelComments[$i]['userCulture']        = UserDescription::getCultureList($comments[$i]->user ? $comments[$i]->userDescription->culture : 0, true);
             $modelComments[$i]['created']            = StringHelper::convertTimestampToHuman(strtotime($comments[$i]->created));
             $modelComments[$i]['commentText']        = $comments[$i]->comment;
             $modelComments[$i]['likeCount']          = count($comments[$i]->likes);
@@ -225,15 +236,27 @@ class Comments extends \yii\db\ActiveRecord
         return $modelComments;
     }
 
-
+    /**
+     * Counts comments by element type and element id
+     *
+     * @param string    $elem_type  Which type of element does this comment represents (i.e. news, school, board)
+     * @param int       $elem_id    Element's id
+     * @return int                  Total comments
+     */
     public static function countComments($elem_type, $elem_id)
     {
         return self::find()->where(array('elem_type' => $elem_type, 'elem_id' => $elem_id))->count();
     }
 
+    /* Relations */
     public function attachments()
     {
         return $this->hasMany(Attachments::className(), ['elem_id' => 'id', 'elem_type' => 'comment']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getUserDescription()

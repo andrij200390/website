@@ -118,7 +118,7 @@ Html::tag('div',
       //cell 2
       Html::tag('div',
 
-        //username and avatar
+        //username and avatar GET ACTIVE AVATAR to model
         Html::a(
           Html::img(
             $modelNews[0]['userAvatar'],
