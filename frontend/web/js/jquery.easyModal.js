@@ -30,14 +30,14 @@ $(function() {
         overlayColor: '#1b2022',
         overlayClose: false,
 		onOpen: function(myModal){
-			
+
             $(myModal).addClass('modal-visible');
-                
+
             var widest = 0;
             var help_block_offset = 6;
             $('.modal-visible .form-group label').each(function () { widest = Math.max(widest, $(this).outerWidth()); }).width(widest);
             $('.help-block').css({'margin-left':widest+help_block_offset+'px'});
-            
+
             var modal_top = $(myModal).data('modal-top');
             if (modal_top) {
                 $(myModal).css({'top':modal_top+'px','margin-top':0});

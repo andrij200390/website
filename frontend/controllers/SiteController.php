@@ -164,6 +164,7 @@ class SiteController extends ParentController
         if ($model->load($data) && $model->validate()) {
 
             // If signup form returned user ID, sending confirmation email
+            // ->setTextBody("Для подтверждения своего email перейдите по ссылке https://".$_SERVER['SERVER_NAME']."/auth/confirm/".$confirmEmail->confirm_key.'/')
             if ($user = $model->signup()) {
 
                 $confirmEmail = new ConfirmEmail();
@@ -174,13 +175,13 @@ class SiteController extends ParentController
                     ->setFrom(Yii::$app->params['adminEmail'])
                     ->setTo($model->email)
                     ->setSubject('Outstyle - robot')
-                    ->setTextBody("Для подтверждения своего email перейдите по ссылке https://".$_SERVER['SERVER_NAME']."/auth/confirm/".$confirmEmail->confirm_key.'/')
+                    ->setTextBody("Спасибо за регистрацию! В данный момент сайт находится в бета-режиме, поэтому не исключено, что в некоторых местах он будет недоступен.")
                     ->send();
 
                 if ($confirmEmail->validate()) {
                     $confirmEmail->save();
 
-                    $response = ['error' => false, 'message' => Yii::t('app', 'На ваш почтовый ящик отправлено письмо для подтверждения пароля.')];
+                    $response = ['error' => false, 'message' => Yii::t('app', 'На ваш ящик отправлено письмо')];
                 }
 
                 // Logging user in
