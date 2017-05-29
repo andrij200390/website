@@ -105,11 +105,14 @@ class SchoolController extends ParentController
     {
         $data = Yii::$app->request->get();
 
+        /* Default arguments for 'where' clause */
+        $where['status'] = School::STATUS_PUBLISHED;
+
         /* GEODATA */
         if (isset($data['geodata'])) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            return Geolocation::getGeodataDropdown(Yii::$app->controller->id);
+            return Geolocation::getGeodataDropdown(Yii::$app->controller->id, $where);
         }
 
         /* If nothing is triggered - throw 404 */

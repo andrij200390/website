@@ -31,7 +31,6 @@ class PortalAsset extends AssetBundle
         'css/fancybox/jquery.fancybox.min.css',
     ];
     public $js = [
-        '//maps.googleapis.com/maps/api/js?key=AIzaSyA0_VDB748HU0g2x8QjuemKdXbcNuwbKj0&amp;extension=.js',
         'js/jquery.easyModal.js',
         'js/packery.pkgd.min.js',
         'js/intercooler-1.0.3.min.js',

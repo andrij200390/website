@@ -19,7 +19,6 @@ use common\models\School;
  */
 class Geolocation extends \yii\db\ActiveRecord
 {
-    const GOOGLE_MAPS_API_KEY = 'AIzaSyA0_VDB748HU0g2x8QjuemKdXbcNuwbKj0';
     public static function tableName()
     {
         return '{{%geolocation}}';
@@ -74,7 +73,7 @@ class Geolocation extends \yii\db\ActiveRecord
                     'header' => "Accept-language: ru\r\n",
                 ),
             );
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?key='.self::GOOGLE_MAPS_API_KEY.'&address='.urlencode($location);
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?key='.Yii::$app->params['googleMapsApiKey'].'&address='.urlencode($location);
             $streamContext = stream_context_create($headerOptions);
             $json = file_get_contents($url, false, $streamContext);
             $parsedjson = json_decode($json, true);
@@ -123,7 +122,7 @@ class Geolocation extends \yii\db\ActiveRecord
                     'header' => "Accept-language: ru\r\n",
                 ),
             );
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?key='.self::GOOGLE_MAPS_API_KEY.'&place_id='.$place_id;
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?key='.Yii::$app->params['googleMapsApiKey'].'&place_id='.$place_id;
             $streamContext = stream_context_create($headerOptions);
             $json = file_get_contents($url, false, $streamContext);
             $parsedjson = json_decode($json, true);
@@ -319,7 +318,7 @@ class Geolocation extends \yii\db\ActiveRecord
      * Behaves same as 'getGeodata', adding 'Choose country...' as a first menu to choose from dropdown.
      *
      * @param string $model Existing model name, that is using geodata. I.e.: 'school'
-     * @param array  $where WHERE clause for SQL query
+     * @param array  $where WHERE clause for SQL query for $model
      *
      * @return array See 'getSchoolGeodata' return
      */
@@ -342,7 +341,7 @@ class Geolocation extends \yii\db\ActiveRecord
      * Caches data for 1 day as a JSON array.
      *
      * @param string $model Existing model name, that is using geodata. I.e.: 'school'
-     * @param array  $where WHERE clause for SQL query
+     * @param array  $where WHERE clause for SQL query for $model
      *
      * @return array
      */
@@ -359,10 +358,10 @@ class Geolocation extends \yii\db\ActiveRecord
 
             /* Getting all the countries, that is related to our specified model */
             $geolocation = self::find()->with([
-              $model => function (\yii\db\ActiveQuery $query) {
-                $query->select('id, geolocation_id');
+              $model => function (\yii\db\ActiveQuery $query) use ($where) {
+                $query->andWhere($where)->select('id, geolocation_id');
               }
-            ])->where($where)->select('id,country,city')->all();
+            ])->select('id,country,city')->all();
 
             for ($i = 0; $i < count($geolocation); ++$i) {
                 $countryISO = $geolocation[$i]->country;
@@ -407,6 +406,7 @@ class Geolocation extends \yii\db\ActiveRecord
                               'objects' => $geodata[$model][$iso_code],
                             ];
                         }
+                        break;
                     }
                 }
             }

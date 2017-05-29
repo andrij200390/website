@@ -45,7 +45,7 @@ class SchoolSearch extends School
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 30,
             ],
         ]);
 

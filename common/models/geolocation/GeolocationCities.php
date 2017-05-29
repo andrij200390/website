@@ -72,22 +72,19 @@ class GeolocationCities extends \yii\db\ActiveRecord
         if (empty($city_exists)) {
 
             # headers and init stuff
-            $headerOptions = array(
-              'http' => array(
+            $headerOptions = [
                 'method' => "GET",
-                'header' => "Accept-language: ru\r\n" .
+                'header' => "Accept-language: en\r\n" .
                 "Cookie: remixlang=0\r\n"
-              )
-            );
+            ];
 
             $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCities&v=5.5&q='.$q.'&country_id='.$vk_country_id;
-            $streamContext = stream_context_create($headerOptions);
-            $json = file_get_contents($url, false, $streamContext);
+            $json = CURLHelper::getURL($url, $headerOptions, true);
 
-            # decoding JSON and checking for country existence
-            $parsedjson = json_decode($json, true);
+            # decoding JSON and saving it to our cache so not to make additional queries to VK API for next [$cache_time]
+            if ($json) $parsedjson = json_decode($json, true);
 
-            if (key_exists('items', $parsedjson['response']) && !empty($parsedjson['response']['items'][0]['title'])) {
+            if (isset($parsedjson['response']) && !empty($parsedjson['response']['items'][0]['title'])) {
                 /**
                  * Write to our DB to prevent thirdparty API interaction in future
                  * If you need to write everything VK returns to our DB, remove 'break' at the end

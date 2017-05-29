@@ -5,6 +5,7 @@ namespace common\models\geolocation;
 use Yii;
 
 use common\components\helpers\BackupHelper;
+use common\components\helpers\CURLHelper;
 
 /**
  * This is the model class for table "{{%geolocation_countries}}".
@@ -62,20 +63,19 @@ class GeolocationCountries extends \yii\db\ActiveRecord
         if ($parsedjson === false) {
 
             # headers and init stuff
-            $headerOptions = array(
-              'http' => array(
+            $headerOptions = [
                 'method' => "GET",
                 'header' => "Accept-language: en\r\n" .
                 "Cookie: remixlang=$lang\r\n"
-              )
-            );
+            ];
+
             $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCountries&v=5.5&need_all=1&count=1000';
-            $streamContext = stream_context_create($headerOptions);
-            $json = file_get_contents($url, false, $streamContext);
+            $json = CURLHelper::getURL($url, $headerOptions, true);
 
             # decoding JSON and saving it to our cache so not to make additional queries to VK API for next [$cache_time]
-            $parsedjson = json_decode($json, true);
-            if (key_exists('items', $parsedjson['response'])) {
+            if ($json) $parsedjson = json_decode($json, true);
+
+            if (isset($parsedjson['response'])) {
                 $parsedjson = $parsedjson['response']['items'];
                 $cache->set($cache_key, $parsedjson, $cache_time);
 
@@ -101,8 +101,14 @@ class GeolocationCountries extends \yii\db\ActiveRecord
     public static function getVkCountriesDropdown($lang = 0)
     {
         $countries = self::getVkCountries($lang);
-        array_unshift($countries, ['id' => 0, 'title' => Yii::t('app', 'Choose country...')]);
-        return $countries;
+        $placeholder = ['id' => 0, 'title' => Yii::t('app', 'Choose country...')];
+
+        if ($countries) {
+          array_unshift($countries, $placeholder);
+          return $countries;
+        }
+
+        return $placeholder;
     }
 
     /**
@@ -120,20 +126,19 @@ class GeolocationCountries extends \yii\db\ActiveRecord
         if ($country_exists === null) {
 
             # headers and init stuff
-            $headerOptions = array(
-              'http' => array(
+            $headerOptions = [
                 'method' => "GET",
                 'header' => "Accept-language: en\r\n" .
                 "Cookie: remixlang=0\r\n"
-              )
-            );
-            $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCountries&v=5.5&code='.$iso_code;
-            $streamContext = stream_context_create($headerOptions);
-            $json = file_get_contents($url, false, $streamContext);
+            ];
 
-            # decoding JSON and checking for country existence
-            $parsedjson = json_decode($json, true);
-            if (key_exists('items', $parsedjson['response']) && !empty($parsedjson['response']['items'][0]['title'])) {
+            $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCountries&v=5.5&code='.$iso_code;
+            $json = CURLHelper::getURL($url, $headerOptions, true);
+
+            # decoding JSON and saving it to our cache so not to make additional queries to VK API for next [$cache_time]
+            if ($json) $parsedjson = json_decode($json, true);
+
+            if (isset($parsedjson['response']) && !empty($parsedjson['response']['items'][0]['title'])) {
 
                 # write to our DB to prevent thirdparty API interaction in future
                 $geolocation_country = new GeolocationCountries;
