@@ -185,7 +185,7 @@ class News extends ActiveRecord
 
           $newsQuery = $newsQuery->offset($pagination->offset)->limit($pagination->limit);
       }
-      
+
       /* And finally let's make our request to DB */
       $news = $newsQuery->all();
 
@@ -307,5 +307,10 @@ class News extends ActiveRecord
     public function getComments()
     {
         return $this->hasMany(Comments::className(), ['user_id' => 'user']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user']);
     }
 }

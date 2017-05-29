@@ -53,7 +53,7 @@ $status = StatusPublication::getStatusList();
             [
                 'attribute' => 'user',
                 'value' => function ($model) {
-                    return (isset($model->users->username)) ? $model->users->username : '';
+                    return (isset($model->user->username)) ? $model->user->username : '';
                 },
                 'filter' => $users,
             ],
