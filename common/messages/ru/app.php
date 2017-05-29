@@ -92,6 +92,7 @@ return [
     'Specify' => 'Уточняйте',
     'Status' => 'Статус',
     'Teaches' => 'Обучает',
+    'This category has no active events!' => 'В этой категории нет активных событий!',
     'This email address is already taken' => 'Этот адрес электронной почты уже занят',
     'This nickname is already taken' => 'Этот никнейм пользователя уже занят',
     'Trainer' => 'Тренер',

@@ -149,6 +149,10 @@ class EventsController extends ParentController
             $response['lastPageReached'] = 1;
             $headers = Yii::$app->response->headers;
             $headers->add('X-IC-Trigger', '{"'.Yii::$app->controller->id.'":['.Json::encode($response).']}');
+
+            // If we dont have anything in certain category...
+            if ($page == 0) return '<center>'.Yii::t('app', 'This category has no active events!').'</center>';
+
             return;
         }
 
