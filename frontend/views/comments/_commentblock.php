@@ -9,10 +9,10 @@ use common\components\helpers\ElementsHelper;
  * renders as partial from public function actionShow @CommentsController
  */
 
-if (isset($modelComments)) {
+if (!empty($modelComments)) {
 
     $data = Yii::$app->request->get();
-    
+
     /* --- Showing each comment from populated model --- */
     foreach ($modelComments as $comment) {
         if (isset($data['elem_id'])) {

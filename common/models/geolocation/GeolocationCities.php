@@ -3,6 +3,7 @@
 namespace common\models\geolocation;
 
 use Yii;
+use common\components\helpers\CURLHelper;
 
 /**
  * This is the model class for table "{{%geolocation_cities}}".
