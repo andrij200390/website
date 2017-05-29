@@ -128,7 +128,8 @@ Html::tag('div',
             ]
           ).
           $modelNews[0]['userName'],
-          Url::toRoute('profile/'.$modelNews[0]['userId']),
+          //Url::toRoute('profile/'.$modelNews[0]['userId']),
+          'javascript:void(0)',
           [
             'class' => "user-name user-name--withavatar color-{$modelNews[0]['userCulture']} news__author",
           ]

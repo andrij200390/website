@@ -225,7 +225,7 @@ class Comments extends \yii\db\ActiveRecord
             $modelComments[$i]['elemId']             = $comments[$i]->elem_id;
             $modelComments[$i]['userId']             = $comments[$i]->user_id;
             $modelComments[$i]['userNickname']       = $comments[$i]->user ? $comments[$i]->userDescription->nickname : 0;
-            $modelComments[$i]['userAvatar']         = UserAvatar::getAvatarPath($comments[$i]->user ? $comments[$i]->user->id : 0, 'medium');
+            $modelComments[$i]['userAvatar']         = UserAvatar::getAvatarPath($comments[$i]->user ? $comments[$i]->user->id : 0, 'small');
             $modelComments[$i]['userCulture']        = UserDescription::getCultureList($comments[$i]->user ? $comments[$i]->userDescription->culture : 0, true);
             $modelComments[$i]['created']            = StringHelper::convertTimestampToHuman(strtotime($comments[$i]->created));
             $modelComments[$i]['commentText']        = $comments[$i]->comment;
