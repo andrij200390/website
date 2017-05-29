@@ -110,7 +110,9 @@ $this->endBody();
  */
 ?>
 <script>
+
 jQuery(document).ready(function () {
+
     jQuery("a.c-nav__item").on("click", function() {
         var activeClass = 'c-text--loud';
         jQuery('#outstyle_loader').show();
@@ -127,6 +129,29 @@ jQuery(document).ready(function () {
         if (responseTitle !== null) {
             document.title = decodeURIComponent(responseTitle);
         }
+
+    });
+
+    /* --- After Intercooler has finished everything --- */
+    jQuery(document).on("complete.ic", function(evt, elt, data, status, xhr, requestId) {
+        jQuery.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(data);
+            if (results==null){
+               return null;
+            }
+            else{
+               return results[1] || 0;
+            }
+        }
+        
+        /**
+         * We need to automatically scroll page on top if we're refreshing contents
+         * So let's depend on IC's target ID
+         */
+        if (jQuery.urlParam('ic-target-id')) {
+            window.scroll(0 ,0);
+        }
+
     });
 
     jQuery(document).mouseup(function(e) {
@@ -154,6 +179,7 @@ jQuery(document).ready(function () {
           jQuery('#scrollup').fadeOut('fast');
         }
       });
+
 
 });
 </script>
