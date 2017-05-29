@@ -173,6 +173,7 @@ class News extends ActiveRecord
        * TODO: Add to userdescription only needed params select
        */
       $newsQuery = self::find()->with(['userDescription'])->where($where)->orderBy(self::$newsOrderBy);
+      $newsQuery = $newsQuery->limit(self::$defaultPageSize);
 
       /* If we have pagination */
       if ($page) {
@@ -183,10 +184,8 @@ class News extends ActiveRecord
           ]);
 
           $newsQuery = $newsQuery->offset($pagination->offset)->limit($pagination->limit);
-      } else {
-          $newsQuery = $newsQuery->limit(self::$defaultPageSize);
       }
-
+      
       /* And finally let's make our request to DB */
       $news = $newsQuery->all();
 

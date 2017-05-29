@@ -191,9 +191,9 @@ class School extends ActiveRecord
          * Also notice, that we don't want to show schools that are not having geolocation ID ('andWhere' chain link)
          */
         $schoolsQuery = self::find()->where($where)->andWhere(['!=', 'geolocation_id', 0])->orderBy(self::$schoolsOrderBy);
-
-        /* If we have pagination */
         $schoolsQuery = $schoolsQuery->limit(self::$defaultPageSize);
+        
+        /* If we have pagination */
         if ($page) {
             $pagination = new Pagination([
               'defaultPageSize' => self::$defaultPageSize,

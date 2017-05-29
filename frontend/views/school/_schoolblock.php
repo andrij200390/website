@@ -27,8 +27,19 @@ if (isset($model[1])) {
 
 
 if (isset($model)) {
+
     if ($page) {
-        echo ElementsHelper::loadMore(Url::toRoute('school/show'), '#outstyle_school .school', '{"page":'.$page.'}');
+      if ($page_height) {
+        $page_height = $page_height-500;
+      }
+      if ($page == 1) {
+        $page_height = 500;
+      }
+        echo
+        Html::tag('div',
+          ElementsHelper::loadMore(Url::toRoute('school/show'), '#outstyle_school .school', '{"page":'.(int) $page.',"category":'.(int) $category.'}'),
+          ['style' => "top:{$page_height}px;position:absolute;z-index:10000;"]
+        );
     }
 
     /* Check if our items are 'first-generation' ones :D This is needed for removing them after AJAX calls --- TODO: REDO */

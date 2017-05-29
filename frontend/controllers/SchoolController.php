@@ -198,6 +198,7 @@ class SchoolController extends ParentController
                 'page' => $page,
                 'page_height' => $page_height,
                 'categories' => $categories,
+                'category' => $category,
             ]);
         }
 

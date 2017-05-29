@@ -13,6 +13,8 @@ use common\components\helpers\ElementsHelper;
 echo $this->render('_schoolblock', [
   'model' => $model,
   'page' => $page,
+  'page_height' => $page_height,
+  'category' => $category ?? '',
 ]);
 
 /* This input is needed for smooth Packery init after each AJAX call */
