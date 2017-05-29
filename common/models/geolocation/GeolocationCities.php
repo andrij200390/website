@@ -80,7 +80,7 @@ class GeolocationCities extends \yii\db\ActiveRecord
             ];
 
             $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCities&v=5.5&q='.$q.'&country_id='.$vk_country_id;
-            $json = CURLHelper::getURL($url, $headerOptions, true);
+            $json = CURLHelper::getURL($url, $headerOptions);
 
             # decoding JSON and saving it to our cache so not to make additional queries to VK API for next [$cache_time]
             if ($json) $parsedjson = json_decode($json, true);

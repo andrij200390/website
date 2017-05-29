@@ -70,7 +70,7 @@ class GeolocationCountries extends \yii\db\ActiveRecord
             ];
 
             $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCountries&v=5.5&need_all=1&count=1000';
-            $json = CURLHelper::getURL($url, $headerOptions, true);
+            $json = CURLHelper::getURL($url, $headerOptions);
 
             # decoding JSON and saving it to our cache so not to make additional queries to VK API for next [$cache_time]
             if ($json) $parsedjson = json_decode($json, true);
@@ -133,7 +133,7 @@ class GeolocationCountries extends \yii\db\ActiveRecord
             ];
 
             $url = 'https://api.vk.com/api.php?oauth=1&method=database.getCountries&v=5.5&code='.$iso_code;
-            $json = CURLHelper::getURL($url, $headerOptions, true);
+            $json = CURLHelper::getURL($url, $headerOptions);
 
             # decoding JSON and saving it to our cache so not to make additional queries to VK API for next [$cache_time]
             if ($json) $parsedjson = json_decode($json, true);

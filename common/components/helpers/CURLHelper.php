@@ -14,26 +14,23 @@ use Yii;
  */
 class CURLHelper
 {
-    public static function getURL($url, $headerOptions = [], $useProxies = false) {
+    public static function getURL($url, $headerOptions = []) {
 
       // Choose a random proxy
       $proxies = Yii::$app->params['CURLHelper']['proxies'] ?? '';
-
-      if (isset($proxies) && $useProxies) {
-          $proxy = $proxies[array_rand($proxies)];
-      }
+      $useProxies = Yii::$app->params['CURLHelper']['useProxies'] ?? '';
 
       $ch = curl_init();  // Initialize a cURL handle
 
-      // Setting proxy option for cURL
-      if (isset($proxy)) {
+      if (isset($proxies) && $useProxies === true) {
+          $proxy = $proxies[array_rand($proxies)];
           curl_setopt($ch, CURLOPT_PROXY, $proxy);
       }
 
       // Set any other cURL options that are required
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headerOptions);
       curl_setopt($ch, CURLOPT_HEADER, FALSE);
-      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, Yii::$app->params['CURLHelper']['timeout'] ?? 5);
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
       curl_setopt($ch, CURLOPT_COOKIESESSION, TRUE);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
