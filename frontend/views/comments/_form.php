@@ -16,9 +16,13 @@ use common\components\helpers\ElementsHelper;
         ?>
         <form class="o-grid o-grid--wrap o-grid--center u-letter-box--xlarge comments_add" way-data="comment" way-persistent>
             <div class="o-grid__cell o-grid__cell--top o-grid__cell--width-20 comments_add__avatar">
-              <img src="<?=$userAvatar;?>"
-                   alt="<?=Yii::t('app', 'Аватар пользователя {user}', ['user' => $userName]); ?>"
-                   class="roundborder u-pull-right color-<?=$userCulture;?>--border avatar avatar--smallest">
+              <img src="<?=UserAvatar::getAvatarPath(Yii::$app->user->id);?>"
+                   alt="<?=Yii::t('app', 'Аватар пользователя {user}',
+                    ['user' =>
+                      Yii::$app->user->identity->userdescription->name.' '.
+                      Yii::$app->user->identity->userdescription->last_name
+                    ]); ?>"
+                   class="roundborder u-pull-right color-<?=Yii::$app->user->identity->userdescription->culture;?>--border avatar avatar--smallest">
             </div>
             <div class="o-grid__cell o-grid__cell--width-60 o-grid__cell--no-gutter comments_add__body">
                 <div class="o-field o-field--icon-right">

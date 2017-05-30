@@ -260,9 +260,6 @@ Html::tag('div',
     [
       'modelComments' => $modelNews[0]['comments'] ?? '',
       'modelElemId' => $modelNews[0]['id'] ?? '',
-      'userAvatar' => $modelNews[0]['userAvatar'] ?? '',
-      'userCulture' => $modelNews[0]['userCulture'] ?? '',
-      'userName' => $modelNews[0]['userName'] ?? '',
     ]
   ),
   [

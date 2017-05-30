@@ -111,17 +111,6 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
         ];
     }
 
-
-    public function getUserdescriptions()
-    {
-        return $this->hasOne(UserDescription::className(), ['id' => 'id']);
-    }
-
-    public function getUserprivacy()
-    {
-        return $this->hasOne(UserPrivacy::className(), ['id' => 'id']);
-    }
-
     /**
      * @inheritdoc
      */
@@ -262,6 +251,17 @@ class User extends ActiveRecord implements IdentityInterface, UserRbacInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /* RELATIONS */
+    public function getUserdescription()
+    {
+        return $this->hasOne(UserDescription::className(), ['id' => 'id']);
+    }
+
+    public function getUserprivacy()
+    {
+        return $this->hasOne(UserPrivacy::className(), ['id' => 'id']);
     }
 
     public function getUserName()
