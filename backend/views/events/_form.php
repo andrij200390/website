@@ -124,7 +124,6 @@ jQuery(document).ready(function () {
   jQuery("#events-events_date").datetimepicker({
     format: "d.m.Y H:i",
     minDate:0,
-    minTime:0,
     yearStart: currentTime.getFullYear(),
     yearEnd: currentTime.getFullYear() + 2,
   });
