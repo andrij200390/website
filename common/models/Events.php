@@ -75,7 +75,6 @@ class Events extends ActiveRecord
                 'category',
                 'description',
                 'price',
-                'phones',
                 'price_currency',
               ],
               'required',
@@ -122,10 +121,10 @@ class Events extends ActiveRecord
               /* '360x540_' => 360, /* 2 / 3 AR */
             ],
             'imageValidatorParams' => [
-              'minWidth' => 640,
-              'minHeight' => 480,
-              'maxWidth' => 2000,
-              'maxHeight' => 2000,
+              'minWidth' => 200,
+              'minHeight' => 200,
+              'maxWidth' => 5000,
+              'maxHeight' => 5000,
             ],
             'aspectRatio' => [
               16 / 6,
