@@ -375,7 +375,7 @@ class Geolocation extends \yii\db\ActiveRecord
 
                 /* GEODATA: $model array */
                 foreach ($geolocation[$i]->$model as $m) {
-                    $geodata[$model][$countryISO][] = $m->id;
+                    $geodata[$model][$countryISO][$geolocation[$i]->city][] = $m->id;
                 }
             }
 
@@ -388,6 +388,7 @@ class Geolocation extends \yii\db\ActiveRecord
 
                 /* if the country ISO code exists in our DB */
                 if ($country) {
+
                     /* sending list of available countries */
                     $response['countries'][] = [
                       'id' => $country->vk_country_id,
@@ -399,14 +400,14 @@ class Geolocation extends \yii\db\ActiveRecord
                         $city = GeolocationCities::find()->where(['name' => $city])->select('id,name')->one();
 
                         /* only show cities if there are any schools around */
-                        if (isset($geodata[$model][$iso_code])) {
+                        if (isset($geodata[$model][$iso_code][$city->name])) {
                             $response['cities'][$country->vk_country_id][] = [
                               'id' => $city->id,
                               'text' => $city->name,
-                              'objects' => $geodata[$model][$iso_code],
+                              'objects' => $geodata[$model][$iso_code][$city->name],
                             ];
                         }
-                        break;
+
                     }
                 }
             }
