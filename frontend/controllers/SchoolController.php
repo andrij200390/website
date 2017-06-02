@@ -156,13 +156,13 @@ class SchoolController extends ParentController
 
         /*
          * Working with objects (schools in cities), if there are any
-         * TODO: categories integration or check for how it plays with schoolsIds
+         * FIXME: Rewrite this code to some more elegant solution regarding sibgle schoolId and array of schools
          */
-        if (isset($data['schoolsId'])) {
+        if (isset($data['schoolsId']) && !is_array($data['schoolsId'])) {
             $schools_to_show = (!array_diff($a = explode(',', $data['schoolsId']), array_map('intval', $a))) ? $data['schoolsId'] : '';
         }
         if (!empty($schools_to_show)) {
-            $where['id'] = explode(',', $schools_to_show);
+            $where['id'] = (is_array($schools_to_show)) ? explode(',', $schools_to_show) : $schools_to_show;
         }
 
         /* If news does not exist - we show 404 */
