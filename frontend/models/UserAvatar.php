@@ -7,6 +7,8 @@ use yii\helpers\Html;
 
 class UserAvatar extends UserDescription
 {
+    public $image;
+    
     /**
      * Available sizes of a user avatars
      * @var array

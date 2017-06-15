@@ -5,6 +5,9 @@ use yii\helpers\Url;
 use common\components\helpers\ElementsHelper;
 use common\models\geolocation\Geolocation;
 
+/* Registering GoogleMaps JS file for map to be shown only on this pages */
+$this->registerJsFile('//maps.googleapis.com/maps/api/js?key='.Yii::$app->params['googleMapsApiKey'].'&amp;extension=.js');
+
 /**
  * Single school block view.
  *

@@ -94,52 +94,68 @@ class StringHelper
     /**
      * Converts timestamp to human readable string
      * Using 'datetime.php' messages translations.
+     * TODO: Break this up into separate funcs
      *
-     * @param int     UNIX timestamp
-     * @param string  date() format (http://php.net/manual/en/function.date.php)
+     * @param int     $time           UNIX timestamp
+     * @param string  $format         date() format (http://php.net/manual/en/function.date.php)
+     * @param string  $controllerId   Controller ID to return date with a certain rules for that controller
      *
      * @return string
      */
-    public static function convertTimestampToHuman($time, $format = '')
+    public static function convertTimestampToHuman($time = 0, $format = '', $controllerId = '')
     {
-        /* If we do not have predefined format */
-        if (empty($format)) {
-            if (date('d m Y', time()) === date('d m Y', $time)) {
-                return Yii::t('datetime',
-                  'Today @ {time}',
-                  [
-                    'time' => date('H:i', $time),
-                  ]
-                );
-            } elseif ((date('d', time()) - date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)) {
-                return Yii::t('datetime',
-                  'Yesterday @ {time}',
-                  [
-                    'time' => date('H:i', $time),
-                  ]
-                );
-            }
-
-            /* For events we simply pass the text, indicating that event is passed long time ago TODO: RELOCATE FROM HERE! */
-            if (Yii::$app->controller->id == 'events' && ($time < time())) {
-                return Yii::t('app', 'Event passed');
-            }
-
-            /* If our year is already passed one */
-            if (date('Y', $time) != date('F', time()) && Yii::$app->controller->id != 'events') {
-                return date('d', $time).' '.Yii::t('datetime', 'of '.date('F', $time)).' '.date('Y', $time);
-            }
-
-            return date('d', $time).' '.Yii::t('datetime', 'of '.date('F', $time)).' <span>'.date('H:i', $time).'</span>';
-        }
+        $todayPrefix = 'Today';
+        $yesterdayPrefix = 'Yesterday';
+        $longAgoPrefix = '';
 
         /* Working with different date formats for converting to suit our needs */
-        switch ($format) {
-            case 'F':
-            return Yii::t('datetime', 'of '.date('F', $time));
+        if ($format) {
+          switch ($format) {
+              case 'F':
+              return Yii::t('datetime', 'of '.date('F', $time));
 
-            default:
-            return Yii::t('datetime', date($format, $time));
+              default:
+              return Yii::t('datetime', date($format, $time));
+          }
         }
+
+        /* Working with controllers */
+        if ($controllerId) {
+            switch ($controllerId) {
+
+              case 'events':
+                if ($time < time()) {
+                  return Yii::t('app', 'Event passed');
+                }
+
+              case 'users':
+                $todayPrefix = 'Was today';
+                $yesterdayPrefix = 'Was yesterday';
+                $longAgoPrefix = 'Last seen';
+
+                if ((time() - $time) < 900) {
+                  return Yii::t('app', 'online');
+                }
+            }
+        }
+
+        # Match d m Y date for today's date, returning H:i string
+        if (date('d m Y', time()) === date('d m Y', $time)) {
+            return Yii::t('datetime', $todayPrefix.' @ {time}', ['time' => date('H:i', $time)]);
+        }
+
+        # Match yesterday day, returning H:i string
+        if ((date('d', time()) - date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)) {
+            return Yii::t('datetime', $yesterdayPrefix.' @ {time}', ['time' => date('H:i', $time)]);
+        }
+
+        # If our year is already passed one */
+        if (date('Y', $time) != date('F', time())) {
+            return Yii::t('datetime', $longAgoPrefix).' '.date('d', $time).' '.Yii::t('datetime', 'of '.date('F', $time)).' '.date('Y', $time);
+        }
+
+        # Default
+        return date('d', $time).' '.Yii::t('datetime', 'of '.date('F', $time)).' <span>'.date('H:i', $time).'</span>';
+
     }
 }

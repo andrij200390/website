@@ -3,8 +3,9 @@
 namespace app\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 use common\components\helpers\StringHelper;
+use common\components\helpers\ElementsHelper;
 
 /**
  * This is the model class for table "z_comments".
@@ -38,14 +39,14 @@ class Comments extends \yii\db\ActiveRecord
                 'required'
             ],
             [
-                ['comment'],
+                'comment',
                 'required',
                 'message' => 'COMMENT_EMPTY'
             ],
             [
                 'elem_type',
                 'in',
-                'range' => ['news', 'school', 'board', 'comments', 'photo', 'video', 'article', 'events']
+                'range' => ElementsHelper::$allowedElements
             ],
             [
                 ['elem_id', 'user_id'],
@@ -226,7 +227,7 @@ class Comments extends \yii\db\ActiveRecord
             $modelComments[$i]['userId']             = $comments[$i]->user_id;
             $modelComments[$i]['userNickname']       = $comments[$i]->user ? $comments[$i]->userDescription->nickname : 0;
             $modelComments[$i]['userAvatar']         = UserAvatar::getAvatarPath($comments[$i]->user ? $comments[$i]->user->id : 0, 'small');
-            $modelComments[$i]['userCulture']        = UserDescription::getCultureList($comments[$i]->user ? $comments[$i]->userDescription->culture : 0, true);
+            $modelComments[$i]['userCulture']        = $comments[$i]->user ? ArrayHelper::getValue(UserDescription::cultureList(true), $comments[$i]->userDescription->culture) : 0;
             $modelComments[$i]['created']            = StringHelper::convertTimestampToHuman(strtotime($comments[$i]->created));
             $modelComments[$i]['commentText']        = $comments[$i]->comment;
             $modelComments[$i]['likeCount']          = count($comments[$i]->likes);

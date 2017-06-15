@@ -3,12 +3,14 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use yii\data\Pagination;
 use backend\models\Category;
 use app\models\Comments;
 use app\models\Likes;
 use app\models\UserDescription;
+use app\models\UserNickname;
 use app\models\UserAvatar;
 use common\components\helpers\StringHelper;
 use common\components\helpers\BlocksHelper;
@@ -33,6 +35,8 @@ use common\components\helpers\BlocksHelper;
  * @property int    $status
  * @property int    $img_block_size
  */
+
+
 class News extends ActiveRecord
 {
     const STATUS_MODERATED = 0;
@@ -196,6 +200,7 @@ class News extends ActiveRecord
 
       /* Now to populate our News model with data */
       for ($i = 0; $i < count($news); ++$i) {
+
           /* Other models data */
           $likes = Likes::findLikesCount(Yii::$app->controller->id, $news[$i]->id);
           $comments = Comments::countComments(Yii::$app->controller->id, $news[$i]->id);
@@ -225,9 +230,9 @@ class News extends ActiveRecord
               $modelNews[$i]['description'] = trim($news[$i]->description);
               $modelNews[$i]['text'] = trim($news[$i]->text);
               $modelNews[$i]['img'] = $news[$i]->getImageSrc('250x250_');
-              $modelNews[$i]['userName'] = UserDescription::getNickname($news[$i]->user);
+              $modelNews[$i]['userName'] = UserNickname::getNickname($news[$i]->user);
               $modelNews[$i]['userAvatar'] = UserAvatar::getAvatarPath($news[$i]->user);
-              $modelNews[$i]['userCulture'] = UserDescription::getCulture($news[$i]->user, true);
+              $modelNews[$i]['userCulture'] = ArrayHelper::getValue(UserDescription::cultureList(true), $news[$i]->userDescription->culture);
               $modelNews[$i]['comments'] = Comments::getComments(['elem_type' => Yii::$app->controller->id, 'elem_id' => $news[$i]->id]);
               $modelNews[$i]['categories'] = Category::getCategories(['id' => self::NEWS_CATEGORIES]);
 
@@ -288,6 +293,11 @@ class News extends ActiveRecord
     public function getUserDescription()
     {
         return $this->hasOne(UserDescription::className(), ['id' => 'user']);
+    }
+
+    public function getLikes()
+    {
+        return $this->hasMany(Likes::className(), ['elem_id' => 'id']);
     }
 
     public function getRedactor()

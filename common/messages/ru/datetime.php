@@ -4,6 +4,9 @@ return [
     #dates
     'Today @ {time}' => 'Сегодня в {time}',
     'Yesterday @ {time}' => 'Вчера в {time}',
+    'Was today @ {time}' => 'Был сегодня в {time}',
+    'Was yesterday @ {time}' => 'Был вчера в {time}',
+    'Last seen' => 'Заходил',
 
     #months
     'of January' => 'Января',

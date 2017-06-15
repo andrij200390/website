@@ -117,6 +117,9 @@ class UserPrivacy extends \yii\db\ActiveRecord
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static function getPrivacy($privacy, $idOwner){
+            if ($idOwner === Yii::$app->user->id) {
+              return true;
+            }
             switch ($privacy) {
                 case 0:
                     return true;

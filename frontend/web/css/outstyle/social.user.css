@@ -1,0 +1,44 @@
+/* --- SOCIAL USER --- */
+.user__info {
+  font-size: .9em;
+  background: #fff;
+  position: relative;
+}
+.user__info .o-grid {
+  font-size: .8em;
+}
+.user__info .o-grid__cell:first-child {
+  color: #bcbcbc;
+}
+.user__nickname {
+  font-size: 2.2em;
+  font-family: 'OsnovaProMedium', sans-serif;
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #606D75;
+  text-shadow: 1px 1px #ddd;
+}
+.user__name {
+  padding-bottom: 2em;
+}
+.user__onlinestatus {
+  font-size: .8em;
+  color: #bcbcbc;
+}
+
+/* SOCIAL: Buttons show/hide */
+.user__info:hover .i-widgetbutton,
+.user__videos:hover .i-widgetbutton
+{
+  display:block;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* --- SOCIAL USER VIDEOS --- */
+.user__videos {
+  position: relative;
+}

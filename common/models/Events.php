@@ -10,6 +10,7 @@ use app\models\Comments;
 use app\models\Likes;
 use app\models\UserDescription;
 use app\models\UserAvatar;
+use yii\helpers\ArrayHelper;
 use common\models\geolocation\Geolocation;
 use common\components\helpers\PriceHelper;
 use common\components\helpers\PhoneHelper;
@@ -243,9 +244,9 @@ class Events extends ActiveRecord
              */
             if (isset($where['id'])) {
                 $modelEvents[$i]['description'] = $events[$i]->description;
-                $modelEvents[$i]['userName'] = UserDescription::getNickname($events[$i]->user);
+                $modelEvents[$i]['userName'] = $events[$i]->userDescription->nickname;
                 $modelEvents[$i]['userAvatar'] = UserAvatar::getAvatarPath($events[$i]->user);
-                $modelEvents[$i]['userCulture'] = UserDescription::getCulture($events[$i]->user, true);
+                $modelEvents[$i]['userCulture'] = ArrayHelper::getValue(UserDescription::cultureList(true), $events[$i]->userDescription->culture);
                 $modelEvents[$i]['comments'] = Comments::getComments(['elem_type' => 'events', 'elem_id' => $events[$i]->id]);
                 $modelEvents[$i]['categories'] = Category::getCategories(['id' => self::EVENTS_CATEGORIES]);
 

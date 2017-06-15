@@ -1,0 +1,100 @@
+/* --- SOCIAL SIDEBAR --- */
+.social__sidebar {
+  background: #57656e;
+  height: 100%;
+  width: 142px;
+  position: fixed;
+  font-family: 'OSNOVAPROLIGHT', sans-serif;
+}
+.social__sidebar .c-nav {
+  width: 142px;
+  height: 100%;
+  margin: 30px 0;
+  vertical-align: top;
+  background: transparent;
+}
+.social__sidebar .c-nav__item {
+  padding: 0;
+  height: 26px;
+  line-height: 27px;
+  font-size: 1em;
+  color: #FFF;
+  margin: 0 0px 4px 0;
+}
+.social__sidebar .c-nav__item:hover {
+  background: rgba(55,64,69,0.4);
+  text-decoration: none;
+}
+.social__sidebar .c-nav--active a {
+  background: rgba(55,64,69,0.4);
+  border-bottom: 1px solid rgba(55,64,69,0.2);
+  text-decoration: none;
+}
+
+/* --- SOCIAL SIDEBAR ICONS ---*/
+.social__sidebar .icons {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 3px 5px 3px 18px;
+    padding: 0;
+    float: left;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAb1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8v0wLRAAAAJXRSTlMAfXSLghNhajlbCpCGHEIwFgNnbw+XM3osRyVMKWsgBlJPPFZVGvN/hQAABFxJREFUeNrs1+lymzAUBeAjtIEQIHYwYJb0/Z+xgFg7odNOl1/5ZjLGSSx0uFxZ4B97CYH/KRJ0JiL8XYXovBL/T0BkFQNxJUmAm4LkpMAqJ3c5AE1DKM0WPodLNa7CJK2BBL+OOHcEwDdGrtg3PIr0C5uXjm45aMELan9FcDjep2SAokE2owYNkThkYyddAFzigUl8PzG3IxFbsGIBgOGO4UmgDQ5GB5di6GI9eAwihJ+WPhaUSD/5OGJ868TLHsmHq2r8hpuRcsDQxgSNbwAPlnotDLxPz/uErGfkdc3XmpBLMfIJQJYfA/SFuQ1YBpFbvLFow3oKUlg98/geST5cVdlg1iRAMmA2JGeQV7qo9yBFuGuPIBVjH7iJpL2n6pquU5LbnbS8aA0gOivieJpfg+j486vFGXAEebiqPseM+9cjDzd7kMrdvexnOec6QxLxHWaiwsx5AW26RhVY5BmAKY9URItz4kq218mwONRbg/VEe3BgZaX6oyCvZBE+3lpSdhSohdxhRmPMdA8ohllMz4pEmuWsOAdwmYhvQSDy3P5d5bn+LIjqtv+tok1s3ycNZmOyHzWXWyuLFu8jSLz/nMGSwWUZrigWIlwSXn5R0LMYj83O+iJJAlsRkdTxj0GmJuT7ZIaPTW/fG380e7OPJhjptdmDBd+DONpFoz1UmsT7POKp5rih26kdZzs7xapgOS11nlNn5PcgrzMIx5Uqb0FUKcJv2nm4CHbRbaXvd61dfp+aPWaTgFMxjHXJQfCAxlgFwRaV7qM5XpUB/XukzX5yBSDI67Mi7TAY+7FxcH+oiNcBqP19oSCz6FZduwbzZeW1HprdFRxvUSHzQjwGsc3et+EwhG2/N7sK5aUYyhm220EbKFax99Ej3qVHGO5BHIXZQ7NbybitvJaHulvJRf3Y7CdeT/G5/GYeTWrXrRPqZevy69JbMeCSdYCeNEzJEG+t9iBNnrc2iJ9LG6QKoz7NAKQugKB8nsy5YB1BgvYU7EEG8kJBQmSO7O9jZcwdEmyIq8MtVRzqZc41MbBsMQoarAOKQTW6U0o1cluOP9u2dI0gZQ+g9V1e0em3gpj3yRw9UgmURmMaRWV3FIcaKOcXLIJzbdrmXIY4uCTqWLAOWJGTHdB5u+FUYdG6oftOgY8UgJdve3hPuJiRZv9eXr+mm5/cWunpuLU81sJlNbIytRUJdkWCjM2vD5tGo48kk192bvyTvZZ08tteyy7uROFKuatUKEDPB+o3mv3nPfLBWPWTbTx3yMRjZFsxnne/5YieGjXTBk2ZbDs3o2N8ZmK2kicjfV8abEQM63d3v88PVpVgeU5tMZ6fR9j6PFIuKMdEGVDQFwIa4nPcEeSPn0f+k0l2ssajsMOXL1++fPnOHhwIAAAAAAD5vzaCqqqqqgp7cCAAAAAAAOT/2giqqqqqqqqqqqoq7cEhAQAAAICg/6+9YQAAAAAAAAAAAAAAAAAAAAAAAAAA2AkK3UcCeI6yFwAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+}
+.social__sidebar .icons.icons--wall {
+    background-position: 0px 0px;
+}
+.social__sidebar .icons.icons--messages {
+    background-position: -100px 0px;
+}
+.social__sidebar .icons.icons--friends {
+    background-position: -20px 0px;
+}
+.social__sidebar .icons.icons--photos {
+    background-position: -40px 0px;
+}
+.social__sidebar .icons.icons--videos {
+    background-position: -60px 0px;
+}
+.social__sidebar .icons.icons--settings {
+    background-position: -180px 0px;
+}
+
+/* --- SOCIAL SIDEBAR BADGES --- */
+.sidebarBadge,
+.sidebarBadge2 {
+    position: relative;
+    display: block;
+    font-size: 10px;
+    font-family: 'OSNOVAPROLIGHT', sans-serif;
+    color: #fff;
+    float: right;
+    vertical-align: top;
+    margin: -8px 42px 0 -28px;
+    padding: 3px 4px 2px;
+    line-height: 14px !important;
+    height: 19px;
+    min-width: 19px;
+    text-align: center;
+    border-radius: 8px / 9px;
+    background-clip: padding-box;
+    background-color: #ed1c24;
+    box-shadow: 1px 1px 0 rgba(47, 54, 59, 0.5);
+}
+
+.sidebarBadge2 {
+    margin: -33px -5px 0 4px !important;
+}
+
+.listLaws {
+    text-align: center;
+    font-size: 11px;
+    font-family: 'OSNOVAPROLIGHT', sans-serif;
+    color: #7f8c95;
+}
+
+.listLaws a {
+    color: #7f8c95;
+}
