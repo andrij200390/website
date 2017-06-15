@@ -80,6 +80,13 @@ if (empty($category)) {
     }
 }
 
+echo Html::a('<i class="zmdi zmdi-plus-circle-o zmdi-hc-3x"></i>', '#googleforms_add_event',
+  [
+    'class' => 'btn btn__addnew roundcorners modal-open',
+    'title' => 'Предложить событие'
+  ]);
+echo $this->render('@modals/google/GoogleFormsAddEvent');
+
 /*
 * --- Single event block ---
 */

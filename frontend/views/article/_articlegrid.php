@@ -69,6 +69,13 @@ if (empty($category)) {
     }
 }
 
+echo Html::a('<i class="zmdi zmdi-plus-circle-o zmdi-hc-3x"></i>', '#googleforms_add_article',
+  [
+    'class' => 'btn btn__addnew roundcorners modal-open',
+    'title' => 'Предложить статью'
+  ]);
+echo $this->render('@modals/google/GoogleFormsAddArticle');
+
 /*
 * --- Main article blocks ---
 * Notice, that we are passing $modelNews from 'NewsController', using News model.

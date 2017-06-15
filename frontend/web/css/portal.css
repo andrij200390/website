@@ -347,6 +347,9 @@ margin-right: 0;
 .news__loader {
   margin: 60px 0 0 440px;
 }
+.news__alertbox {
+  color:#FFF;
+}
 
 /* --- NEWS FILTER BOX & TOOLTIP BOX --- */
 .tooltip-box {
@@ -430,7 +433,6 @@ h4.block__title{
 /* --- SCHOOLS PAGE --- */
 #school-filter-block--geolocation {
   position: absolute;
-  z-index: 5;
   right:.5em;
   top:.5em;
   visibility:hidden;
@@ -1324,6 +1326,17 @@ ul {
 .c-button--large {
   padding: .5em 2em;
 }
+.btn__addnew {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  padding: 4px;
+  color:#374045;
+  opacity:0.4;
+}
+.btn__addnew:hover {
+  opacity:1;
+}
 
 
 /* --- MODAL WINDOW (see additional JS settings at /js/jquery.easyModal.js) --- */
@@ -1339,7 +1352,7 @@ ul {
 }
 .modal__header {
   background-color: #56646d;
-  border-bottom: 1px solid #a5a5a5;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
   font-family: 'OsnovaProLight', sans-serif;
   height: 47px;
   overflow: hidden;

@@ -143,7 +143,7 @@ jQuery(document).ready(function () {
                return results[1] || 0;
             }
         }
-        
+
         /**
          * We need to automatically scroll page on top if we're refreshing contents
          * So let's depend on IC's target ID
