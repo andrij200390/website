@@ -44,6 +44,8 @@ class SocialAsset extends AssetBundle
         'js/misc/preciseTextResize.js',
         'js/misc/way.min.js',
 
+        'js/outstyle.social.sidebar.js',
+        'js/outstyle.user.video.js',
         'js/outstyle.analytics.js',
 
     ];

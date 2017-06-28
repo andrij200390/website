@@ -109,6 +109,7 @@ return [
     'Upload image' => 'Загрузить изображение',
     'Video' => 'Видео',
     'Videos' => 'Видео',
+    '{video_date} via {video_provider}' => '{video_date} через {video_provider}',
     'Wall' => 'Стена',
     'Website' => 'Вебсайт',
     'Working hours' => 'Время работы',

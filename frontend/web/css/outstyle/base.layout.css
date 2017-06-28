@@ -26,16 +26,24 @@ body {
 
 /* LINKS */
 a {
+  color: #428bca;
   outline: 0;
   text-decoration: none;
 }
 a:hover {
+  color: #2a6496;
   text-decoration: underline;
 }
+
 a.innactive {
   cursor:default;
 }
-
+a.c-nav__item:focus,
+a.c-nav__item:active,
+a.c-nav__item:not(:disabled):focus {
+   outline: none;
+   box-shadow: none;
+}
 
 
 /* --- FORMS --- */
@@ -494,7 +502,7 @@ img.school__image {
   width: 58px;
   height: 53px;
   opacity: 0.15;
-  background-image: url('img/logo.png');
+  background-image: url('../img/logo.png');
   background-repeat: no-repeat;
   background-position: 0px -19px;
 }
@@ -1163,7 +1171,7 @@ p>img.img-fixedwidth {
   width: 58px;
   height: 53px;
   opacity: 0.15;
-  background-image: url('img/logo.png');
+  background-image: url('../img/logo.png');
   background-repeat: no-repeat;
   background-position: 0px -19px;
 }

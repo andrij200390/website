@@ -19,7 +19,6 @@ use Yii;
  */
 class Board extends \yii\db\ActiveRecord
 {
-
     public static $boardPageSize = 15;
     public static $boardOrderBy = 'id desc';
 
@@ -88,29 +87,36 @@ class Board extends \yii\db\ActiveRecord
         return $board;
     }
 
-    public function getOwneruser(){
+    public function getOwneruser()
+    {
         return $this->hasOne(User::className(), ['id' => 'owner']);
     }
-    public function getOwnerDescription() {
+    public function getOwnerDescription()
+    {
         return $this->hasOne(UserDescription::className(), ['id' => 'owner']);
     }
 
-    public function getBoardRepost() {
+    public function getBoardRepost()
+    {
         return $this->hasOne(self::className(), ['id' => 'repost', 'repost_type' => 'repost_type']);
     }
 
-    public function getPhotoRepost() {
+    public function getPhotoRepost()
+    {
         return $this->hasOne(Photo::className(), ['id' => 'repost', 'repost_type' => 'repost_type']);
     }
 
-    public function getVideoRepost() {
+    public function getVideoRepost()
+    {
         return $this->hasOne(Video::className(), ['id' => 'repost', 'repost_type' => 'repost_type']);
     }
 
-    public function attachments(){
-        return $this->hasMany(Attahments::className(),['elem_id' => 'id', 'elem_type' => 'board']);
+    public function attachments()
+    {
+        return $this->hasMany(Attahments::className(), ['elem_id' => 'id', 'elem_type' => 'board']);
     }
-    public function comments(){
-        return $this->hasMany(Comments::className(),['elem_id' => 'id'])->andWhere([ 'elem_type' => 'board']);
+    public function comments()
+    {
+        return $this->hasMany(Comments::className(), ['elem_id' => 'id'])->andWhere([ 'elem_type' => 'board']);
     }
 }

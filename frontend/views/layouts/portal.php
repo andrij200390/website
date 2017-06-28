@@ -11,6 +11,7 @@ use yii\widgets\Menu;
 use yii\widgets\Spaceless;
 
 use frontend\assets\PortalAsset;
+
 PortalAsset::register($this);
 
 $this->beginPage();
@@ -28,7 +29,7 @@ Spaceless::begin();
 <link rel="shortcut icon" type="image/png" href="/css/favicon.png">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
-<body class="portal user<?php echo (Yii::$app->user->id) ? '-registered' : '-guest'; ?>">
+<body class="portal user<?php echo (Yii::$app->user->id) ? '-registered' : '-guest'; ?>" ic-history-elt=''>
 <?php
 $this->beginBody();
 
@@ -73,7 +74,7 @@ $this->beginBody();
             Html::endTag('div'),
         Html::endTag('header'),
 
-        Html::beginTag('div', ['id' => 'content', 'ic-history-elt' => '', 'class' => 'content u-window-box--small']),
+        Html::beginTag('div', ['id' => 'content', 'class' => 'content u-window-box--small']),
             Html::beginTag('main'),
                 $content,
             Html::endTag('main'),

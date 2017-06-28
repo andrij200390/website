@@ -14,17 +14,17 @@ $this->title = Yii::t('app', 'My page');
 $this->registerMetaTag(['name' => 'description', 'content' => $this->title]);
 
 
-/* --- Left block section --- */
+/* --- LEFT BLOCK SECTION --- */
 echo Html::beginTag('section', ['id' => 'leftBlock']);
 
-    # Profile
+    # PROFILE
     echo UserProfileBlock::widget([
       'user' => $user
     ]);
 
-    echo ElementsHelper::separatorWidget(2,'bottomborder');
+    echo ElementsHelper::separatorWidget(2, 'bottomborder');
 
-    # Videos
+    # VIDEOS
     echo UserVideosBlock::widget([
       'videos' => $user->video
     ]);
@@ -40,4 +40,5 @@ echo Html::beginTag('section', ['id' => 'rightBlock']);
 
 echo Html::endTag('section');
 
-?>
+/* --- MISC: Modals --- */
+echo $this->render('@modals/userVideo');

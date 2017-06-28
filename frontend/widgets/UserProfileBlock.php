@@ -77,76 +77,75 @@ class UserProfileBlock extends Widget
 
         # User nickname
         if (isset($this->user->userDescription->nickname)) {
-          $this->userNickname = $this->user->userDescription->nickname;
+            $this->userNickname = $this->user->userDescription->nickname;
         }
 
         # User name
         if (isset($this->user->userDescription->name)) {
-          $this->userName = $this->user->userDescription->name;
+            $this->userName = $this->user->userDescription->name;
         }
 
         # User lastname
         if (isset($this->user->userDescription->last_name)) {
-          $this->userLastName = $this->user->userDescription->last_name;
+            $this->userLastName = $this->user->userDescription->last_name;
         }
 
         # Converting user last visit timestamp to a human readable string
         if (isset($this->user->lastvisit)) {
-          $this->userLastVisitTimestamp = StringHelper::convertTimestampToHuman($this->user->lastvisit, '', Yii::$app->controller->id);
+            $this->userLastVisitTimestamp = StringHelper::convertTimestampToHuman($this->user->lastvisit, '', Yii::$app->controller->id);
         }
 
         # User avatar
         if (isset($this->user->userDescription->avatar)) {
-          $this->userAvatarPath = \app\models\UserAvatar::getAvatarPath($this->user->id);
+            $this->userAvatarPath = \app\models\UserAvatar::getAvatarPath($this->user->id);
         }
 
         # User birthday + Privacy check
         if (isset($this->user->userDescription->birthday)) {
-          if (UserPrivacy::getPrivacy($this->user->userPrivacy->birthday, $this->user->id)) {
-            $this->userBirthdayDate = Yii::$app->formatter->asDate($this->user->userDescription->birthday, Yii::$app->params['dateMini']);
-          }
+            if (UserPrivacy::getPrivacy($this->user->userPrivacy->birthday, $this->user->id)) {
+                $this->userBirthdayDate = Yii::$app->formatter->asDate($this->user->userDescription->birthday, Yii::$app->params['dateMini']);
+            }
         }
 
         # User country
         if (isset($this->user->userDescription->country)) {
-          $this->userCountry = $this->user->userDescription->country;
+            $this->userCountry = $this->user->userDescription->country;
         }
 
         # User city
         if (isset($this->user->userDescription->city)) {
-          $this->userCity = $this->user->userDescription->city;
+            $this->userCity = $this->user->userDescription->city;
         }
 
         # User team
         if (isset($this->user->userDescription->team)) {
-          $this->userTeam = $this->user->userDescription->team;
+            $this->userTeam = $this->user->userDescription->team;
         }
 
         # User skype
         if (isset($this->user->userDescription->skype)) {
-          $this->userSkype = $this->user->userDescription->skype;
+            $this->userSkype = $this->user->userDescription->skype;
         }
 
         # User phone
         if (isset($this->user->userDescription->phone)) {
-          $this->userPhone = $this->user->userDescription->phone;
+            $this->userPhone = $this->user->userDescription->phone;
         }
 
         # User sex
         if (isset($this->user->userDescription->sex)) {
-          $this->userSex = $this->user->userDescription->sex;
+            $this->userSex = $this->user->userDescription->sex;
         }
 
         # User culture
         if (isset($this->user->userDescription->culture)) {
-          $this->userCulture = ArrayHelper::getValue(UserDescription::cultureList(), $this->user->userDescription->culture);
+            $this->userCulture = ArrayHelper::getValue(UserDescription::cultureList(), $this->user->userDescription->culture);
         }
 
         # User family
         if (isset($this->user->userDescription->family)) {
-          $this->userFamily = $this->user->userDescription->family;
+            $this->userFamily = $this->user->userDescription->family;
         }
-
     }
 
 

@@ -10,10 +10,8 @@ use yii\helpers\Url;
 use yii\widgets\Menu;
 use yii\widgets\Spaceless;
 
-use app\models\Friend;
-use app\models\Message;
-
 use frontend\assets\SocialAsset;
+
 SocialAsset::register($this);
 
 $this->beginPage();
@@ -40,7 +38,19 @@ echo Html::beginTag('div', ['class' => 'wrap']);
 
   # Music player area + logo
   echo Html::tag('header',
-    Html::a('', Url::to(['/']), ['id' => 'logo', 'class' => 'logo']).
+
+    Html::a('', Url::to(['/id'.Yii::$app->user->id]),
+      [
+          'id' => 'logo',
+          'class' => 'logo',
+          'ic-get-from' => Url::to(['/id'.Yii::$app->user->id]),
+          'ic-trigger-delay' => "200ms",
+          'ic-select-from-response' => '#content',
+          'ic-indicator' => '#outstyle_loader',
+          'ic-target' => '#content'
+      ]
+    ).
+
     '',//$this->render('@forms/headerPlayerForm'),
     ['class' => 'social__header']
   );
@@ -60,16 +70,16 @@ echo Html::beginTag('div', ['class' => 'wrap']);
             'options' => ['tag' => false],
             'encodeLabels' => false,
             'activeCssClass' =>'c-nav--active',
-            'linkTemplate' => '<a href="{url}" ic-get-from="{url}" ic-trigger-delay="500ms" ic-indicator="#outstyle_loader" class="c-nav__item">{label}</a>',
+            'linkTemplate' => '<a href="{url}" ic-get-from="{url}" ic-select-from-response="#content" ic-target="#content" ic-trigger-delay="200ms" ic-indicator="#outstyle_loader" class="c-nav__item">{label}</a>',
             'items' => [
                 [
                   'label' => '<i class="icons icons--wall"></i>'.Yii::t('app', 'Wall'),
-                  'url' => ['/'],
+                  'url' => ['/id'.Yii::$app->user->id],
                   'active' => $checkController('users')
                 ],
                 [
                   'label' => '<i class="icons icons--messages"></i>'.Yii::t('app', 'Messages'),
-                  'url' => ['/'],
+                  'url' => ['/id'.Yii::$app->user->id],
                   'active' => $checkController('messages')
                 ],
                 [
@@ -84,8 +94,8 @@ echo Html::beginTag('div', ['class' => 'wrap']);
                 ],
                 [
                   'label' => '<i class="icons icons--videos"></i>'.Yii::t('app', 'Videos'),
-                  'url' => ['/'],
-                  'active' => $checkController('messages')
+                  'url' => ['/videos'],
+                  'active' => $checkController('video')
                 ],
                 [
                   'label' => '<i class="icons icons--settings"></i>'.Yii::t('app', 'Settings'),
@@ -116,15 +126,14 @@ echo Html::beginTag('div', ['class' => 'wrap']);
   );
 
 echo Html::endTag('div');
+
+/* TODO: Script init in jquery only on page, and other code in files without jquery wrap */
 ?>
-<script type="text/javascript" src="/js/sitebar.js"></script>
+<div id="scrollup"><i class="icon-up-open-big icon-huge"></i></div>
+<div id="outstyle_loader"><div class="loader"></div></div>
+<div id="ohsnap"></div>
 <script type="text/javascript" src="/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="/js/jquery.jscrollpane.js"></script>
-<script src="/js/underscore.js"></script>
-<script src="/js/social.js"></script>
-<script src="/js/users.js"></script>
-<script src="/js/users-index.js"></script>
-<div id="scrollup"><img alt="Прокрутить вверх" src="<?php echo Yii::$app->homeUrl; ?>css/img/view-foto-arrow.png"></div>
 <?php $this->endBody() ?>
 <?php echo Html::endTag('body'); ?>
 </html>
