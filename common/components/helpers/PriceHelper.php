@@ -18,6 +18,7 @@ class PriceHelper
      */
     const AVAILABLE_CURRENCIES = [
       'UAH' => 'Hryvnia',
+      'RUB' => 'Ruble',
       'USD' => 'Dollar',
       'EUR' => 'Euro',
     ];

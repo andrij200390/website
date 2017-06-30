@@ -24,7 +24,6 @@ use frontend\components\ParentController;
 
 class SiteController extends ParentController
 {
-
     public $layout = 'portal';
 
     public function behaviors()
@@ -66,44 +65,44 @@ class SiteController extends ParentController
 
            /* Check for attempts */
             $misstep = AuthMisstep::find()->where("ip = :ip", [':ip' => Yii::$app->request->userIP])->one();
-            if ($misstep) {
-                if ($misstep->created != 0 && time() - $misstep->created < 86400) {
-                    $time = ($misstep->created + 86400 - time());
-                    $endTime = date("H:i", mktime(0, 0, $time));
-                    $model->addError('misstep', Yii::t('app', 'You will be able to sign up again after').' '.$endTime);
-                } else {
-                    $misstep->attempt += 1;
+        if ($misstep) {
+            if ($misstep->created != 0 && time() - $misstep->created < 86400) {
+                $time = ($misstep->created + 86400 - time());
+                $endTime = date("H:i", mktime(0, 0, $time));
+                $model->addError('misstep', Yii::t('app', 'You will be able to sign up again after').' '.$endTime);
+            } else {
+                $misstep->attempt += 1;
 
                     /* If we step over limit - block user from further logins and throw error */
                     if ($misstep->attempt == 10) {
                         $misstep->created = time();
                         $model->addError('misstep', Yii::t('app', 'You have entered your password wrong 10 times. This action is blocked for you on 24 hours!'));
                     }
-                    $misstep->save();
+                $misstep->save();
 
                     /* If the user has tried again after block, we check for errors and delete + check for login validation again */
                     if ($misstep->attempt > 10 && !$model->errors) {
                         $misstep->delete();
                         $model->login();
                     }
-                }
-
-            } else {
-                $misstep = new AuthMisstep();
-                $misstep->ip = Yii::$app->request->userIP;
-                $misstep->created = 0;
-                $misstep->attempt = 1;
-                $misstep->save();
             }
+        } else {
+            $misstep = new AuthMisstep();
+            $misstep->ip = Yii::$app->request->userIP;
+            $misstep->created = 0;
+            $misstep->attempt = 1;
+            $misstep->save();
+        }
 
         /* We will try to login only if attempts are not overlimited */
-        if ($misstep->attempt < 10)
-        {
+        if ($misstep->attempt < 10) {
             /* If data is valid, and we don't have any errors - proceed to login */
             if ($model->validate() && !$model->errors) {
                 if ($model->login()) {
                     /* If we logged in, we need to delete previous attempts, if there are any + redirect user to his profile page */
-                    if ($misstep) $misstep->delete();
+                    if ($misstep) {
+                        $misstep->delete();
+                    }
                     return $this->redirect(['/']); // Must be /myprofile on live (with social)
                 }
             } else {
@@ -124,7 +123,9 @@ class SiteController extends ParentController
         }
 
         /* If we making a request via Intercooler, we're not sending anything to the element, that have made a request (button) to prevent content rewrite */
-        if (isset($data['ic-request'])) return;
+        if (isset($data['ic-request'])) {
+            return;
+        }
     }
 
     /**
@@ -166,7 +167,6 @@ class SiteController extends ParentController
             // If signup form returned user ID, sending confirmation email
             // ->setTextBody("Для подтверждения своего email перейдите по ссылке https://".$_SERVER['SERVER_NAME']."/auth/confirm/".$confirmEmail->confirm_key.'/')
             if ($user = $model->signup()) {
-
                 $confirmEmail = new ConfirmEmail();
                 $confirmEmail->confirm_key = Yii::$app->security->generateRandomString();
                 $confirmEmail->email = $model->email;
@@ -187,7 +187,6 @@ class SiteController extends ParentController
                 // Logging user in
                 Yii::$app->getUser()->login($user);
                 return $this->redirect(['/']);
-
             } else {
                 $response = ['error' => true, 'message' => Yii::t('app', 'Signup process has failed!')];
             }
@@ -196,7 +195,6 @@ class SiteController extends ParentController
         }
 
         return $response;
-
     }
 
     /**
@@ -206,6 +204,7 @@ class SiteController extends ParentController
     public function actionError()
     {
         $exception = Yii::$app->errorHandler->exception;
+        $this->layout = '404';
         if ($exception !== null) {
             return $this->render('error', ['exception' => $exception]);
         }
@@ -232,18 +231,17 @@ class SiteController extends ParentController
 
     public function actionPasswordrestore()
     {
-
         $data = Yii::$app->request->post();
         $model = new PasswordResetRequestForm();
 
-        if (Yii::$app->request->isAjax && $model->load( $data )) {
-            if ( isset($data['ajax']) && ( $data['ajax'] == 'form-passwordrestore') ) {
+        if (Yii::$app->request->isAjax && $model->load($data)) {
+            if (isset($data['ajax']) && ($data['ajax'] == 'form-passwordrestore')) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
             }
         }
 
-        if ( $model->load( $data ) && $model->validate() ) {
+        if ($model->load($data) && $model->validate()) {
             if ($model->sendEmail()) {
                 return [
                         'error' => false,
@@ -259,7 +257,6 @@ class SiteController extends ParentController
                         'message' => Yii::t('app', 'Обнаружены ошибки: ') . $message
                     ];
             }
-
         }
         return $this->redirect(['/']);
     }

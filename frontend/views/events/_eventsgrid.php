@@ -42,7 +42,7 @@ if (empty($category)) {
     echo Html::endForm(),
     Html::endTag('div');
 
-    echo ElementsHelper::separatorDiamond(Yii::t('app', 'New events'));
+    echo ElementsHelper::separatorDiamond('<h1>'.Yii::t('seo', Yii::$app->controller->id.'.h1').'</h1>');
 } else {
     echo
    Html::tag('div',
@@ -75,7 +75,7 @@ if (empty($category)) {
 
     foreach ($eventsCategories as $c) {
         if ($c->id == $category) {
-            echo ElementsHelper::separatorDiamond(Yii::t('app', ucfirst($c->url).' events'));
+            echo ElementsHelper::separatorDiamond('<h1>'.Yii::t('seo', Yii::$app->controller->id.'.'.$c->url.'.h1').'</h1>');
         }
     }
 }

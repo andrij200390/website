@@ -51,7 +51,7 @@ class News extends ActiveRecord
     public static $defaultPageSize = 15;
     public static $similarPageSize = 6;
     public static $recommendedPageSize = 6;
-    public static $newsOrderBy = 'id desc';
+    public static $newsOrderBy = 'RAND()';
 
     /**
      * imageUploaderBehavior - https://github.com/demisang/yii2-image-uploader

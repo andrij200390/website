@@ -132,7 +132,7 @@ class School extends ActiveRecord
             ['title', 'string', 'max' => 64],
             ['price', 'integer', 'min' => 0, 'max' => 10000],
             ['phone', 'match', 'pattern' => PhoneHelper::PHONE_INTERNATIONAL_REGEX],
-            ['description', 'string', 'max' => 2048],
+            ['description', 'string', 'max' => 4096],
             ['site', 'url', 'defaultScheme' => 'http'],
             ['price_currency', 'in', 'range' => PriceHelper::getPriceCurrenciesISO()],
         ];
@@ -144,7 +144,7 @@ class School extends ActiveRecord
         return [
             'id' => 'ID',
             'user' => Yii::t('app', 'User'),
-            'title' => Yii::t('app',  'School name'),
+            'title' => Yii::t('app', 'School name'),
             'category' => Yii::t('app', 'Category'),
             'geolocation_id' => Yii::t('app', 'Geolocation ID'),
             'price' => Yii::t('app', 'Price'),
@@ -192,7 +192,7 @@ class School extends ActiveRecord
          */
         $schoolsQuery = self::find()->where($where)->andWhere(['!=', 'geolocation_id', 0])->orderBy(self::$schoolsOrderBy);
         $schoolsQuery = $schoolsQuery->limit(self::$defaultPageSize);
-        
+
         /* If we have pagination */
         if ($page) {
             $pagination = new Pagination([

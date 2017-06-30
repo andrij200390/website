@@ -28,7 +28,8 @@
         "demi/image": "dev-master",
         "demi/cropper": "dev-master",
         "developeruz/yii2-db-rbac": "*",
-        "vova07/yii2-imperavi-widget": "*"
+        "vova07/yii2-imperavi-widget": "*",
+        "dragonjet/yii2-opengraph": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

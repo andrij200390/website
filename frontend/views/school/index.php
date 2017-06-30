@@ -1,20 +1,18 @@
 <?php
-use yii\helpers\Html;
-use common\components\helpers\ElementsHelper;
 
-$this->title = Yii::t('app', 'Schools');
-$this->registerMetaTag([
-  'name' => 'description',
-  'content' => $this->title
-]);
+use common\components\helpers\ElementsHelper;
+use common\components\helpers\SEOHelper;
 
 /**
  * Main schools grid, that must be wrapped in #ajax for Intercooler
  *
+ * @var $this            yii\web\View
  * @var $model           common/models/School
  * @var $categories      common/models/School
  * @var $page            common/models/School
  */
+
+SEOHelper::setMetaInfo($this);
 
 echo ElementsHelper::ajaxGridWrap('school', 'o-grid--no-gutter',
     $this->render('_schoolgrid',

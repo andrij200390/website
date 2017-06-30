@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\helpers\Json;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -87,6 +88,13 @@ class SchoolController extends ParentController
               'page_height' => $page_height,
             ]);
         }
+
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => Yii::t('seo', Yii::$app->controller->id.'.title'),
+            'description' => Yii::t('seo', Yii::$app->controller->id.'.description'),
+            'image' => Url::toRoute(['css/i/opengraph/outstyle_default_968x504.jpg'], true),
+        ]);
 
         return $this->render('index', [
           'model' => $model,

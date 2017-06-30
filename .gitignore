@@ -43,5 +43,6 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-# robots.txt
+# robots, sitemap...
 /robots.txt
+/sitemap.xml

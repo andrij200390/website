@@ -92,6 +92,13 @@ class NewsController extends ParentController
             ]);
         }
 
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => Yii::t('seo', Yii::$app->controller->id.'.title'),
+            'description' => Yii::t('seo', Yii::$app->controller->id.'.description'),
+            'image' => Url::toRoute(['css/i/opengraph/outstyle_default_968x504.jpg'], true),
+        ]);
+
         return $this->render('index', [
           'modelNews' => $modelNews,
           'newsCategories' => $newsCategories,
@@ -234,6 +241,13 @@ class NewsController extends ParentController
             ]);
         }
 
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => $modelNews[0]['title'],
+            'description' => $modelNews[0]['description'],
+            'image' => Url::toRoute([$modelNews[0]['img']], true),
+        ]);
+
         return $this->render('../news/view', [
             'modelNews' => $modelNews,
             'modelNewsRecommended' => $modelNews['recommended'] ?? 0,
@@ -250,7 +264,6 @@ class NewsController extends ParentController
      */
     public function actionViewcategory($category = null)
     {
-
         $where = [];
         if ($category) {
             $where['category'] = (Category::findOne(['url' => $category])->id) ?? '';
@@ -268,6 +281,13 @@ class NewsController extends ParentController
         if (!$modelNews || empty($where['category'])) {
             throw new NotFoundHttpException();
         }
+
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => Yii::t('seo', Yii::$app->controller->id.'.'.$category.'.title'),
+            'description' => Yii::t('seo', Yii::$app->controller->id.'.'.$category.'.description'),
+            'image' => Url::toRoute(['css/i/opengraph/outstyle_default_968x504.jpg'], true),
+        ]);
 
         return $this->render('index', [
           'modelNews' => $modelNews,

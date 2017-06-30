@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -98,6 +99,13 @@ class EventsController extends ParentController
             ]);
         }
 
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => Yii::t('seo', Yii::$app->controller->id.'.title'),
+            'description' => Yii::t('seo', Yii::$app->controller->id.'.description'),
+            'image' => Url::toRoute(['css/i/opengraph/outstyle_default_968x504.jpg'], true),
+        ]);
+
         return $this->render('index', [
           'modelEvents' => $modelEvents,
           'eventsCategories' => $eventsCategories,
@@ -151,7 +159,9 @@ class EventsController extends ParentController
             $headers->add('X-IC-Trigger', '{"'.Yii::$app->controller->id.'":['.Json::encode($response).']}');
 
             // If we dont have anything in certain category...
-            if ($page == 0) return '<center>'.Yii::t('app', 'This category has no active events!').'</center>';
+            if ($page == 0) {
+                return '<center>'.Yii::t('app', 'This category has no active events!').'</center>';
+            }
 
             return;
         }
@@ -226,30 +236,36 @@ class EventsController extends ParentController
     }
 
     /**
-     * View news category page.
+     * View events category page.
      *
-     * @param string $category News category
+     * @param string $category Event category
      *
      * @return array|JSON
      */
     public function actionViewcategory($category = null)
     {
-
         $where = [];
         if ($category) {
             $where['category'] = (Category::findOne(['url' => $category])->id) ?? '';
         }
 
-        /* Initial page to start load news from */
+        /* Initial page to start load events from */
         $page = $data['page'] ?? 0;
 
         $model = Events::getEvents($where, $page);
         $page++;
 
-        /* If news does not exist - we show 404 */
+        /* If event does not exist - we show 404 */
         if (!$model || empty($where['category'])) {
             throw new NotFoundHttpException();
         }
+
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => Yii::t('seo', Yii::$app->controller->id.'.'.$category.'.title'),
+            'description' => Yii::t('seo', Yii::$app->controller->id.'.'.$category.'.description'),
+            'image' => Url::toRoute(['css/i/opengraph/outstyle_default_968x504.jpg'], true),
+        ]);
 
         return $this->render('index', [
           'modelEvents' => $model,

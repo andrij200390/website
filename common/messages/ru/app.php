@@ -1,6 +1,7 @@
 <?php
 
 return [
+    '404 - Page not found' => '404 - Страница не найдена',
     'About school' => 'О школе',
     'Address' => 'Адрес',
     'Add Event' => 'Добавить событие',
