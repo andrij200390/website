@@ -46,12 +46,12 @@ class News extends ActiveRecord
      * @var int    How much news do we show per page by default?
      * @var int    $similarPageSize        How much similar news do we show per page?
      * @var int    $recommendedPageSize    How much recommended news do we show per page?
-     * @var string $newsOrderBy            Default order of news shown
+     * @var string $addtionalNewsOrderBy   Default order of additional news
      */
     public static $defaultPageSize = 15;
     public static $similarPageSize = 6;
     public static $recommendedPageSize = 6;
-    public static $newsOrderBy = 'RAND()';
+    public static $addtionalNewsOrderBy = 'RAND()';
 
     /**
      * imageUploaderBehavior - https://github.com/demisang/yii2-image-uploader
@@ -172,7 +172,7 @@ class News extends ActiveRecord
        *
        * TODO: Add to userdescription only needed params select
        */
-      $newsQuery = self::find()->with(['userDescription'])->where($where)->orderBy(self::$newsOrderBy);
+      $newsQuery = self::find()->with(['userDescription'])->where($where)->orderBy('id desc');
       $newsQuery = $newsQuery->limit(self::$defaultPageSize);
 
       /* If we have pagination */
@@ -245,7 +245,7 @@ class News extends ActiveRecord
                   $similarNews = self::find()
                   ->where($where)
                   ->andWhere($andWhere)
-                  ->orderBy(self::$newsOrderBy)
+                  ->orderBy(self::$addtionalNewsOrderBy)
                   ->limit(self::$similarPageSize)
                   ->all();
                   if (!empty($similarNews)) {
@@ -263,7 +263,7 @@ class News extends ActiveRecord
                       $recommendedNews = self::find()
                       ->where($where)
                       ->andWhere($andWhere)
-                      ->orderBy(self::$newsOrderBy)
+                      ->orderBy(self::$addtionalNewsOrderBy)
                       ->limit(self::$recommendedPageSize)
                       ->all();
                       if (!empty($recommendedNews)) {
