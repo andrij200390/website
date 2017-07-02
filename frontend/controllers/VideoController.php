@@ -72,43 +72,38 @@ class VideoController extends ParentController
 
     /**
      * Single video view
+     * Checks videohash, descrypts it, and if it has valid data - renders the view
+     *
      * @param  string $videoHash Hashed video ID
      * @return array
      */
     public function actionView($videoHash)
     {
-        echo CryptoHelper::simpleEncryptDecrypt($videoHash, 'd');
-        return;
+        $videoData = CryptoHelper::simpleEncryptDecrypt($videoHash, 'd');
+        if (!$videoData) {
+            throw new NotFoundHttpException();
+        }
+
+        # Forming an array of data from dehashed string
+        $videoData = self::getVideoDataFromHash($videoData);
+
+        $video = Video::getByVideoId($videoData[0]);
+        return $this->render('view', [
+            'video' => $video
+        ]);
     }
 
-    public function actionVieew($id)
+    /**
+     * Gets data from dehashed string
+     * @see: @helpers/CryptoHelper
+     *
+     * @param  string   $videoData  Dehashed video data
+     * @return array    $videoData[0] -> video_id; $videoData[1] -> user_id (who added the video initially)
+     */
+    private static function getVideoDataFromHash($videoData)
     {
-        $model = Video::find()->where("user = :user", [':user' => $id])->orderBy("id desc")->all();
-        $countVideo = Video::find()->where("user = :user", [':user' => $id])->count();
-        $name = UserDescription::findOne(['id' => $id])->name;
-        $modelVideo = array();
-        $countFalse = 0;
-        for ($i=0; $i<$countVideo; $i++) {
-            if (!UserPrivacy::getPrivacy($model[$i]->privacy_video, $model[$i]->user) && $idOwner != Yii::$app->user->id) {
-                $countFalse ++;
-                continue;
-            }
-            $modelVideo[$i-$countFalse]['id'] = $model[$i]->id;
-            $modelVideo[$i-$countFalse]['user'] = $model[$i]->user;
-            $modelVideo[$i-$countFalse]['title'] = $model[$i]->title;
-            $modelVideo[$i-$countFalse]['description'] = $model[$i]->description;
-            $modelVideo[$i-$countFalse]['urlImg'] = $model[$i]->url_img;
-            $modelVideo[$i-$countFalse]['urlIframe'] = $model[$i]->url_iframe;
-            $modelVideo[$i-$countFalse]['created'] = $model[$i]->created;
-        }
-        $countVideo = $countVideo - $countFalse;
-
-        return $this->render('view', [
-            'modelVideo' => $modelVideo,
-            'countVideo' => $countVideo,
-            'id' => $id,
-            'name' => $name,
-        ]);
+        $videoData = explode('##', $videoData);
+        return $videoData;
     }
 
     public function actionListvideo()

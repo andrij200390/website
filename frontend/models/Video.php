@@ -75,13 +75,19 @@ class Video extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Gets video by its unique ID
+     * @param  string $videoId    Video ID
+     * @return array
+     */
+    public static function getByVideoId($videoId)
+    {
+        return self::findOne(['video_id' => $videoId]);
+    }
+
+    /* RELATIONS */
     public function comments()
     {
         return $this->hasMany(Comments::className(), ['elem_id' => 'id'])->andWhere([ 'elem_type' => 'video']);
-    }
-
-    public static function getUserNickname($id)
-    {
-        return UserDescription::findOne(['id' => $id])->nickname;
     }
 }
