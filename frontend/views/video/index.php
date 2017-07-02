@@ -1,5 +1,5 @@
 <?php
-   
+
     use yii\helpers\Html;
     use yii\helpers\Url;
 
@@ -26,11 +26,13 @@
     </div>
 
     <div class="video-content">
-        <? if (empty($model)){ ?>
+        <?php if (empty($model)) {
+    ?>
             <div class="new-uzer">
             У Вас еще нет видеозаписей<br>
           </div>
-          <? } ?>
+          <?php 
+} ?>
     </div>
     <div id="modal4" class="modal_div">
       <div class="modal_close"> <div id="close_for_modal" class="close close-foto"></div><h1>Добавление по ссылке</h1></div>
@@ -67,7 +69,7 @@
             <li>
                <select id="privacy-video" class="video-privancy">
                 <option value="0">Все пользователи</option>
-                <option value="1">Только друзья</option>            
+                <option value="1">Только друзья</option>
                 <option value="2">Друзья и друзья друзей</option>
                 <option value="3">Только я</option>
                         </select>
@@ -75,26 +77,26 @@
             <li>
               <select id="privacy-comments" class="video-privancy">
                 <option value="0">Все пользователи</option>
-                <option value="1">Только друзья</option>            
+                <option value="1">Только друзья</option>
                 <option value="2">Друзья и друзья друзей</option>
                 <option value="3">Только я</option>
                         </select>
             </li>
           </ul>
-          <input class="checkbox" type="checkbox" id='repost-board'> 
+          <input class="checkbox" type="checkbox" id='repost-board'>
           <div class="checkbox-label"> Опубликовать на моей странице </div>
         </div>
       </div>
       <div class="foot-modal">
         <button class="for-modal2">Сохранить изменения</button>
       </div>
-      
+
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
-    
+
 <script type="text/javascript">
 
 $(document).ready(function() {
-    
+
     // Устанавливать на коммент фокус при показе модального окна с видео
     $.cookie("setCommentFocus", "false");
 
@@ -127,8 +129,8 @@ $(document).ready(function() {
 
             modalUse();
 
-            //Репост видео 
-            $('.Share').on('click', function(){ 
+            //Репост видео
+            $('.Share').on('click', function(){
                 // var likeIns = $(this).parent().children(".count-like");
                 // console.log(likeIns);
                 var data = {
@@ -146,8 +148,8 @@ $(document).ready(function() {
                 });
             });
 
-            //Лайки для видео 
-        $('.panel-video > .like').on('click', function(){ 
+            //Лайки для видео
+        $('.panel-video > .like').on('click', function(){
           var likeIns = $(this).find(".count-like");
           var like = $(this);
           console.log(likeIns);
@@ -171,14 +173,14 @@ $(document).ready(function() {
         });
 
         ///удаление видео
-        $('.video-del').on('click', function(){ 
+        $('.video-del').on('click', function(){
           if (confirm("Вы действительно хотите удалить это видео?")){
             var thisVideo = $(this).parent().parent();
             var data = {
               idDel : $(this).attr('id'),
                 };
             console.log(data);
-                          
+
                 $.ajax({
                         dataType: 'JSON',
                         type : 'get',
@@ -195,12 +197,12 @@ $(document).ready(function() {
           }
 
           // Запуск видео
-      $('.open_modal').on('click', function(){ 
+      $('.open_modal').on('click', function(){
         var data = {
           id : $(this).attr('id'),
         };
         console.log(data);
-        
+
         $.ajax({
                 dataType: 'JSON',
                 type : 'get',
@@ -245,7 +247,7 @@ $(document).ready(function() {
                             $(' .coments > .coment-message > .coment').hide();
                             $(' .coments > .coment-message > .coment:last').show();
                             $(' .coments > .coment-message > .coment:last').prev().show();
-                        } 
+                        }
 
                         $('.show-all-coment').on("click",function(){
                             $(this).parent().children('.coment-message').children('.coment').show();
@@ -269,8 +271,8 @@ $(document).ready(function() {
                         var numLasts = str.slice(- 2);
 
                         if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                            $('  .show-all-coment > .word').text("отзывов"); 
-                        } 
+                            $('  .show-all-coment > .word').text("отзывов");
+                        }
                         else {
                             if (numLast == 2 || numLast == 3 || numLast == 4) {
                                 $(' .show-all-coment > .word').text("отзыва");
@@ -281,11 +283,11 @@ $(document).ready(function() {
                             }
                         };
                         }
-                              
 
-                  
-                           //Репост видео 
-              $('.Shar').on('click', function(){ 
+
+
+                           //Репост видео
+              $('.Shar').on('click', function(){
                 // var likeIns = $(this).parent().children(".count-like");
                 // console.log(likeIns);
                 var data = {
@@ -304,8 +306,8 @@ $(document).ready(function() {
                     });
               });
 
-                        //Лайки для видео 
-            $('.lik').on('click', function(){ 
+                        //Лайки для видео
+            $('.lik').on('click', function(){
               var likeIns = $(this).find(".count-like");
               var like = $(this);
               console.log(likeIns);
@@ -328,8 +330,8 @@ $(document).ready(function() {
                   });
             });
 
-                           //Лайки для коментариев 
-                $('.like').on('click', function(){ 
+                           //Лайки для коментариев
+                $('.like').on('click', function(){
                   var likeIns = $(this).find(".like-count");
                   var like = $(this);
                   // console.log(likeIns);
@@ -376,7 +378,7 @@ $(document).ready(function() {
               var comentText = $(this).parent().children('textarea').val();
               var thisArea = $(this).parent().children('textarea');
               if ($.trim(comentText) == ""){
-            
+
                     }else{
                 var data = {
                   id : $(this).attr('id'),
@@ -393,10 +395,10 @@ $(document).ready(function() {
                         console.log(data);
                         $('.coment-message').append("<div class='coment'><div class='user-ava'><a href='/profile/"+data.user_id+"/'><img src="+"<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/"+data.user_id+"_small.jpg"+" alt=''></a></div><div class='info-user'><div class='for-user-vs-time'><a href='/profile/"+data.user_id+"/'><div class='user-name'>"+data.user_name+"</div></a><div class='time'>"+data.created+"</div></div><div id="+data.idComment+" class='del-coment'><img src='<?php echo Yii::$app->homeUrl; ?>css/img/close.png'></div><div class='user-message'>"+data.comment+"</div><div class='reply'></div><div  id="+data.idComment+" class='like'><div class='like-count'>"+data.likeCount+"</div></div></div>");
                           $(thisArea).val("");
-                        
-                        //Лайки для коментариев 
+
+                        //Лайки для коментариев
                               $('.like').off();
-                  $('.like').on('click', function(){ 
+                  $('.like').on('click', function(){
                     var likeIns = $(this).find(".like-count");
                     var like = $(this);
                     // console.log(likeIns);
@@ -440,7 +442,7 @@ $(document).ready(function() {
                     });
               }
             });
-            
+
             var s = $.cookie("setCommentFocus");
             if ( s == "true" ) {
                 var scrollPos = $('#mess-user-index').offset().top;
@@ -502,8 +504,8 @@ var loadMore = true;
               }
 
               modalUse();
-               //Репост видео 
-        $('.Share').on('click', function(){ 
+               //Репост видео
+        $('.Share').on('click', function(){
           // var likeIns = $(this).parent().children(".count-like");
           // console.log(likeIns);
           var data = {
@@ -520,10 +522,10 @@ var loadMore = true;
 
               });
         });
-            //Лайки для видео 
+            //Лайки для видео
                         $('.panel-video > .like').off();
 
-        $('.panel-video > .like').on('click', function(){ 
+        $('.panel-video > .like').on('click', function(){
           var likeIns = $(this).find(".count-like");
           var like = $(this);
           console.log(likeIns);
@@ -547,14 +549,14 @@ var loadMore = true;
         });
         ///удаление видео
         $('.video-del').off();
-        $('.video-del').on('click', function(){ 
+        $('.video-del').on('click', function(){
           if (confirm("Вы действительно хотите удалить это видео?")){
             var thisVideo = $(this).parent().parent();
             var data = {
               idDel : $(this).attr('id'),
                 };
             console.log(data);
-                          
+
                 $.ajax({
                         dataType: 'JSON',
                         type : 'get',
@@ -571,12 +573,12 @@ var loadMore = true;
           }
 
           // Запуск видео
-      $('.open_modal').on('click', function(){ 
+      $('.open_modal').on('click', function(){
         var data = {
           id : $(this).attr('id'),
         };
         console.log(data);
-        
+
         $.ajax({
                 dataType: 'JSON',
                 type : 'get',
@@ -624,7 +626,7 @@ var loadMore = true;
                             $(' .coments > .coment-message > .coment').hide();
                             $(' .coments > .coment-message > .coment:last').show();
                             $(' .coments > .coment-message > .coment:last').prev().show();
-                        } 
+                        }
 
                         $('.show-all-coment').on("click",function(){
                             $(this).parent().children('.coment-message').children('.coment').show();
@@ -647,8 +649,8 @@ var loadMore = true;
                         var numLasts = str.slice(- 2);
 
                         if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                            $('  .show-all-coment > .word').text("отзывов"); 
-                        } 
+                            $('  .show-all-coment > .word').text("отзывов");
+                        }
                         else {
                             if (numLast == 2 || numLast == 3 || numLast == 4) {
                                 $(' .show-all-coment > .word').text("отзыва");
@@ -659,8 +661,8 @@ var loadMore = true;
                             }
                         };
                         }
-                         //Репост видео 
-              $('.Shar').on('click', function(){ 
+                         //Репост видео
+              $('.Shar').on('click', function(){
                 // var likeIns = $(this).parent().children(".count-like");
                 // console.log(likeIns);
                 var data = {
@@ -678,10 +680,10 @@ var loadMore = true;
 
                     });
               });
-              
-                          //Лайки для видео 
+
+                          //Лайки для видео
                         $('.lik').off();
-            $('.lik').on('click', function(){ 
+            $('.lik').on('click', function(){
               var likeIns = $(this).find(".count-like");
               var like = $(this);
               console.log(likeIns);
@@ -705,7 +707,7 @@ var loadMore = true;
             });
                             //Лайки для коментариев
                             $('.like').off();
-                $('.like').on('click', function(){ 
+                $('.like').on('click', function(){
                   var likeIns = $(this).find(".like-count");
                   var like = $(this);
                   // console.log(likeIns);
@@ -755,7 +757,7 @@ var loadMore = true;
               var comentText = $(this).parent().children('textarea').val();
               var thisArea = $(this).parent().children('textarea');
               if ($.trim(comentText) == ""){
-            
+
                     }else{
                 var data = {
                   id : $(this).attr('id'),
@@ -772,10 +774,10 @@ var loadMore = true;
                         console.log(data);
                         $('.coment-message').append("<div class='coment'><div class='user-ava'><a href='/profile/"+data.user_id+"/'><img src="+"<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/"+data.user_id+"_small.jpg"+" alt=''></a></div><div class='info-user'><div class='for-user-vs-time'><a href='/profile/"+data.user_id+"/'><div class='user-name'>"+data.user_name+"</div></a><div class='time'>"+data.created+"</div></div><div id="+data.idComment+" class='del-coment'><img src='<?php echo Yii::$app->homeUrl; ?>css/img/close.png'></div><div class='user-message'>"+data.comment+"</div><div class='reply'></div><div  id="+data.idComment+" class='like'><div class='like-count'>"+data.likeCount+"</div></div></div>");
                           $(thisArea).val("");
-                        
-                        //Лайки для коментариев 
+
+                        //Лайки для коментариев
                               $('.like').off();
-                  $('.like').on('click', function(){ 
+                  $('.like').on('click', function(){
                     var likeIns = $(this).find(".like-count");
                     var like = $(this);
                     // console.log(likeIns);
@@ -841,8 +843,8 @@ var loadMore = true;
         });
  //////////////////////////////////////////////////////END infinite scroll
 
-    ///добавление видео 
-    $('.for-modal2').on('click', function(){ 
+    ///добавление видео
+    $('.for-modal2').on('click', function(){
         var data = {
             url : $("#url").val(),
             name : $("#name").val(),
@@ -868,9 +870,9 @@ var loadMore = true;
     $('body').on('click', '.Add-coment', function() {
         var $this = $(this);
         $.cookie("setCommentFocus", "true");
-        
+
         $this.closest('.video-prev').find('.open_modal').trigger('click');
-        
+
 //        var scrollPos = $('#mess-user-index').offset().top;
 //        $("html, body").animate({ scrollTop: scrollPos }, 1);
 //        $('#mess-user-index').focus();
@@ -884,6 +886,6 @@ var loadMore = true;
 
 
 </div>
-    
+
 <div id="modal2" class="modal-div-user-video"></div>
 <div id="overlay"></div><!-- Подложка -->

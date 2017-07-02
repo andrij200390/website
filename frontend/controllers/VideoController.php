@@ -21,14 +21,11 @@ use app\models\AuthAssignment;
 use app\models\UserDescription;
 
 use frontend\components\ParentController;
+use common\components\helpers\CryptoHelper;
 
-class VideoController extends ParentController {
-
-    public $layout='main-new';
-
-    /**
-     * @inheritdoc
-     */
+class VideoController extends ParentController
+{
+    public $layout='social';
 
     public function behaviors()
     {
@@ -51,12 +48,11 @@ class VideoController extends ParentController {
 
     public function actionIndex()
     {
-
         $model = Video::find()->where("user = :user", [':user' => Yii::$app->user->id])->orderBy("id desc")->all();
         $countVideo = Video::find()->where("user = :user", [':user' => Yii::$app->user->id])->count();
         $modelVideo = array();
-        
-        for($i=0; $i<$countVideo; $i++){
+
+        for ($i=0; $i<$countVideo; $i++) {
             $modelVideo[$i]['id'] = $model[$i]->id;
             $modelVideo[$i]['user'] = $model[$i]->user;
             $modelVideo[$i]['title'] = $model[$i]->title;
@@ -74,47 +70,51 @@ class VideoController extends ParentController {
         ]);
     }
 
-    public function actionView($id)
+    /**
+     * Single video view
+     * Checks videohash, descrypts it, and if it has valid data - renders the view
+     *
+     * @param  string $videoHash Hashed video ID
+     * @return array
+     */
+    public function actionView($videoHash)
     {
-        $model = Video::find()->where("user = :user", [':user' => $id])->orderBy("id desc")->all();
-        $countVideo = Video::find()->where("user = :user", [':user' => $id])->count();
-        $name = UserDescription::findOne(['id' => $id])->name;
-        $modelVideo = array();
-        $countFalse = 0;
-        for($i=0; $i<$countVideo; $i++){
-            if(!UserPrivacy::getPrivacy($model[$i]->privacy_video, $model[$i]->user) && $idOwner != Yii::$app->user->id){
-                $countFalse ++;
-                continue;
-            }
-            $modelVideo[$i-$countFalse]['id'] = $model[$i]->id;
-            $modelVideo[$i-$countFalse]['user'] = $model[$i]->user;
-            $modelVideo[$i-$countFalse]['title'] = $model[$i]->title;
-            $modelVideo[$i-$countFalse]['description'] = $model[$i]->description;
-            $modelVideo[$i-$countFalse]['urlImg'] = $model[$i]->url_img;
-            $modelVideo[$i-$countFalse]['urlIframe'] = $model[$i]->url_iframe;
-            $modelVideo[$i-$countFalse]['created'] = $model[$i]->created;
+        $videoData = CryptoHelper::simpleEncryptDecrypt($videoHash, 'd');
+        if (!$videoData) {
+            throw new NotFoundHttpException();
         }
-        $countVideo = $countVideo - $countFalse; 
 
+        # Forming an array of data from dehashed string
+        $videoData = self::getVideoDataFromHash($videoData);
+
+        $video = Video::getByVideoId($videoData[0]);
         return $this->render('view', [
-            'modelVideo' => $modelVideo,
-            'countVideo' => $countVideo,
-            'id' => $id,
-            'name' => $name,
+            'video' => $video
         ]);
+    }
+
+    /**
+     * Gets data from dehashed string
+     * @see: @helpers/CryptoHelper
+     *
+     * @param  string   $videoData  Dehashed video data
+     * @return array    $videoData[0] -> video_id; $videoData[1] -> user_id (who added the video initially)
+     */
+    private static function getVideoDataFromHash($videoData)
+    {
+        $videoData = explode('##', $videoData);
+        return $videoData;
     }
 
     public function actionListvideo()
     {
-
         if (Yii::$app->request->isAjax) {
-
             $data = Yii::$app->request->get();
             $idOwner = $data['idOwner'];
             $page = $data['page'];
             $loadMore = true;
             $check = self::getVideo($idOwner, $page+1);
-            if(empty($check)){
+            if (empty($check)) {
                 $loadMore = false;
             }
 
@@ -123,9 +123,9 @@ class VideoController extends ParentController {
             $countVideo = Video::find()->where("user = :user", [':user' => $idOwner])->count();
             $modelVideo = array();
             $countFalse = 0;
-            
-            for($i=0; $i<$count; $i++){
-                if(!UserPrivacy::getPrivacy($model[$i]->privacy_video, $model[$i]->user) && $idOwner != Yii::$app->user->id){
+
+            for ($i=0; $i<$count; $i++) {
+                if (!UserPrivacy::getPrivacy($model[$i]->privacy_video, $model[$i]->user) && $idOwner != Yii::$app->user->id) {
                     $countFalse ++;
                     continue;
                 }
@@ -147,8 +147,8 @@ class VideoController extends ParentController {
 
         return [
             'modelVideo' => $modelVideo,
-            'loadMore' => $loadMore,           
-            ];  
+            'loadMore' => $loadMore,
+            ];
     }
 
     public function actionGetvideoinfo()
@@ -158,7 +158,7 @@ class VideoController extends ParentController {
 
             $model = Video::findOne(['id' => $data['id']]);
             $video = array(
-                'id' => $model->id, 
+                'id' => $model->id,
                 'user' => $model->user,
                 'username' => $model->getUserNickname($model->user),
                 'title' => $model->title,
@@ -176,7 +176,7 @@ class VideoController extends ParentController {
             $commentsCount = $model->comments()->count();
             $comments = array();
 
-            for($i=0; $i<$commentsCount; $i++){
+            for ($i=0; $i<$commentsCount; $i++) {
                 $comments[$i] = array(
                     'id' => $comentVideo[$i]->id,
                     'elem_type' => $comentVideo[$i]->elem_type,
@@ -193,7 +193,7 @@ class VideoController extends ParentController {
             $isAdmin = AuthAssignment::isAdmin(Yii::$app->user->id);
 
             $videoInfo = array(
-                'video' => $video, 
+                'video' => $video,
                 'comments' => $comments,
                 'countLikes' => $countLikes,
                 'isAdmin' => $isAdmin,
@@ -203,7 +203,7 @@ class VideoController extends ParentController {
 
         return [
             'videoInfo' => $videoInfo,
-            ];  
+            ];
     }
 
     public function actionDelvideo()
@@ -219,7 +219,7 @@ class VideoController extends ParentController {
 
         return [
             'ok' => $ok,
-            ];  
+            ];
     }
 
     public static function getVideo($idOwner, $page = 1)
@@ -254,35 +254,34 @@ class VideoController extends ParentController {
             $videoload->description = ($data['description'] != '') ? $data['description'] : '';
             $videoload->url_img = $videoInfo['urlImg'];
             $videoload->url_iframe = $videoInfo['iframeUrl'];
-            $videoload->created = date("Y-m-d H:i:s",time());
+            $videoload->created = date("Y-m-d H:i:s", time());
             $videoload->privacy_video = $data['privacyVideo'];
             $videoload->privacy_comments = $data['privacyComments'];
-            if($videoload->validate()){
+            if ($videoload->validate()) {
                 $videoload->save();
             }
 
-            if($data['repostBoard'] != "false"){
-
+            if ($data['repostBoard'] != "false") {
                 $model = new Board();
                 $model->user = Yii::$app->user->id;
                 $model->owner = Yii::$app->user->id;
-                $model->created = date("Y-m-d H:i:s",time());
+                $model->created = date("Y-m-d H:i:s", time());
                 $model->text = '';
 
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->save();
 
                     $modelNewsFeed = new Newsfeed();
                     $modelNewsFeed->elem_type = "board";
                     $modelNewsFeed->elem_id = $model->id;
                     $modelNewsFeed->user_id = $model->user;
-                    if($modelNewsFeed->validate()){
+                    if ($modelNewsFeed->validate()) {
                         $modelNewsFeed->save();
                     }
                 }
 
                 $modelAtt = Board::find()->where(array('user' => Yii::$app->user->id, 'owner' => Yii::$app->user->id))->orderBy('id desc')->limit(1)->one();
-                $attachment = Attachments::addAttachment('board',$modelAtt->id,'video',$videoload->id);
+                $attachment = Attachments::addAttachment('board', $modelAtt->id, 'video', $videoload->id);
             }
             return $this->redirect(['video/index']);
             $ok = 1;
@@ -291,7 +290,7 @@ class VideoController extends ParentController {
 
         return [
             'ok' => $ok,
-            ];        
+            ];
     }
 
 ///получить c сервиса все данные о ссылке
@@ -301,21 +300,21 @@ class VideoController extends ParentController {
 
         if (stripos($url, 'youtube.com') !== false) {
             preg_match('#v=([^\&]+)#is', $url, $videoId);
-            if (count ($videoId) > 0) {
+            if (count($videoId) > 0) {
                 $videoInfo['idVideo'] = $videoId[1];
                 $videoInfo['service'] = 'youtube.com';
             }
         }
         if (stripos($url, 'rutube.ru') !== false) {
             preg_match('#video/([^\&]+)#is', $url, $videoId);
-            if (count ($videoId) > 0) {
+            if (count($videoId) > 0) {
                 $videoInfo['idVideo'] = $videoId[1];
                 $videoInfo['service'] = 'rutube.ru';
             }
         }
         if (stripos($url, 'vimeo.com') !== false) {
             preg_match('#staffpicks/([^\&]+)#is', $url, $videoId);
-            if (count ($videoId) > 0) {
+            if (count($videoId) > 0) {
                 $videoInfo['idVideo'] = $videoId[1];
                 $videoInfo['service'] = 'vimeo.com';
             }
@@ -347,7 +346,8 @@ class VideoController extends ParentController {
         return $videoInfo;
     }
 
-    public function actionLike() {
+    public function actionLike()
+    {
         $data = Yii::$app->request->get();
 
         $response = Likes::addLike($data['elem_type'], $data['id']);
@@ -358,7 +358,8 @@ class VideoController extends ParentController {
         return $response;
     }
 
-    public function actionCountlikes() {
+    public function actionCountlikes()
+    {
         $data = Yii::$app->request->get();
 
         if (Video::find()->where(['id' => $data['id']])->count() > 0) {
@@ -372,7 +373,8 @@ class VideoController extends ParentController {
 
 
 
-    public function actionComment() {
+    public function actionComment()
+    {
         $data = Yii::$app->request->post();
 
         $atype = (!empty($data['atype'])) ? $data['atype'] : null;
@@ -382,7 +384,7 @@ class VideoController extends ParentController {
             $response = Comments::addComment('video', $data['id'], $data['text'], $atype, $aid);
         }
 
-        if($response['ok']){
+        if ($response['ok']) {
             $model = Comments::find()->where(array('elem_type' => 'video', 'elem_id' => $data['id']))->orderBy('id desc')->limit(1)->one();
             $response['comment'] = $model->comment;
             $response['created'] = self::getTimeRecord(strtotime($model->created));
@@ -392,14 +394,13 @@ class VideoController extends ParentController {
             $response['user_name'] = UserDescription::getNickname($model->user_id);
             $response['likeCount'] = Likes::countLikes("comments", $model->id);
             $response['myLike'] = Likes::myLike("comments", $model->id);
-
         }
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $response;
     }
 
-    public function actionCountcomments() 
+    public function actionCountcomments()
     {
         $data = Yii::$app->request->get();
         if (Video::find()->where(array('id' => $data['id']))->count() > 0) {
@@ -429,26 +430,26 @@ class VideoController extends ParentController {
         $model = new Board();
         $model->user = Yii::$app->user->id;
         $model->owner = Yii::$app->user->id;
-        $model->created = date("Y-m-d H:i:s",time());
+        $model->created = date("Y-m-d H:i:s", time());
         $model->text = '';
 
-        if($model->validate()){
+        if ($model->validate()) {
             $model->save();
 
             $modelNewsFeed = new Newsfeed();
             $modelNewsFeed->elem_type = "board";
             $modelNewsFeed->elem_id = $model->id;
             $modelNewsFeed->user_id = $model->user;
-            if($modelNewsFeed->validate()){
+            if ($modelNewsFeed->validate()) {
                 $modelNewsFeed->save();
             }
         }
 
         $modelAtt = Board::find()->where(array('user' => Yii::$app->user->id, 'owner' => Yii::$app->user->id))->orderBy('id desc')->limit(1)->one();
-        $attachment = Attachments::addAttachment('board',$modelAtt->id,'video',$data['id']);
-        
+        $attachment = Attachments::addAttachment('board', $modelAtt->id, 'video', $data['id']);
+
         $ok = false;
-        if(!empty($attachment)){
+        if (!empty($attachment)) {
             $ok = true;
         }
 
@@ -456,37 +457,37 @@ class VideoController extends ParentController {
 
         return [
             'ok' => $ok,
-            ]; 
+            ];
     }
 
     public static function getTimeRecord($time)
     {
-        if( date('d m Y', time()) === date('d m Y', $time)){
+        if (date('d m Y', time()) === date('d m Y', $time)) {
             return "Сегодня в ".date('H:i', $time);
-        }elseif( (date('d', time())-date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)){
+        } elseif ((date('d', time())-date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)) {
             return "Вчера в ".date('H:i', $time);
-        }else{
+        } else {
             $monthes = array(
             1 => 'января', 2 => 'февраля', 3 => 'марта', 4 => 'апреля',
             5 => 'мая', 6 => 'июня', 7 => 'июля', 8 => 'августа',
             9 => 'сентября', 10 => 'октября', 11 => 'ноября', 12 => 'декабря');
-            
+
             return date('j', $time).' '. $monthes[(int)date('m', $time)].' в '.date('H:i', $time);
         }
     }
 
     public static function getAddTimeVideo($time)
     {
-        if( date('d m Y', time()) === date('d m Y', $time)){
+        if (date('d m Y', time()) === date('d m Y', $time)) {
             return "Сегодня в ".date('H:i', $time);
-        }elseif( (date('d', time())-date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)){
+        } elseif ((date('d', time())-date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)) {
             return "Вчера в ".date('H:i', $time);
-        }else{
+        } else {
             $monthes = array(
             1 => 'января', 2 => 'февраля', 3 => 'марта', 4 => 'апреля',
             5 => 'мая', 6 => 'июня', 7 => 'июля', 8 => 'августа',
             9 => 'сентября', 10 => 'октября', 11 => 'ноября', 12 => 'декабря');
-            
+
             return date('j', $time).' '. $monthes[(int)date('m', $time)].' '.date('Y', $time);
         }
     }

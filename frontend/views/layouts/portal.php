@@ -8,7 +8,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Menu;
-
 use yii\widgets\Spaceless;
 
 use frontend\assets\PortalAsset;
@@ -29,21 +28,14 @@ Spaceless::begin();
 <?php echo Html::csrfMetaTags(); ?>
 <link rel="shortcut icon" type="image/png" href="/css/favicon.png">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script src="//maps.googleapis.com/maps/api/js?key=<?=Yii::$app->params['googleMapsApiKey'];?>&amp;extension=.js"></script>
 </head>
-<?php
-/**
- * Let's check if our user is a guest or a registered user. In every case we need to add corresponding class to main body class.
- * This is needed for hiding/showing certain elements on the page dynamically, without performing such kind of checking in every view.
- */
-?>
-<body class="user<?php echo (Yii::$app->user->id) ? '-registered' : '-guest'; ?>">
+<body class="portal user<?php echo (Yii::$app->user->id) ? '-registered' : '-guest'; ?>" ic-history-elt=''>
 <?php
 $this->beginBody();
 
     echo Html::beginTag('div', ['class' => 'wrap']),
 
-        Html::beginTag('header', ['class' => 'o-grid']),
+        Html::beginTag('header', ['class' => 'o-grid portal__header']),
             Html::beginTag('div', ['class' => 'o-grid__cell o-grid__cell--width-15 u-center-block']),
                 Html::a('', Url::to(['/']), ['id'=>'logo', 'class'=>'u-center-block__content']),
             Html::endTag('div'),
@@ -82,7 +74,7 @@ $this->beginBody();
             Html::endTag('div'),
         Html::endTag('header'),
 
-        Html::beginTag('div', ['id' => 'content', 'ic-history-elt' => '', 'class' => 'content u-window-box--small']),
+        Html::beginTag('div', ['id' => 'content', 'class' => 'content u-window-box--small']),
             Html::beginTag('main'),
                 $content,
             Html::endTag('main'),

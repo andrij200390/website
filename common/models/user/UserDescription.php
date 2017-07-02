@@ -3,8 +3,8 @@
 namespace common\models\user;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use common\models\User;
-
 
 /**
  * This is the model class for table "z_user_description".
@@ -92,7 +92,7 @@ class UserDescription extends \yii\db\ActiveRecord
           'country' => Yii::t('app', 'Страна'),
           'city' => Yii::t('app', 'Город'),
           'culture' => Yii::t('app', 'Кто Вы в культуре'),
-          'team' => Yii::t('app', 'Название команды'),
+          'team' => Yii::t('app', 'Команда'),
           'phone' => Yii::t('app', 'Телефон'),
           'site' => Yii::t('app', 'Сайт'),
           'skype' => Yii::t('app', 'Скайп'),
@@ -109,77 +109,7 @@ class UserDescription extends \yii\db\ActiveRecord
           'worth_people' => Yii::t('app', 'Главное в людях'),
           'inspiration' => Yii::t('app', 'Источники вдохновения'),
           'sex' => Yii::t('app', 'Пол'),
-          'day' => Yii::t('app', ''),
-          'month' => Yii::t('app', ''),
-          'year' => Yii::t('app', ''),
-          'rating' => Yii::t('app', ''),
-          'search' => Yii::t('app', ''),
-        ];
-    }
-
-    public static function listLabels()
-    {
-        return [
-          'name' => Yii::t('app', 'Имя'),
-          'last_name' => Yii::t('app', 'Фамилия'),
-          'nickname' => Yii::t('app', 'Никнейм'),
-          'status' => Yii::t('app', 'Статус'),
-          'rating' => Yii::t('app', 'Рейтинг'),
-          'family' => Yii::t('app', 'Отношения'),
-          'birthday' => Yii::t('app', 'День рождения'),
-          'country' => Yii::t('app', 'Страна'),
-          'city' => Yii::t('app', 'Город'),
-          'culture' => Yii::t('app', 'Кто Вы в культуре'),
-          'team' => Yii::t('app', 'Название команды'),
-          'phone' => Yii::t('app', 'Телефон'),
-          'site' => Yii::t('app', 'Сайт'),
-          'skype' => Yii::t('app', 'Скайп'),
-          'music' => Yii::t('app', 'Музыка'),
-          'film' => Yii::t('app', 'Фильмы'),
-          'shows' => Yii::t('app', 'Шоу'),
-          'books' => Yii::t('app', 'Книги'),
-          'game' => Yii::t('app', 'Игры'),
-          'citation' => Yii::t('app', 'Цитаты'),
-          'about' => Yii::t('app', 'О себе'),
-          'politics' => Yii::t('app', 'Политика'),
-          'world_view' => Yii::t('app', 'Мировоззрение'),
-          'worth_life' => Yii::t('app', 'Главное в жизни'),
-          'worth_people' => Yii::t('app', 'Главное в людях'),
-          'inspiration' => Yii::t('app', 'Источники вдохновения'),
-          'sex' => Yii::t('app', 'Пол'),
-        ];
-    }
-
-    public static function setSexList()
-    {
-        return [
-          'male' => Yii::t('app', 'Мужской'),
-          'female' => Yii::t('app', 'Женский'),
-        ];
-    }
-
-    public static function getSexList($id = null)
-    {
-        $r = self::setSexList();
-        if ($id !== null) {
-            return (isset($r[$id]))?$r[$id]:false;
-        }
-        return $r;
-    }
-
-
-    public static function setFamilyList()
-    {
-        return [
-          0 => Yii::t('app', '- не выбрано -'),
-          1 => Yii::t('app', 'Замужем'),
-          2 => Yii::t('app', 'Женат'),
-          3 => Yii::t('app', 'Не замужем'),
-          4 => Yii::t('app', 'Не женат'),
-          5 => Yii::t('app', 'Встречаюсь'),
-          6 => Yii::t('app', 'Любовь'),
-          7 => Yii::t('app', 'Все сложно'),
-          8 => Yii::t('app', 'В активном поиске'),
+          'rating' => Yii::t('app', 'Rating'),
         ];
     }
 
@@ -188,19 +118,19 @@ class UserDescription extends \yii\db\ActiveRecord
         $r = null;
         switch ($field) {
             case 'country':
-                $r = (isset($model->countries->name))?$model->countries->name : false;
+                $r =  false;
                 break;
             case 'sex':
-                $r = ($model->{$field})?self::getSexList($model->{$field}):false;
+                $r = ($model->{$field})?ArrayHelper::getValue(self::sexList(), $model->{$field}):false;
                 break;
             case 'family':
-                $r = ($model->{$field})?self::getFamilyList($model->{$field}):false;
+                $r = ($model->{$field})?ArrayHelper::getValue(self::familyList(), $model->{$field}):false;
                 break;
             case 'culture':
-                $r = ($model->{$field})?self::getCultureList($model->{$field}):false;
+                $r = ($model->{$field})?ArrayHelper::getValue(self::cultureList(), $model->{$field}):false;
                 break;
             case 'city':
-                $r = ($model->{$field})?self::getCityList($model->{$field}):false;
+                $r = false;
                 break;
             case 'birthday':
                 if ($show == '1') {
@@ -215,31 +145,51 @@ class UserDescription extends \yii\db\ActiveRecord
         return $r;
     }
 
-    public static function getFamilyList($id = null)
+    /**
+     * Family status list
+     * @return array
+     */
+    public static function familyList()
     {
-        $r = self::setFamilyList();
-        if ($id !== null) {
-            return (isset($r[$id]) && $id > 0)?$r[$id]:null;
-        }
-        return $r;
+        return [
+          0 => Yii::t('app', '- не выбрано -'),
+          1 => Yii::t('app', 'Замужем'),
+          2 => Yii::t('app', 'Женат'),
+          3 => Yii::t('app', 'Не замужем'),
+          4 => Yii::t('app', 'Не женат'),
+          5 => Yii::t('app', 'Встречаюсь'),
+          6 => Yii::t('app', 'Любовь'),
+          7 => Yii::t('app', 'Все сложно'),
+          8 => Yii::t('app', 'В активном поиске'),
+        ];
     }
 
-/**
- * Culture names list
- * These 2 functions below are needed to convert INT representation of cultures into human-readable STRING.
- *
- * @param  boolean  $forCSS If set to true, the names will be returned as a class name representation in CSS file.
- * @return array    culture names
- */
+    /**
+     * Sex status list
+     * @return array
+     */
+    public static function sexList()
+    {
+        return [
+          'male' => Yii::t('app', 'Мужской'),
+          'female' => Yii::t('app', 'Женский'),
+        ];
+    }
+
+    /**
+     * Culture names list
+     *
+     * @param  boolean  $forCSS If set to true, the names will be returned as a class name representation in CSS file.
+     * @return array
+     */
     public static function cultureList($forCSS = false)
     {
-        /* --- NOTICE: If you will change this values, don't forget to change the corresponding classes in CSS file! --- */
         if ($forCSS == true) {
             return [
               0 => 'default',
               1 => 'breaking',
               2 => 'graffiti',
-              3 => 'mc',
+              3 => 'rap',
               4 => 'dj',
             ];
         }
@@ -247,72 +197,13 @@ class UserDescription extends \yii\db\ActiveRecord
         return [
           0 => Yii::t('app', '- не выбрано -'),
           1 => Yii::t('app', 'b-boy/b-girl'),
-          2 => Yii::t('app', 'mc'),
-          3 => Yii::t('app', 'dj'),
-          4 => Yii::t('app', 'graffiti writer'),
+          2 => Yii::t('app', 'graffiti writer'),
+          3 => Yii::t('app', 'mc/rapper'),
+          4 => Yii::t('app', 'dj'),
         ];
     }
 
-/**
- * Gets a corresponding value by it's array key from 'cultureList' function
- *
- * @param  $key             Corresponding array key from 'cultureList' function
- * @param  boolean $forCSS  If set to true, the names will be returned as a class name representation in CSS file.
- * @return string           Returns value from 'cultureList' func
- */
-    public static function getCultureList($key = null, $forCSS = false)
-    {
-        $r = self::cultureList($forCSS);
-        if ($key !== null) {
-            return (isset($r[$key]) && $key > 0)?$r[$key]:'default';
-        }
-        return $r;
-    }
-
-/**
- * Gets user culture by his ID
- *
- * @param  int        $userId   User ID
- * @param  boolean    $forCSS   If set to true, the culture name will be returned as a class name representation in CSS file.
- * @return string|int           User nickname or false (if guest)
- */
-    public static function getCulture($userId, $forCSS = false)
-    {
-        $model = self::find()->where(['id'=>$userId])->one();
-        if (!empty($model)) {
-            if ($forCSS) {
-                return self::getCultureList($model->culture, $forCSS);
-            }
-            return $model->culture;
-        }
-        return false;
-    }
-
-/**
- * Get user nickname by his ID
- * If user is in STATUS_DELETED, returns User::STATUS_DELETED
- *
- * @param  int     $userId     User ID
- * @return string              User nickname or empty if user is deleted
- */
-    public static function getNickname($userId)
-    {
-        $user = self::getDb()->cache(function ($db) use ($userId) {
-            return self::find()->with([
-                'user' => function ($query) {
-                  $query->andWhere(['!=', 'status', User::STATUS_DELETED])->select('id');
-                }
-              ])->where(['id' => $userId])->one();
-        }, 3600);
-
-        if (isset($user->user)) {
-            return $user->nickname;
-        }
-
-        return false;
-    }
-
-/* Relations */
+    /* Relations */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id']);

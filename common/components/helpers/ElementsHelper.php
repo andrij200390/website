@@ -380,6 +380,48 @@ class ElementsHelper extends Html
     }
 
     /**
+     * Separator with corner shadows
+     * @param  integer $effect Shadow effect number (CSS style)
+     * @param  string  $style  Custom CSS style (bottomborder, etc)
+     * @return html            Div block with styles
+     */
+    public static function separatorWidget($effect = 0, $style = 'none')
+    {
+        return Html::tag('div',
+          '',
+          [
+            'class' => "box box__shadow--effect{$effect} box--{$style}"
+          ]);
+    }
+
+    /**
+     * Widget button
+     * @param   string $style Icon name
+     * @see:    http://zavoloklom.github.io/material-design-iconic-font/icons.html for icon name
+     * @return  html
+     */
+    public static function widgetButton($style = 'settings')
+    {
+        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-widgetbutton i-widgetbutton--topleft i-settings"));
+
+        return
+        Html::button(
+          Html::tag('i', '', [
+            'class' => 'zmdi zmdi-edit zmdi-hc-lg',
+          ]),
+        [
+          'class' => $class,
+          'title' => Yii::t('app', 'Edit'),
+          'ic-indicator' => self::DEFAULT_AJAX_LOADER,
+          'ic-target' => '#outstyle_comments .comments_body',
+          'ic-get-from' => Url::toRoute(['comments/add']),
+          'ic-prepend-from' => Url::toRoute(['comments/add']),
+          'ic-push-url' => 'false',
+          'ic-select-from-response' => '#new_comment'
+        ]);
+    }
+
+    /**
      * Filter box tooltip
      * For $method see: http://intercoolerjs.org/reference.html (post-to, get-from, append-to, prepend-from).
      *

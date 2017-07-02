@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  *
  * @since 1.0
  */
-class PortalAsset extends AssetBundle
+class SocialAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -21,11 +21,14 @@ class PortalAsset extends AssetBundle
         'css/owlcarousel/owl.carousel.min.css',
         'css/owlcarousel/owl.theme.default.min.css',
         'css/fancybox/jquery.fancybox.min.css',
-        'css/fancybox/jquery.fancybox.min.css',
 
         'css/outstyle/base.layout.css',
         'css/outstyle/misc.layout.css',
-        'css/portal.css',
+        'css/outstyle/social.layout.css',
+        'css/outstyle/social.header.css',
+        'css/outstyle/social.sidebar.css',
+        'css/outstyle/social.user.css',
+        'css/style.css',
     ];
     public $js = [
         'js/jquery.easyModal.js',
@@ -41,6 +44,8 @@ class PortalAsset extends AssetBundle
         'js/misc/preciseTextResize.js',
         'js/misc/way.min.js',
 
+        'js/outstyle.social.sidebar.js',
+        'js/outstyle.user.video.js',
         'js/outstyle.analytics.js',
 
     ];

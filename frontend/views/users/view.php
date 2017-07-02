@@ -10,8 +10,7 @@ use app\models\User;
 use app\models\Photo;
 use frontend\widgets\addMessageWidget;
 
-
-/* @var $this yii\web\View */  
+/* @var $this yii\web\View */
 $this->title = $modelDescription->name;
 $this->registerMetaTag(['name' => 'description', 'content' => $this->title]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Друзья'), 'url' => ['/users/']];
@@ -32,7 +31,7 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
 <div class="leftBlock">
       <div class="profileDiv">
         <span><?php echo $userStatus;?></span> <!--Был сегодня в 17:45?-->
-        
+
         <div class="profileImg">
           <div class="ava-back">
             <img class="ava-img" src="<?=UserAvatar::getImg($model->id)?>" alt="<?=Html::encode(Yii::$app->user->identity->username)?>">
@@ -40,7 +39,7 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
             <img class="ava-border" src="<?php echo Yii::$app->homeUrl; ?>css/img/ava-border.png" alt="avatar">
             <img class="ava-title" src="<?php echo Yii::$app->homeUrl; ?>css/img/ava-title.png" alt="avatar">
             <a class="ava-level" href="javascript:void(0);" title="Если тыц сюда, то откроется <br>меню прокачки персонажа и <br> статистика прокачанных скилов"><img src="<?php echo Yii::$app->homeUrl; ?>css/img/ava_d.png" alt=""></a>
-          </div>                  
+          </div>
         </div>
         <!--<?php echo print_r($model) ;?>-->
         <!--<p class="profileFullName">
@@ -50,20 +49,28 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
 
 
         <ul class="profileUl js-active-1">
-          <?php foreach($userList AS $name => $value){ ?>
-            <?php if ($name == 'Рейтинг') {?>
+          <?php foreach ($userList as $name => $value) {
+    ?>
+            <?php if ($name == 'Рейтинг') {
+        ?>
                 <li><span><?=$name?>:</span> <?= number_format($value/27*100, 0) . ' %'; ?></li>
-            <?php } else {?>
+            <?php 
+    } else {
+        ?>
                 <li><span><?=$name?>:</span> <?=$value?></li>
-            <?php } ?>
-          <?php } ?>
+            <?php 
+    } ?>
+          <?php 
+} ?>
           <!-- <a href="#modal-send-message" onclick="modalUse()" class="open_modal"><li><h4>Написать сообщение</h4></li></a> -->
         </ul>
       </div>
   <div class="push-wrap clearfix">
-  <?php if($messagePrivacy){ ?>
+  <?php if ($messagePrivacy) {
+    ?>
       <a href="#modal-send-message" onclick="modalUse()" class="open_modal">Написать сообщение</a>
-  <?php } ?>
+  <?php 
+} ?>
     <p class="push">подробнее</p>
     <p class="push-item">скрыть</p>
   </div>
@@ -71,31 +78,33 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
         <img src="<?php echo Yii::$app->homeUrl; ?>css/img/blockJ_l.jpg" alt="" class="blockJ_l">
         <img src="<?php echo Yii::$app->homeUrl; ?>css/img/blockJ_r.jpg" alt="" class="blockJ_r">
         <h3><a href="<?=Url::toRoute('profile/'.$model->id.'/friends')?>">Друзья</a></h3>
-        
+
         <span><?php echo $friendsCnt; ?></span>
-        
-        <?php foreach($userFriends as $key => $val): ?> 
-          
+
+        <?php foreach ($userFriends as $key => $val): ?>
+
           <div class="friendsList">
             <a href="<?=Url::toRoute('profile/'.$userFriends[$key]['id'])?>">
-                <img src="<?= Yii::$app->homeUrl.'images/avatar/'.$userFriends[$key]['id'].'_small.jpg'; ?>" class="img-circle imgFrendS" alt="<?=$userFriends[$key]['nickname'];?>"> 
-              <?=$userFriends[$key]['nickname'];?> 
-              <?php if($userFriends[$key]['onlineInd']!=0){ ?>
+                <img src="<?= Yii::$app->homeUrl.'images/avatar/'.$userFriends[$key]['id'].'_small.jpg'; ?>" class="img-circle imgFrendS" alt="<?=$userFriends[$key]['nickname'];?>">
+              <?=$userFriends[$key]['nickname'];?>
+              <?php if ($userFriends[$key]['onlineInd']!=0) {
+    ?>
                 <i class="greenI"></i>
-              <?php }?>
+              <?php 
+}?>
             </a>
           </div>
-          
+
         <?php endforeach; ?>
-        
+
 <script>
     $('.imgFrendS').error(function() {
         $(this).attr( "src", "http://devoutstyle.org/images/avatar/def_avatar.jpg" );
     });
 </script>
-        
+
         <div class="clearfix"></div>
-        
+
       </div>
       <!-- <div class="blockJ"> -->
       <!--  <h3><a href="#">Группы</a></h3>
@@ -106,15 +115,16 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
           <li><a href="#"><img src="<//?php echo Yii::$app->homeUrl; ?>css/img/froups3.jpg"> Графити гик <small>Лучшие техники</small></a></li>
         </ul>
         <div class="clearfix"></div> -->
-        
+
       <!-- </div> -->
       <div class="blockJ">
         <h3><a href="<?=Url::toRoute('profile/'.$model->id.'/video')?>">Видео</a></h3>
         <span><?=$countVideo?></span>
 
-        <?php foreach($modelVideo AS $key => $val){ 
-          if(!$modelVideo[$key]['privacyVideo']){ continue; }
-        ?>
+        <?php foreach ($modelVideo as $key => $val) {
+    if (!$modelVideo[$key]['privacyVideo']) {
+        continue;
+    } ?>
             <div class="small-video">
               <a href='#modal2' id="<?=$modelVideo[$key]['id']?>" class='open_modal open-div-user-video'><div class="video-play"></div></a>
               <!-- <div class="small-video-time">4:02</div> -->
@@ -122,10 +132,11 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
             </div>
             <div class="small-video-title"><?=$modelVideo[$key]['title']?></div>
             <div class="small-video-date"><?=$modelVideo[$key]['created']?> через <?=$modelVideo[$key]['service']?></div>
-        <?php } ?>
+        <?php 
+} ?>
 
         <div class="clearfix"></div>
-        
+
 <!--                 <div class="small-video"><div class="video-play"></div><div class="small-video-time">4:02</div><img src="<//?php echo Yii::$app->homeUrl; ?>css/img/video1.jpg" alt=""></div>
         <div class="small-video-title">Michael Jackson - Hollywood Toni...</div>
         <div class="small-video-date">Фев 9, 2015 в 15:40 через YouTube</div>
@@ -145,7 +156,7 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
           <div class="track-date">3:55</div>
           <div class="track-title">Do You Know Where Your ...</div>
         </div>
-        
+
         <div class="track">
           <img src="<//?php echo Yii::$app->homeUrl; ?>css/img/track1.jpg" alt="">
           <div class="track-avtor">Michael Jackson</div>
@@ -162,27 +173,31 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
         <!-- </div> -->
 
         <div class="clearfix"></div> -->
-        
+
       </div>
     </div>
-    <div class="rightBlock"> 
+    <div class="rightBlock">
 
-        <?php if(!empty($modelPhotoCount)){?>
+        <?php if (!empty($modelPhotoCount)) {
+    ?>
 
 
             <div class="random-foto">
 
-                    <?php if($modelPhotoCount == 1){?>
+                    <?php if ($modelPhotoCount == 1) {
+        ?>
                        <div class="random-foto-users foto-own">
                         <a href='#modal1' id="<?=$modelPhoto[0]['idPhoto']?> " class='open_modal open-div-user-foto'>
                             <img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[0]['idOwner']?>/<?=$modelPhoto[0]['idAlbum']?>/small_<?=$modelPhoto[0]['nameImg']?>">
-                        </a> 
+                        </a>
                         </div>
                         <a href="<?php echo Yii::$app->homeUrl; ?>profile/<?=$model->id?>/photos/"><div class="cvadr"></div></a>
-                    <?php }?>
+                    <?php 
+    } ?>
 
 <!-- 'profile/<id:[0-9]*>/photos' -->
-                    <?php if($modelPhotoCount == 2){?>
+                    <?php if ($modelPhotoCount == 2) {
+        ?>
                        <div class="random-foto-users fotos-own">
                         <a href='#modal1' id="<?=$modelPhoto[0]['idPhoto']?> " class='open_modal open-div-user-foto'>
                             <img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[0]['idOwner']?>/<?=$modelPhoto[0]['idAlbum']?>/small_<?=$modelPhoto[0]['nameImg']?>">
@@ -194,9 +209,11 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
                             <img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[1]['idOwner']?>/<?=$modelPhoto[1]['idAlbum']?>/small_<?=$modelPhoto[1]['nameImg']?>">
                             </a>
                         </div>
-                   <?php }?>
+                   <?php 
+    } ?>
 
-                    <?php if($modelPhotoCount == 3){?>
+                    <?php if ($modelPhotoCount == 3) {
+        ?>
                         <div class="random-foto-users">
                             <a href='#modal1' id="<?=$modelPhoto[0]['idPhoto']?> " class='open_modal open-div-user-foto'>
                             <img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[0]['idOwner']?>/<?=$modelPhoto[0]['idAlbum']?>/small_<?=$modelPhoto[0]['nameImg']?>">
@@ -211,10 +228,12 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
                         <div class="random-foto-users">
                             <a href='#modal1' id="<?=$modelPhoto[2]['idPhoto']?> " class='open_modal open-div-user-foto'>
                             <img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[2]['idOwner']?>/<?=$modelPhoto[2]['idAlbum']?>/small_<?=$modelPhoto[2]['nameImg']?>"></a>
-                        </div> 
-                    <?php }?>
+                        </div>
+                    <?php 
+    } ?>
 
-                    <?php if($modelPhotoCount >= 4){?>
+                    <?php if ($modelPhotoCount >= 4) {
+        ?>
                        <div class="random-foto-users">
                              <a href='#modal1' id="<?=$modelPhoto[0]['idPhoto']?> " class='open_modal open-div-user-foto'><img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[0]['idOwner']?>/<?=$modelPhoto[0]['idAlbum']?>/small_<?=$modelPhoto[0]['nameImg']?>"></a>
                         </div>
@@ -229,16 +248,18 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
                         </div>
                         <div class="random-foto-users">
                         <a href='#modal1' id="<?=$modelPhoto[3]['idPhoto']?> " class='open_modal open-div-user-foto'><img src="<?php echo Yii::$app->homeUrl; ?>images/photo/<?=$modelPhoto[3]['idOwner']?>/<?=$modelPhoto[3]['idAlbum']?>/small_<?=$modelPhoto[3]['nameImg']?>"></a>
-                        </div> 
-                    <?php }?>
+                        </div>
+                    <?php 
+    } ?>
             </div>
-        <?php }?>
+        <?php 
+}?>
 
 <!--input field-->
 <!--    <div class="about">
       <div class="astatus">
         <?//php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
-          
+
           <?//= $form->field($newBoard, 'text')->textInput( [ 'placeholder' => "О чем вы думаете?" ] )->label(false, ['style'=>'display:none']) ?>
           <div class="astatus-form">
             <div class="form-selection">
@@ -251,15 +272,16 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
           </div>
         <?//php ActiveForm::end() ?>
       </div>
-    </div> -->  
-       
+    </div> -->
+
 <!-- нормальный вид формы отправки -->
-<?php if($boardPrivacy){ ?>
+<?php if ($boardPrivacy) {
+    ?>
     <div class="about">
         <!-- <div class="astatus"> -->
-        
+
         <textarea name="" id="message" placeholder="О чем вы думаете?" rows="1"></textarea>
-        
+
         <!--<img src="<//?php echo Yii::$app->homeUrl; ?>css/img/location.jpg" alt="">-->
         <img class="astatus_plus" src="<?php echo Yii::$app->homeUrl; ?>css/img/addition.jpg" alt="">
         <div class="about-menu">
@@ -274,8 +296,9 @@ $this->params['breadcrumbs'][] = $modelDescription->nickname;
         <!-- </div> -->
         <button type="submit" id="send-on-board"></button>
     </div>
-<?php } ?>
-    
+<?php 
+} ?>
+
 <!-- Comments -->
 
 <script>
@@ -284,7 +307,7 @@ var homeUrl = "<?php echo Yii::$app->homeUrl; ?>";
 var userId = "<?=Yii::$app->user->id?>";
 
 $(document).ready(function() {
-    
+
     $('.ava_class').error(function() {
         $(this).attr( "src", "<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/def_avatar.jpg" );
     });
@@ -363,7 +386,7 @@ $(document).ready(function() {
                             $('.message-repost-attachment:last').append("<iframe width='413' height='200' src=" + attachment.modelVideo.url_iframe + " frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><div class='video-title'>" + attachment.modelVideo.title + "</div>");
                         }
                     }
-                    
+
                     for (var x = 0; x < comentLength; x++) {
                         var coment = comments[x];
                         var likeActive2 = (coment['myLike'] == 1) ?  'likeActive2' :  '';
@@ -382,7 +405,7 @@ $(document).ready(function() {
                         }
                           // if(!data.isAdmin){
                           //     if("<?=Yii::$app->user->id;?>" != coment.user_id){
-                          //         $('#coment-' + coment.id+' > .del-coment').hide();  
+                          //         $('#coment-' + coment.id+' > .del-coment').hide();
                           //     }
                           // }
 
@@ -404,13 +427,13 @@ $(document).ready(function() {
                         $('#post-' + board[i]['id']+' .message-repost > .all-coments > .coment-mes > .comment').hide();
                         $('#post-' + board[i]['id']+' .message-repost > .all-coments > .coment-mes > .comment:last').show();
                         $('#post-' + board[i]['id']+' .message-repost > .all-coments > .coment-mes > .comment:last').prev().show();
-                    } 
+                    }
                     $('.show-all-coment').on("click",function(){
                         $(this).parent().children('.all-coments').children('.coment-mes').children('.comment').show();
                         $(this).parent().children('.hide-all-coments').show();
                         $(this).hide();
                     });
-                    
+
                     $('.hide-all-coments').on("click",function(){
                         $(this).parent().children('.all-coments').children('.coment-mes').children('.comment').hide();
                         $(this).hide();
@@ -425,7 +448,7 @@ $(document).ready(function() {
                     var numLasts = num.slice(- 2);
 
                     if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                        $('#post-' + board[i]['id']+' .message-repost > .show-all-coment > .word').text("отзывов"); 
+                        $('#post-' + board[i]['id']+' .message-repost > .show-all-coment > .word').text("отзывов");
                     } else {
                         if (numLast == 2 || numLast == 3 || numLast == 4) {
                             $('#post-' + board[i]['id']+' .message-repost > .show-all-coment > .word').text("отзыва");
@@ -466,7 +489,7 @@ $(document).ready(function() {
                     "<img class='plus' src=" + "<?php echo Yii::$app->homeUrl; ?>" + "css/img/addition.jpg" + " alt=''><div class='about-menu'><a onclick='modalUse()' class='open_modal foto-coment-atachment' href='#modal6'><div class='img-in' id='a1'></div></a><a onclick='modalUse()' class='open_modal video-coment-atachment' href='#modal7'><div class='img-in' id='a2'></div></a><div class='img-in' id='a3'></div><div class='img-in' id='a4'></div></div></div>" +
                     "<div id=" + board[i]['id'] + " class='m-top'></div>" +
                     "</div></div></div></div>");
-                               
+
                     $('.ava_class').error(function() {
                         $(this).attr( "src", "<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/def_avatar.jpg" );
                     });
@@ -533,7 +556,7 @@ $(document).ready(function() {
                         $('#post-' + board[i]['id']+' .massage > .all-coments > .coment-mes > .comment').hide();
                         $('#post-' + board[i]['id']+' .massage > .all-coments > .coment-mes > .comment:last').show();
                         $('#post-' + board[i]['id']+' .massage > .all-coments > .coment-mes > .comment:last').prev().show();
-                    } 
+                    }
 
                     $('.show-all-coment').on("click",function(){
                         $(this).parent().children('.all-coments').children('.coment-mes').children('.comment').show();
@@ -555,8 +578,8 @@ $(document).ready(function() {
                     var numLasts = num.slice(- 2);
 
                     if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                        $('#post-' + board[i]['id']+' .massage > .show-all-coment > .word').text("отзывов"); 
-                    } 
+                        $('#post-' + board[i]['id']+' .massage > .show-all-coment > .word').text("отзывов");
+                    }
                     else {
                         if (numLast == 2 || numLast == 3 || numLast == 4) {
                             $('#post-' + board[i]['id']+' .massage > .show-all-coment > .word').text("отзыва");
@@ -568,7 +591,7 @@ $(document).ready(function() {
                     };
                 }
             }
-                            
+
             $('.ava_class').error(function() {
                 $(this).attr( "src", "<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/def_avatar.jpg" );
             });
@@ -827,7 +850,7 @@ var loadMore = true;
                           "<div id=" + board[i]['id'] + " class='m-top send'></div>" +
                           "</div></div></div></div>");
 
-                              
+
 
                         if (attachment != null){
                             console.log(attachment);
@@ -881,7 +904,7 @@ var loadMore = true;
                                         $('#post-' + board[i]['id']+' .message-repost > .all-coments > .coment-mes > .comment').hide();
                                         $('#post-' + board[i]['id']+' .message-repost > .all-coments > .coment-mes > .comment:last').show();
                                         $('#post-' + board[i]['id']+' .message-repost > .all-coments > .coment-mes > .comment:last').prev().show();
-                                    } 
+                                    }
 
                                     $('.show-all-coment').on("click",function(){
                                         $(this).parent().children('.all-coments').children('.coment-mes').children('.comment').show();
@@ -903,8 +926,8 @@ var loadMore = true;
                                     var numLasts = num.slice(- 2);
 
                                     if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                                        $('#post-' + board[i]['id']+' .message-repost > .show-all-coment > .word').text("отзывов"); 
-                                    } 
+                                        $('#post-' + board[i]['id']+' .message-repost > .show-all-coment > .word').text("отзывов");
+                                    }
                                     else {
                                         if (numLast == 2 || numLast == 3 || numLast == 4) {
                                             $('#post-' + board[i]['id']+' .message-repost > .show-all-coment > .word').text("отзыва");
@@ -1004,7 +1027,7 @@ var loadMore = true;
                                         $('#post-' + board[i]['id']+' .massage > .all-coments > .coment-mes > .comment').hide();
                                         $('#post-' + board[i]['id']+' .massage > .all-coments > .coment-mes > .comment:last').show();
                                         $('#post-' + board[i]['id']+' .massage > .all-coments > .coment-mes > .comment:last').prev().show();
-                                    } 
+                                    }
 
                                     $('.show-all-coment').on("click",function(){
                                         $(this).parent().children('.all-coments').children('.coment-mes').children('.comment').show();
@@ -1026,8 +1049,8 @@ var loadMore = true;
                                     var numLasts = num.slice(- 2);
 
                                     if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                                        $('#post-' + board[i]['id']+' .massage > .show-all-coment > .word').text("отзывов"); 
-                                    } 
+                                        $('#post-' + board[i]['id']+' .massage > .show-all-coment > .word').text("отзывов");
+                                    }
                                     else {
                                         if (numLast == 2 || numLast == 3 || numLast == 4) {
                                             $('#post-' + board[i]['id']+' .massage > .show-all-coment > .word').text("отзыва");
@@ -1040,7 +1063,7 @@ var loadMore = true;
 
                                 }
                             }
-                            
+
                             $('img').error(function() {
                                     $(this).attr( "src", "<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/def_avatar.jpg" );
                                 });
@@ -1060,7 +1083,7 @@ var loadMore = true;
                    var commentMessage = $(this).prevAll(".add-style").children(".coment-message").val();
                    var thisComent = $(this).parent('.comment-plus:last');
                     if ($.trim(commentMessage) == ""){
-            
+
                    }else{
                      console.log(thisComent);
                      var data = {
@@ -1321,7 +1344,7 @@ if(!"<?=$boardPrivacy?>"){
                     }
 
                     var comText = getBrString(board['text']);
-                    
+
 
                           $('.board').prepend("<div id='message-"+board.id+"' class='blockM'><div class='zoom'></div><div class='massage-avatar'><a href='" + url + "'/'><img src=" + "<?php echo Yii::$app->homeUrl; ?>" + "images/avatar/" + board.idOwner + "_small.jpg" + " alt=''></a></div><div class='massage'>" +
                             deleteBtn +
@@ -1370,7 +1393,7 @@ if(!"<?=$boardPrivacy?>"){
                    var commentMessage = $(this).prevAll(".add-style").children(".coment-message").val();
                    var thisComent = $(this).parent('.comment-plus:last');
                     if ($.trim(commentMessage) == ""){
-            
+
                    }else{
                      console.log(thisComent);
                      var data = {
@@ -1415,7 +1438,7 @@ if(!"<?=$boardPrivacy?>"){
 
                       titleInit();
                       textareaInit('.js-click, .m-top, #send-on-board');
-                      
+
 
                          //// Удаление комментария
                          $('.close').on('click', function() {
@@ -1458,7 +1481,7 @@ if(!"<?=$boardPrivacy?>"){
 textareaInit();
 
                      });
-                     
+
           }
                });
 //                          ////удаление сообщений
@@ -1529,7 +1552,7 @@ textareaInit();
                     id : $(this).attr('id'),
                 };
                 console.log(data);
-                
+
               $.ajax({
                     dataType: 'JSON',
                     type : 'get',
@@ -1559,7 +1582,7 @@ textareaInit();
                     $('.modal-div-user-video').append("<div class='modal_close'><h2 class='video-title'>"+titleVideo+"</h2><div id='close_for_modal'  class='close'></div></div><div  class='conten'><div class='for-user-video'><iframe width='910' height='511' src="+thisVideo+" frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div><div class='for-user-coments'><div class='coments'><div class='show-all-coment'>Показать все <span class='coment-count-news'>"+comentLength+"</span> <span class='word'></span></div><div class='hide-all-coments'>Cкрыть все отзывы</div><div class='coment-message'></div><div class='write-message'>"+ writeMessage +"</div></div><div class='video-creator'><div class='user-creator-ava'><a href='/profile/"+data.videoInfo.video.user+"/'><img src="+"<?php echo Yii::$app->homeUrl; ?>"+"images/avatar/"+data.videoInfo.video.user+"_small.jpg"+" alt=''></a></div><a href='/profile/"+data.videoInfo.video.user+"/'><div class='user-creator-name'>"+nameUserCreator+"</div></a><div class='add-time'>Добавлено "+videoCreated+"</div><div class='creator-dostig'><div class='Add-comen'>"+data.videoInfo.comments.length+"</div><div id="+data.videoInfo.video.id+" class='lik "+likeActive2+"'><div class='count-like'>"+likeCount+"</div></div><div id="+data.videoInfo.video.id+" class='Shar'></div></div></div></div></div>");
 
                         modalUse();
-                        
+
                         if (coments){
                             // alert('yo');
                             for (var x = 0; x < comentLength; x++) {
@@ -1595,7 +1618,7 @@ textareaInit();
                                         $(' .coments > .coment-message > .coment').hide();
                                         $(' .coments > .coment-message > .coment:last').show();
                                         $(' .coments > .coment-message > .coment:last').prev().show();
-                                    } 
+                                    }
 
                                     $('.show-all-coment').on("click",function(){
                                         $(this).parent().children('.coment-message').children('.coment').show();
@@ -1618,8 +1641,8 @@ textareaInit();
                                     var numLasts = str.slice(- 2);
 
                                     if (numLasts == 11 || numLasts == 12 || numLasts == 13 || numLasts == 14) {
-                                        $('  .show-all-coment > .word').text("отзывов"); 
-                                    } 
+                                        $('  .show-all-coment > .word').text("отзывов");
+                                    }
                                     else {
                                         if (numLast == 2 || numLast == 3 || numLast == 4) {
                                             $(' .show-all-coment > .word').text("отзыва");
@@ -1630,8 +1653,8 @@ textareaInit();
                                         }
                                     };
                         }
-                         //Репост видео 
-                            $('.Shar').on('click', function(){ 
+                         //Репост видео
+                            $('.Shar').on('click', function(){
                                 // var likeIns = $(this).parent().children(".count-like");
                                 // console.log(likeIns);
                                 var data = {
@@ -1650,7 +1673,7 @@ textareaInit();
 
                                 });
                             });
-                            
+
 
 
                         //// Удаление комментария для видео
@@ -1681,7 +1704,7 @@ textareaInit();
                             var comentText = $(this).parent().children('textarea').val();
                             var thisArea = $(this).parent().children('textarea');
                             if ($.trim(comentText) == ""){
-            
+
                             }else{
                                 var data = {
                                     id : $(this).attr('id'),
@@ -1711,7 +1734,7 @@ textareaInit();
                                       delComent +
                                       "<div class='user-message'>"+comText+"</div><div class='reply'></div><div  id="+data.idComment+" class='like "+likeActive2+"'><div class='like-count'>"+data.likeCount+"</div></div></div>");
                                         $(thisArea).val("");
-                                    
+
 
                                     //// Удаление комментария для видео
                                     $('.del-coment').on('click', function(){
@@ -1744,12 +1767,12 @@ textareaInit();
 
             });
 
-   $('.open-div-user-foto').on('click', function(){ 
-            
+   $('.open-div-user-foto').on('click', function(){
+
         var data = {
             idPhoto: $(this).attr('id')
         };
-            
+
         $.ajax({
             dataType: 'JSON',
             type: 'get',
@@ -1939,7 +1962,7 @@ textareaInit();
           var $this = $(this);
             var commentMessage = $(this).parent().children('textarea').val();
             if ($.trim(commentMessage) == ""){
-            
+
             }else{
                 var data = {
                     id: $(this).attr('id'),
@@ -2037,7 +2060,7 @@ textareaInit();
      textareaInit('.js-click, .m-top, #send-on-board');
      sendCtrlEnter('.m-top, .send-icon, #send-on-board');
 
-  });      
+  });
 
 </script>
 
@@ -2095,11 +2118,11 @@ textareaInit();
             <div class="ava-creator">
                 <a href=""><img src=""></a>
             </div>
-        
+
                 <div class="user-name">
                     <a href=""></a>
                 </div>
-        
+
             <div class="name-album">
               <div class="like-panel">
                 <div class="photo-edit">
@@ -2119,8 +2142,8 @@ textareaInit();
     </div>
 </div>
      <div id="modal2" class="modal-div-user-video modal-div-view-board-video">
-            
-                
+
+
         </div>
     <div id="modal-send-message" class="modal-send-message">
         <div class="modal_close"> <h1>Написать сообщение</h1><div id="close_for_modal" class="close-foto"></div></div>

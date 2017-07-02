@@ -18,4 +18,24 @@ class User extends \common\models\User
       return $this->hasMany(News::className(), ['user' => 'id']);
   }
 
+  public function getBoard()
+  {
+      return $this->hasMany(Board::className(), ['owner' => 'id']);
+  }
+
+  public function getVideo()
+  {
+      return $this->hasMany(Video::className(), ['user' => 'id']);
+  }
+
+  public function getUserPrivacy()
+  {
+      return $this->hasOne(UserPrivacy::className(), ['id' => 'id']);
+  }
+
+  public function getUserDescription()
+  {
+      return $this->hasOne(UserDescription::className(), ['id' => 'id']);
+  }
+
 }
