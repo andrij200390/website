@@ -83,7 +83,9 @@ return [
     'school.graffiti.h1' => 'Школы граффити',
 
     'school.rap.description' => 'Школы MC от профессиональных учителей. Выбор курсов обучение MC на портале - Outstyle.org ',
-    'school.rap.title' => 'Рэп школы. Выбор курсов обучение рэпперов на портале - Outstyle.org ',
+    'school.rap.title' => 'Рэп школы. Выбор курсов обучение рэпперов на портале - Outstyle.org',
     'school.rap.h1' => 'Школы рэпа',
 
+    /* SEO: Schools.single title */
+    '{school} - {category} school in {city}' => '{school} - {category} школа в г. {city}',
 ];

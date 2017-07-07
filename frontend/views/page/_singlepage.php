@@ -4,8 +4,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
-    /* @var $this yii\web\View */
+/* @var $this yii\web\View */
     $this->title = Yii::t('app', 'О нас');
     //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Главная'), 'url' => ['/main/index']];
     $this->registerMetaTag(['name' => 'description', 'content' => $this->title]);
@@ -42,7 +41,7 @@ MCs, DJs, Writers, Bboys, а также тех, кому эта культура
 <a href="mailto:info@outstyle.org">info@outstyle.org</a>
 </p>
 <p class="blog_about_link_descr" style="text-align: center;">
-Сотрудничество и предложения
+В данный момент мы ищем людей, которые смогут писать интересные новости и статьи для портала :)
 </p>
 </div>
 </div>

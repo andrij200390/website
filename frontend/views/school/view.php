@@ -1,6 +1,7 @@
 <?php
 
 use common\components\helpers\ElementsHelper;
+use common\components\helpers\SEOHelper;
 
 /*
  * Single school view, that must be wrapped by #ajax for Intercooler
@@ -8,13 +9,7 @@ use common\components\helpers\ElementsHelper;
  * @var $this       yii\web\View
  */
 
-$this->title = $model[0]['title'];
-$description = isset($model[0]['description']) ? $model[0]['description'] : $this->title;
-
-$this->registerMetaTag([
-  'name' => 'description',
-  'content' => $description,
-]);
+SEOHelper::setMetaInfo($this);
 
 echo
 ElementsHelper::ajaxGridWrap('school school_single', 'o-grid--no-gutter color-content--bg',

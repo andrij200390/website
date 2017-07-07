@@ -5,6 +5,7 @@ namespace frontend\widgets;
 use Yii;
 use yii\base\Widget;
 use common\components\helpers\CryptoHelper;
+use app\models\Video;
 
 /**
  * Handles User -> Videos block, showing videos of user
@@ -39,9 +40,8 @@ class UserVideosBlock extends Widget
         if (isset($this->videos)) {
             foreach ($this->videos as $k => $video) {
                 $videos[$k] = $video;
-                $videos[$k]['hash'] = CryptoHelper::simpleEncryptDecrypt($video['video_id'].Yii::$app->params['CryptoHelper']['encryptConcat'].$video['user'], 'e');
+                $videos[$k]['hash'] = CryptoHelper::hash($video['id']);
             }
-
             $this->videos = $videos;
         }
     }

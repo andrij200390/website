@@ -92,6 +92,24 @@ class StringHelper
     }
 
     /**
+     * Checks url for validity (used mainly by 'away' checks for external links)
+     * @param  string $url Url to check
+     * @return bool
+     */
+    public static function checkExternalUrlValidity($url)
+    {
+        // Remove all illegal characters from a url
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+
+        // Validate url
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Converts timestamp to human readable string
      * Using 'datetime.php' messages translations.
      * TODO: Break this up into separate funcs
@@ -110,7 +128,7 @@ class StringHelper
 
         /* Working with different date formats for converting to suit our needs */
         if ($format) {
-          switch ($format) {
+            switch ($format) {
               case 'F':
               return Yii::t('datetime', 'of '.date('F', $time));
 
@@ -125,7 +143,7 @@ class StringHelper
 
               case 'events':
                 if ($time < time()) {
-                  return Yii::t('app', 'Event passed');
+                    return Yii::t('app', 'Event passed');
                 }
 
               case 'users':
@@ -134,7 +152,7 @@ class StringHelper
                 $longAgoPrefix = 'Last seen';
 
                 if ((time() - $time) < 900) {
-                  return Yii::t('app', 'online');
+                    return Yii::t('app', 'online');
                 }
             }
         }
@@ -156,6 +174,5 @@ class StringHelper
 
         # Default
         return date('d', $time).' '.Yii::t('datetime', 'of '.date('F', $time)).' <span>'.date('H:i', $time).'</span>';
-
     }
 }

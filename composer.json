@@ -29,7 +29,8 @@
         "demi/cropper": "dev-master",
         "developeruz/yii2-db-rbac": "*",
         "vova07/yii2-imperavi-widget": "*",
-        "dragonjet/yii2-opengraph": "dev-master"
+        "dragonjet/yii2-opengraph": "dev-master",
+        "fg/multiplayer": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

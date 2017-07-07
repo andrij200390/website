@@ -31,12 +31,12 @@ echo Html::beginTag('div', ['class' => 'user__videos u-window-box--medium']);
       echo Html::tag('div',
 
         # Video image
-        Html::a(Html::img($video['url_img'], ['class' => 'o-image video__thumbnail']), Url::toRoute('/video-'.$video['hash'], true)).
+        Html::a(Html::img($video['video_img'], ['class' => 'o-image user__videothumbnail']), Url::toRoute('/video-'.$video['hash'], true)).
 
         # Video title
-        Html::a($video['title'], Url::toRoute('/video-'.$video['hash'], true),
+        Html::a($video['video_title'], Url::toRoute('/video-'.$video['hash'], true),
           [
-            'class' => 'video__title',
+            'class' => 'user__videotitle',
             'ic-action' => 'userShowVideoModal',
             'ic-get-from' => Url::toRoute('/video-'.$video['hash']),
             'ic-select-from-response' => '#content',
@@ -49,12 +49,12 @@ echo Html::beginTag('div', ['class' => 'user__videos u-window-box--medium']);
         Html::tag('div',
 
           Yii::t('app', '{video_date} via {video_provider}', [
-            'video_date' => Yii::$app->formatter->asDateTime(strtotime($video['created']), Yii::$app->params['date']),
-            'video_provider' => $video['service'],
+            'video_date' => Yii::$app->formatter->asDateTime(strtotime($video['created_at']), Yii::$app->params['date']),
+            'video_provider' => $video['service_id'],
           ]),
 
           [
-            'class' => 'video__date'
+            'class' => 'user__videodate'
           ]
         ),
 

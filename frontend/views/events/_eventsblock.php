@@ -24,7 +24,9 @@ if ($page == 1) {
 
 if (isset($modelEvents)) {
     echo ElementsHelper::loadMore(Url::toRoute('events/show'), '#outstyle_events .events__body', '{"page":'.(int) $page.',"category":'.(int) $category.'}');
+
     foreach ($modelEvents as $key => $event) {
+        $eventsCategoryUrl = Url::toRoute(Yii::$app->controller->id.'/'.$event['categoryUrl']);
 
       /* Odd or even */
       $eventCellClass = ($key % 2) ? ' even' : ' odd';
@@ -52,8 +54,10 @@ if (isset($modelEvents)) {
 
             /* Category title */
             Html::tag('div',
-              $event['category'],
-              ['class' => 'c-text--shadow event__category']
+              ElementsHelper::linkElement('category', $event['category'], $eventsCategoryUrl, false),
+              [
+                'class' => "event__category block__category u-window-box--small c-text--shadow"
+              ]
             ).
 
             /* Event image */

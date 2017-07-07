@@ -92,13 +92,15 @@ if (isset($modelNews)) {
               Html::tag('div',
                 Html::tag('div',
 
-                  //category circle icon
+                  # Category circle icon
                   Html::tag('i',
                     '',
                     ['class' => "zmdi zmdi-circle color-{$article['categoryUrl']}"]
                   ).
 
-                  $article['category'],
+                  # Category link
+                  ElementsHelper::linkElement('category', $article['category'], Url::toRoute(Yii::$app->controller->id.'/'.$article['categoryUrl']), false),
+
                   [
                     'class' => 'article__category u-pull-left',
                   ]

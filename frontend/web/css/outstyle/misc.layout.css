@@ -207,17 +207,19 @@ ul {
   margin-right: 1.5em;
   text-align: center;
 }
-.news__actions .i-like i,
-.news__actions .i-icon i,
-.comment__actions .i-icon i,
-.comment__actions .i-like i,
-.comment__actions .icon-heart
+.i-icon i
 {
   margin-right: 3px;
+}
+.i-icon i.zmdi
+{
+  font-size: 15px;
+  vertical-align: -2px;
 }
 .i-icon i.icon-megaphone {
   margin-right: 0;
 }
+
 /* --- Widgetbutton --- */
 .i-widgetbutton {
   opacity:0.3;

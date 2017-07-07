@@ -16,27 +16,35 @@ class SEOHelper
 
     /**
      * Sets all the needed SEO info for model
+     *
      * @param obj $model  Model object
+     * @param array $metaTags  Array of metatags (metaname => metavalue)
      */
     public static function setMetaInfo($model)
     {
-        if (!isset($model->title)) {
-            $model->title = Yii::t('app', Yii::$app->controller->id);
-            $description = Yii::t('app', Yii::$app->controller->id);
-        }
+        # MetaTags: default
+        $description = Yii::t('app', Yii::$app->controller->id);
+        $title = Yii::t('app', Yii::$app->controller->id);
 
+        # OG Title
         if (isset(Yii::$app->opengraph->title)) {
-            $model->title = Yii::$app->opengraph->title;
+            $title = Yii::$app->opengraph->title;
         }
 
+        # OG Description
         if (isset(Yii::$app->opengraph->description)) {
             $description = Yii::$app->opengraph->description;
         }
 
-        $model->registerMetaTag([
-          'name' => 'description',
-          'content' => $description,
-        ]);
+        # Assigning to model
+        if (!isset($model->metaTags['description'])) {
+            $model->registerMetaTag([
+              'name' => 'description',
+              'content' => $description,
+            ]);
+        }
+
+        $model->title = $title;
 
         return $model;
     }

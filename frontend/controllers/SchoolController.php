@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use common\models\School;
 use common\models\geolocation\Geolocation;
 use backend\models\Category;
+use common\components\helpers\StringHelper;
 
 /* TODO */
 use app\models\Photo;
@@ -244,6 +245,17 @@ class SchoolController extends ParentController
             }
             $cache->set($key, $model, 3600 * 24); /* 1 day [?] */
         }
+
+        /* Open Graph: https://github.com/dragonjet/yii2-opengraph */
+        Yii::$app->opengraph->set([
+            'title' => Yii::t('seo', '{'.Yii::$app->controller->id.'} - {category} school in {city}', [
+              Yii::$app->controller->id => $model[0]['title'],
+              'category' => $model[0]['category'],
+              'city' => $model[0]['geolocation']['city'],
+            ]),
+            'description' => StringHelper::cutString($model[0]['description'], 140),
+            'image' => Url::toRoute(['css/i/opengraph/outstyle_default_968x504.jpg'], true),
+        ]);
 
         return $this->render('view', [
            'model' => $model,

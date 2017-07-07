@@ -46,12 +46,12 @@
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
-.video__title {
+.user__videotitle {
   display: block;
   font-size: .8em;
   text-align:left;
 }
-.video__date {
+.user__videodate {
   font-size: .7em;
   text-align:left;
   color: #bcbcbc;

@@ -23,9 +23,10 @@ class PortalAsset extends AssetBundle
         'css/fancybox/jquery.fancybox.min.css',
         'css/fancybox/jquery.fancybox.min.css',
 
-        'css/outstyle/base.layout.css',
-        'css/outstyle/misc.layout.css',
         'css/portal.css',
+        'css/outstyle/base.layout.css',
+        'css/outstyle/base.boxes.css',
+        'css/outstyle/misc.layout.css',
     ];
     public $js = [
         'js/jquery.easyModal.js',

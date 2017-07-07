@@ -9,6 +9,7 @@ use yii\web\HttpException;
 use yii\filters\AccessControl;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 
 use app\models\Video;
 use app\models\Board;
@@ -79,31 +80,15 @@ class VideoController extends ParentController
      */
     public function actionView($videoHash)
     {
-        $videoData = CryptoHelper::simpleEncryptDecrypt($videoHash, 'd');
-        if (!$videoData) {
+        $videoId = CryptoHelper::unhash($videoHash);
+        if (!$videoId && !is_int($videoId)) {
             throw new NotFoundHttpException();
         }
 
-        # Forming an array of data from dehashed string
-        $videoData = self::getVideoDataFromHash($videoData);
-
-        $video = Video::getByVideoId($videoData[0]);
+        $video = Video::getById($videoId);
         return $this->render('view', [
             'video' => $video
         ]);
-    }
-
-    /**
-     * Gets data from dehashed string
-     * @see: @helpers/CryptoHelper
-     *
-     * @param  string   $videoData  Dehashed video data
-     * @return array    $videoData[0] -> video_id; $videoData[1] -> user_id (who added the video initially)
-     */
-    private static function getVideoDataFromHash($videoData)
-    {
-        $videoData = explode('##', $videoData);
-        return $videoData;
     }
 
     public function actionListvideo()

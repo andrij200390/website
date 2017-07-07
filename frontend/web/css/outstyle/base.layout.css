@@ -12,12 +12,15 @@ body {
   margin: 0 auto;
   background: #fff;
 }
+.wrap-fix {
+  padding-top:45px;
+}
 .social #content {
   min-height: 100vh;
   height: 100%;
   background: #fff;
   vertical-align: top;
-  margin: 45px 0 0 142px;
+  margin: 0 0 0 142px;
   padding: 0;
 }
 .portal #content {
@@ -981,91 +984,6 @@ a.article__title:hover {
   font-weight: normal;
 }
 
-/* --- AUTHORBOX --- */
-.authorbox {
-  font-size: 0.9em;
-}
-.authorbox .zmdi-circle,
-.article__misc .zmdi-circle,
-.authorbox .zmdi-time {
-  padding-right:5px;
-  font-size: 0.9em;
-}
-.authorbox i.zmdi {
-  font-size:15px;
-  vertical-align: -2px;
-}
-.article__info a.repost,
-.authorbox__actionbox a.repost {
-  border-radius: 50%;
-  border: 1px solid #ddd;
-  padding:5px;
-  width:30px;
-  height: 30px;
-  position: absolute;
-  margin-left: -30px;
-  margin-top: 6px;
-  line-height: 1.4em;
-}
-.authorbox__actionbox a.repost {
-  margin-top: -7px;
-}
-.article__info a.repost:hover,
-.authorbox__actionbox a.repost:hover {
-  border-color: #7d7d7d;
-}
-.authorbox__category {
-  padding-right: 20px;
-}
-.authorbox .zmdi-icon--hoverable:hover,
-.authorbox .zmdi-icon--hoverable:focus,
-.authorbox a.i-icon:hover,
-.authorbox a.i-icon:focus,
-.user-registered .authorbox .i-like.active,
-a.innactive {
-  color:#7d7d7d;
-}
-.authorbox__hashtags {
-  display:none;
-}
-
-/* --- DATEBOX --- */
-.datebox__wrap {
-  height: 60px;
-}
-.datebox .datebox__date .number {
-  display:block;
-  float:left;
-  margin-right:10px;
-  font-size: 72px;
-  font-weight:normal;
-  letter-spacing: -4px;
-}
-.datebox .datebox__date .month {
-  text-transform: capitalize;
-  display: block;
-  font-size: 21px;
-  margin-top: 9px;
-}
-.datebox .datebox__date .day {
-  display: block;
-  line-height: 1;
-}
-.datebox .datebox__date .hour {
-  font-size: 18px;
-  letter-spacing: -1px;
-}
-.datebox .datebox__title {
-  letter-spacing: -2px;
-  font-weight:normal;
-  line-height: 1;
-}
-.datebox .datebox__host {
-  font-size:18px;
-}
-.datebox .datebox__address {
-  line-height: 1;
-}
 
 /* --- MISC ELEMENTS --- */
 .icon-heart::before {

@@ -23,12 +23,14 @@ class SocialAsset extends AssetBundle
         'css/fancybox/jquery.fancybox.min.css',
 
         'css/outstyle/base.layout.css',
+        'css/outstyle/base.boxes.css',
         'css/outstyle/misc.layout.css',
         'css/outstyle/social.layout.css',
         'css/outstyle/social.header.css',
         'css/outstyle/social.sidebar.css',
         'css/outstyle/social.user.css',
-        'css/style.css',
+        'css/outstyle/social.video.css',
+
     ];
     public $js = [
         'js/jquery.easyModal.js',

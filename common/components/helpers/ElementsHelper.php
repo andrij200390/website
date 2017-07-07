@@ -91,7 +91,7 @@ class ElementsHelper extends Html
             $isLikeActive = '';
         }
 
-        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-like {$isLikeActive}"));
+        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-like i-icon {$isLikeActive}"));
 
         return
         Html::button(
@@ -121,7 +121,6 @@ class ElementsHelper extends Html
      */
     public static function commentAddButton($elem_type = '', $elem_id = 0)
     {
-
         $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-send"));
 
         return

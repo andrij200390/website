@@ -35,6 +35,7 @@ $this->beginBody();
 
 # Fixed width wrapper
 echo Html::beginTag('div', ['class' => 'wrap']);
+echo Html::beginTag('div', ['class' => 'wrap-fix']);
 
   # Music player area + logo
   echo Html::tag('header',
@@ -125,6 +126,7 @@ echo Html::beginTag('div', ['class' => 'wrap']);
     ]
   );
 
+echo Html::endTag('div');
 echo Html::endTag('div');
 
 /* TODO: Script init in jquery only on page, and other code in files without jquery wrap */

@@ -26,9 +26,9 @@ use app\models\UserPrivacy;
 
 use frontend\components\ParentController;
 
-class BoardController extends ParentController {
-
-		public $layout = 'social';
+class BoardController extends ParentController
+{
+    public $layout = 'social';
 
     /**
      * @inheritdoc
@@ -62,16 +62,17 @@ class BoardController extends ParentController {
         $loadMore = true;
 
         $check = BoardController::getBoard($idOwnerBoard, $page+1);
-        if(empty($check)){
+        if (empty($check)) {
             $loadMore = false;
         }
 
-        function makePost($post, $isRepost = false) {
+        function makePost($post, $isRepost = false)
+        {
             $comentPost = $post->comments()->all();
             $commentsCount = $post->comments()->count();
             $comments = array();
 
-            for($i=0; $i<$commentsCount; $i++){
+            for ($i=0; $i<$commentsCount; $i++) {
                 $comments[$i] = array(
                     'id' => $comentPost[$i]->id,
                     'elem_type' => $comentPost[$i]->elem_type,
@@ -99,7 +100,7 @@ class BoardController extends ParentController {
                 'myLike' => Likes::findMyLike("board", $post->id),
                 'attachment' => BoardController::getAttachment($post->id),
             );
-            if (isset($post->repost) && ($post->repost > 0) ) {
+            if (isset($post->repost) && ($post->repost > 0)) {
                 $newPost['repost'] = makePost(Board::findOne(['id' => $post->repost]), true);
             } else {
                 $newPost['repost'] = null;
@@ -131,27 +132,26 @@ class BoardController extends ParentController {
     {
         $modelAttach = Attachments::findOne(['elem_type'=>'board', 'elem_id'=>$id]);
 
-        if(!empty($modelAttach)){
-
-            if($modelAttach->attachment_type == 'video'){
+        if (!empty($modelAttach)) {
+            if ($modelAttach->attachment_type == 'video') {
                 $modelVideo = Video::findOne(['id'=>$modelAttach->attachment_id]);
                 if (!empty($modelVideo)) {
                     return array('type' => 'video', 'modelVideo' => $modelVideo);
-                }else{
+                } else {
                     return null;
                 }
             }
-            if($modelAttach->attachment_type == 'photo'){
+            if ($modelAttach->attachment_type == 'photo') {
                 $modelPhoto = Photo::findOne(['id'=>$modelAttach->attachment_id]);
 
                 if (!empty($modelPhoto)) {
                     return array('type' => 'photo', Photo::findOne(['id'=>$modelAttach->attachment_id]));
-                }else{
+                } else {
                     return null;
                 }
             }
-        }else{
-            return NULL;
+        } else {
+            return null;
         }
     }
 
@@ -162,12 +162,12 @@ class BoardController extends ParentController {
 
         $atype = $data['atype'];
 
-        if( $atype == 'video' ) {
+        if ($atype == 'video') {
             $modelVideo = Video::find()->where("user = :user", [':user' => Yii::$app->user->id])->orderBy("id desc")->all();
-            if(!empty($modelVideo)){
+            if (!empty($modelVideo)) {
                 $count = count($modelVideo);
                 $videoList = array();
-                for($i=0; $i<$count; $i++){
+                for ($i=0; $i<$count; $i++) {
                     $videoList[$i]['id'] = $modelVideo[$i]->id;
                     $videoList[$i]['title'] = $modelVideo[$i]->title;
                     $videoList[$i]['urlImg'] = $modelVideo[$i]->url_img;
@@ -183,15 +183,13 @@ class BoardController extends ParentController {
                     'message' => Yii::t('app', 'У вас нет загруженных видеозаписей. Сначала загрузите их себе.')
                 ];
             }
-
-        } elseif( $atype == 'photo' ) {
-
+        } elseif ($atype == 'photo') {
             $modelPhoto = Photo::find()->where("user = :user", [':user' => Yii::$app->user->id])->orderBy("id desc")->all();
 
-            if( !empty($modelPhoto) ){
+            if (!empty($modelPhoto)) {
                 $count = count($modelPhoto);
                 $photoList = array();
-                for($i=0; $i<$count; $i++){
+                for ($i=0; $i<$count; $i++) {
                     $photoList[$i]['id'] = $modelPhoto[$i]->id;
                     $photoList[$i]['name'] = $modelPhoto[$i]->name;
                     $photoList[$i]['nameImg'] = $modelPhoto[$i]->img;
@@ -224,13 +222,13 @@ class BoardController extends ParentController {
         $text = (!empty($data['text'])) ? $data['text'] : '' ;
 
         ///для вложений
-        if(!empty($data['atype'])){
+        if (!empty($data['atype'])) {
             $type = 'board';
             $atype = $data['atype'];
             $aid = $data['aid'];
         }
 
-        if(empty($atype) && empty($text)){
+        if (empty($atype) && empty($text)) {
             echo 'no text';
             return false;
         }
@@ -245,17 +243,17 @@ class BoardController extends ParentController {
         $newBoard->created = date("Y-m-d H:i:s");
         $newBoard->text = strip_tags($text);
 
-        if( $newBoard->validate() && ($commentAbility || ( $id == Yii::$app->user->id ) ) ){
+        if ($newBoard->validate() && ($commentAbility || ($id == Yii::$app->user->id))) {
             $newBoard->save();
-            if(!empty($atype)){
-                $res = Attachments::addAttachment($type,$newBoard->id,$atype,$aid);
+            if (!empty($atype)) {
+                $res = Attachments::addAttachment($type, $newBoard->id, $atype, $aid);
             }
 
             $modelNewsFeed = new Newsfeed();
             $modelNewsFeed->elem_type = "board";
             $modelNewsFeed->elem_id = $newBoard->id;
             $modelNewsFeed->user_id = $newBoard->user;
-            if($modelNewsFeed->validate()){
+            if ($modelNewsFeed->validate()) {
                 $modelNewsFeed->save();
             }
         } else {
@@ -278,7 +276,7 @@ class BoardController extends ParentController {
             'myLike' => Likes::findMyLike("board", $record->id),
             );
 
-        for($i=0; $i<$records['commentsCount']; $i++){
+        for ($i=0; $i<$records['commentsCount']; $i++) {
             $records['comments'][$i]['created'] = BoardController::getTimeRecord(strtotime($records['comments'][$i]['created']));
         }
         $records['attachment'] = self::getAttachment($record->id);
@@ -291,7 +289,6 @@ class BoardController extends ParentController {
     public function actionDelboard()
     {
         if (Yii::$app->request->isAjax) {
-
             $data = Yii::$app->request->get();
 
             $idOwnerBoard = $data['idOwnerBoard'];
@@ -304,7 +301,7 @@ class BoardController extends ParentController {
 
             // Выбираем и удаляем этот пост в ленте
             $delNewsFeed = Newsfeed::find()->where(['elem_type' => 'board', 'elem_id' => $idRecord])->one();
-            if(!empty($delNewsFeed)){
+            if (!empty($delNewsFeed)) {
                 $delNewsFeed->delete();
             }
 
@@ -336,7 +333,7 @@ class BoardController extends ParentController {
             $editBoard->text = $editText;
             $editBoard->created = date("Y-m-d H:i:s");
 
-            if($editBoard->validate()){
+            if ($editBoard->validate()) {
                 $editBoard->save();
             }
 
@@ -352,15 +349,15 @@ class BoardController extends ParentController {
 
     public static function getBoard($idOwnerBoard, $page = 1)
     {
-            $query = Board::find()->where("user = :user", [':user' => $idOwnerBoard]);
+        $query = Board::find()->where("user = :user", [':user' => $idOwnerBoard]);
 
-            $pagination = new Pagination([
+        $pagination = new Pagination([
                         'defaultPageSize' => 10,
                         'totalCount' => $query->count(),
                         'page' => $page-1,
                     ]);
 
-            return $query->orderBy("id desc")
+        return $query->orderBy("id desc")
                          ->offset($pagination->offset)
                          ->limit($pagination->limit)
                          ->all();
@@ -368,11 +365,11 @@ class BoardController extends ParentController {
 
     public static function getTimeRecord($time)
     {
-        if( date('d m Y', time()) === date('d m Y', $time)){
+        if (date('d m Y', time()) === date('d m Y', $time)) {
             return "Сегодня в ".date('H:i', $time);
-        }elseif( (date('d', time())-date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)){
+        } elseif ((date('d', time())-date('d', $time)) == 1 && date('m Y', time()) == date('m Y', $time)) {
             return "Вчера в ".date('H:i', $time);
-        }else{
+        } else {
             $monthes = array(
             1 => 'января', 2 => 'февраля', 3 => 'марта', 4 => 'апреля',
             5 => 'мая', 6 => 'июня', 7 => 'июля', 8 => 'августа',
@@ -382,7 +379,8 @@ class BoardController extends ParentController {
         }
     }
 
-    public function actionLike() {
+    public function actionLike()
+    {
         $data = Yii::$app->request->get();
 
         $elem_type = (!empty($data['elem_type'])) ? $data['elem_type'] : "board";
@@ -396,7 +394,8 @@ class BoardController extends ParentController {
     }
 
 
-    public function actionCountlikes() {
+    public function actionCountlikes()
+    {
         $data = Yii::$app->request->get();
 
         if (Board::find()->where(['id' => $data['id']])->count() > 0) {
@@ -408,7 +407,8 @@ class BoardController extends ParentController {
         return $response;
     }
 
-    public function actionComment() {
+    public function actionComment()
+    {
         $data = Yii::$app->request->post();
 
         $atype = (!empty($data['atype'])) ? $data['atype'] : null;
@@ -416,13 +416,13 @@ class BoardController extends ParentController {
         $text = (!empty($data['text'])) ? $data['text'] : '' ;
 
         ///для вложений
-        if(!empty($data['atype'])){
+        if (!empty($data['atype'])) {
             $type = 'board';
             $atype = $data['atype'];
             $aid = $data['aid'];
         }
 
-        if( empty($text) ){
+        if (empty($text)) {
             echo 'no text';
             return false;
         }
@@ -437,16 +437,16 @@ class BoardController extends ParentController {
         $commentAbility = UserPrivacy::getPrivacy($modelPrivacy['board_comment'], $wallOwner);
 
         // Если НЕ владелец стены или НЕ разрешено настройками приватнсоти
-        if ( !( ( $wallOwner == Yii::$app->user->id ) || $commentAbility ) ) {
+        if (!(($wallOwner == Yii::$app->user->id) || $commentAbility)) {
             echo 'Post forbidden board owner!';
             return false;
         }
 
-        if ( (Board::find()->where(array('id' => $data['id']))->count() > 0) ) {
+        if ((Board::find()->where(array('id' => $data['id']))->count() > 0)) {
             $response = Comments::addComment('board', $data['id'], $data['text'], $atype, $aid);
         }
 
-        if($response['ok']){
+        if ($response['ok']) {
             $model = Comments::find()->where(array('elem_type' => 'board', 'elem_id' => $data['id']))->orderBy('id desc')->limit(1)->one();
             $response['comment'] = $model->comment;
             $response['created'] = self::getTimeRecord(strtotime($model->created));
@@ -457,8 +457,8 @@ class BoardController extends ParentController {
             $response['likeCount'] = Likes::countLikes("comments", $model->id);
             $response['myLike'] = Likes::findMyLike("comments", $model->id);
 
-            if(!empty($atype)){
-                $res = Attachments::addAttachment($type,$model->id,$atype,$aid);
+            if (!empty($atype)) {
+                $res = Attachments::addAttachment($type, $model->id, $atype, $aid);
             }
             $records['attachment'] = self::getAttachment($model->id);
         }
@@ -494,7 +494,7 @@ class BoardController extends ParentController {
     {
         $data = Yii::$app->request->get();
         if (Comments::find()->where(array('id' => $data['id']))->count() > 0) {
-            $response = Comments::editComment('board',$data['id']);
+            $response = Comments::editComment('board', $data['id']);
         }
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $response;
@@ -507,16 +507,16 @@ class BoardController extends ParentController {
         $uid = Yii::$app->user->id;
         $rep = Board::find()->where(array('id' => $data['id']))->one();
 
-        if(!$rep) {
+        if (!$rep) {
             echo 'post doesn\'t exist';
             return false;
         }
-        if($rep->repost) {
+        if ($rep->repost) {
             $rep = $rep->repost()->one();
         }
         $exist = Board::find()->where(array('repost' => $rep->id, 'user' => $uid))->count();
 
-        if($exist) {
+        if ($exist) {
             echo 'already exist';
             return false;
         }
@@ -532,12 +532,12 @@ class BoardController extends ParentController {
         $newBoard->repost = $rep->id;
         $newBoard->repost_type = 'board';
 
-        if($newBoard->validate()){
+        if ($newBoard->validate()) {
             $newBoard->save();
 
-            $modelAttach = Attachments::findOne( ['elem_type'=>'board', 'elem_id' => $rep->id] );
-            if(!empty($modelAttach)){
-                $res = Attachments::addAttachment('board',$newBoard->id,$modelAttach->attachment_type,$modelAttach->attachment_id);
+            $modelAttach = Attachments::findOne(['elem_type'=>'board', 'elem_id' => $rep->id]);
+            if (!empty($modelAttach)) {
+                $res = Attachments::addAttachment('board', $newBoard->id, $modelAttach->attachment_type, $modelAttach->attachment_id);
             }
         }
         $ok = true;
@@ -549,15 +549,15 @@ class BoardController extends ParentController {
             ];
     }
 
-    public function actionCity($id) {
-
+    public function actionCity($id)
+    {
         $countCity = City::find()->where(['country_id' => $id])->count();
         $cities = City::find()->where(['country_id' => $id])->orderby('name')->all();
         if ($countCity > 0) {
             foreach ($cities as $city) {
                 echo "<option value='".$city->city_id."'>".$city->name."</option>";
             }
-        }else{
+        } else {
             echo "<option value='0'>-Не выбрано-</option>";
         }
     }
