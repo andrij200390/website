@@ -46,6 +46,14 @@ ul {
   display: table;
   clear: both;
 }
+.u-window-box--shadowed .i-widgetbutton {
+  top: -15px;
+}
+.u-window-box--shadowed {
+  background: #fff;
+  margin-top:1em;
+  padding-top:0;
+}
 .cb {
   clear:both;
 }

@@ -1,0 +1,45 @@
+/* --- COMMENTS ---- */
+#comments_section .c-comments i.zmdi {
+  font-size: 19px;
+}
+#comments_section .comment__info {
+  padding-top:10px;
+}
+#comments_section .comment__username {
+  color:#606d75;
+}
+#comments_section .comment {
+  border-bottom: 1px solid #d5d7d8;
+}
+#comments_section .comment__avatar,
+#comments_section .comment__wrap {
+  padding-top:1.5em;
+}
+#comments_section .comment__body,
+#comments_section .comment__actions,
+#comments_section .comment__info {
+  padding-right: 1em;
+}
+#comments_section .comment__time,
+#comments_section .comment__body {
+  font-size:12px;
+}
+#comments_section .comment__wrap {
+  position: relative;
+}
+#comments_section .comment__avatar .avatar {
+  border-width: 2px;
+  border-style: solid;
+}
+#comments_section .comment__delete {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  display:none;
+}
+#comments_section .comment__deleted {
+  background: #f5f5df;
+}
+#comments_section .comment__highlight {
+  background: #f5f5df;
+}

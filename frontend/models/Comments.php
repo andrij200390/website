@@ -198,8 +198,6 @@ class Comments extends \yii\db\ActiveRecord
          * 'User' query is needed to check whether user (and his data) is active or not.
          *
          * @see: http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relational-data.
-         * HACK: This approach with greedy 'user' query goes well, if you want to exclude comments from being populated, but violates SOLID principles
-         * 'user' => function ($query) {$query->andWhere(['!=', 'status', User::STATUS_DELETED])->select('id');}
          */
 
         $commentsQuery = self::find()->with([

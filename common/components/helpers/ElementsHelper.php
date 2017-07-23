@@ -179,6 +179,8 @@ class ElementsHelper extends Html
      */
     public static function linkElement($elem_name = '', $elem_text = '', $url = false, $icon = '', $elem_title = '')
     {
+        /* INITIAL for ic-select-from-response: http://intercoolerjs.org/attributes/ic-select-from-response.html */
+        $selected_element = '#'.self::DEFAULT_AJAX_ID;
 
         /*
          * Setting title for the link, referring to element's name
@@ -203,6 +205,10 @@ class ElementsHelper extends Html
 
           case 'category':
             $elem_title = Yii::t('app', 'More from '.$elem_text);
+            break;
+
+          case 'friend':
+            $selected_element = '#content';
             break;
 
           case 'title':
@@ -253,7 +259,7 @@ class ElementsHelper extends Html
             $attr['ic-indicator'] = self::DEFAULT_AJAX_LOADER;
             $attr['ic-target'] = '#'.self::DEFAULT_TARGET_ID;
             $attr['ic-push-url'] = 'true';
-            $attr['ic-select-from-response'] = '#'.self::DEFAULT_AJAX_ID;
+            $attr['ic-select-from-response'] = $selected_element;
         }
 
         if (!$url) {
@@ -423,18 +429,18 @@ class ElementsHelper extends Html
      * @see:    http://zavoloklom.github.io/material-design-iconic-font/icons.html for icon name
      * @return  html
      */
-    public static function widgetButton($style = 'settings')
+    public static function widgetButton($style = 'edit')
     {
-        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-widgetbutton i-widgetbutton--topleft i-settings"));
+        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-widgetbutton i-widgetbutton--topleft i-{$style}"));
 
         return
         Html::button(
           Html::tag('i', '', [
-            'class' => 'zmdi zmdi-edit zmdi-hc-lg',
+            'class' => "zmdi zmdi-{$style} zmdi-hc-lg",
           ]),
         [
           'class' => $class,
-          'title' => Yii::t('app', 'Edit'),
+          'title' => Yii::t('app', ucfirst($style)),
           'ic-indicator' => self::DEFAULT_AJAX_LOADER,
           'ic-target' => '#outstyle_comments .comments_body',
           'ic-get-from' => Url::toRoute(['comments/add']),

@@ -18,7 +18,7 @@ use common\components\helpers\ElementsHelper;
 /* @see @frontend/widgets/UserVideosBlock for vars */
 /* @var $videos */
 
-echo Html::beginTag('div', ['class' => 'user__videos u-window-box--medium']);
+echo Html::beginTag('div', ['class' => 'user__videos u-window-box--medium u-window-box--shadowed']);
 
   # Widget settings button
   echo ElementsHelper::widgetButton();
