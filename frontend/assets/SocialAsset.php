@@ -33,6 +33,7 @@ class SocialAsset extends AssetBundle
         'css/outstyle/social.video.css',
         'css/outstyle/social.friends.css',
         'css/outstyle/social.comments.css',
+        'css/outstyle/social.board.post.css',
 
     ];
     public $js = [

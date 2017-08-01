@@ -20,20 +20,24 @@ use yii\helpers\Url;
 
 echo Html::beginTag('div', [
       'id' => 'comments_section',
-      'class' => 'u-full-width c-comments'
+      'class' => 'u-full-width c-comments '.Yii::$app->controller->id.'__comments'
     ]
 );
 
   # COMMENTS FORM
-  echo $this->render('../../views/comments/_form',
-    ['modelElemId' => $elem_id ?? '']
-  );
+  if ($elem_id) {
+      echo $this->render('../../views/comments/_form',
+        ['modelElemId' => $elem_id]
+      );
+  }
 
 
   # COMMENTS LIST
-  echo $this->render('../../views/comments/_commentblock',
-    ['modelComments' => $comments ?? '']
-  );
+  if ($comments) {
+      echo $this->render('../../views/comments/_commentblock',
+        ['modelComments' => $comments]
+      );
+  }
 
 echo Html::endTag('div');
 

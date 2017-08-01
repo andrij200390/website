@@ -43,7 +43,6 @@ class UserFriendsBlock extends Widget
         # Working with each friend data, setting additional info
         if (isset($this->friends)) {
             foreach ($this->friends as $k => $friend) {
-
                 # Friend ID
                 $id = $this->friends[$k]['id'];
 
@@ -52,6 +51,9 @@ class UserFriendsBlock extends Widget
 
                 # Friend name
                 $friends[$id]['name'] = \app\models\UserNickname::getNickname($id);
+
+                # Friend culture
+                # $friends[$id]['culture'] = \app\models\UserDescription::getUserCultureByUserId($id);
             }
             $this->friends = $friends;
         }

@@ -10,8 +10,7 @@ use common\components\helpers\ElementsHelper;
  */
  echo Html::beginTag('div', ['id' => 'outstyle_comments']),
          Html::beginTag('div', ['class' => 'o-grid o-grid--wrap o-grid--center comments_list']),
-             Html::tag('div', '', ['class' => 'o-grid__cell o-grid__cell--width-10']),
-             Html::beginTag('div', ['class' => 'o-grid__cell o-grid__cell--width-80 o-grid__cell--no-gutter comments_body']);
+             Html::beginTag('div', ['class' => 'o-grid__cell o-grid__cell--width-100 o-grid__cell--no-gutter comments_body']);
 
 if (!empty($modelComments)) {
     $data = Yii::$app->request->get();
@@ -22,7 +21,7 @@ if (!empty($modelComments)) {
             echo '<div id="new_comment">';
         } ?>
         <div data-comment-id="<?=$comment['id']; ?>" class="o-grid o-grid--wrap o-grid--top comment">
-            <div class="o-grid__cell o-grid__cell--width-fixed comment__avatar">
+            <div class="o-grid__cell o-grid__cell--width-fixed o-grid__cell--no-gutter comment__avatar">
               <img src="<?=$comment['userAvatar']; ?>"
                    alt="<?=Yii::t('app', 'Аватар пользователя {user}', ['user' => $comment['userNickname']]); ?>"
                    class="roundborder color-<?=$comment['userCulture']; ?>--border avatar avatar--medium">
@@ -34,7 +33,8 @@ if (!empty($modelComments)) {
                             <?php if ($comment['userNickname']) {
             ?>
                               <a href='javascript:void(0)' class="comment__username"><?=$comment['userNickname']; ?></a>
-                            <?php 
+                            <?php
+
         } else {
             echo Yii::t('app', 'Deleted user');
         } ?>
@@ -76,6 +76,5 @@ if (!empty($modelComments)) {
 }
 
 echo Html::endTag('div'),
-                  Html::tag('div', '', ['class' => 'o-grid__cell o-grid__cell--width-10']),
           Html::endTag('div'),
        Html::endTag('div');

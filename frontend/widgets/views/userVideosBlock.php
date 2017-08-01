@@ -31,7 +31,7 @@ echo Html::beginTag('div', ['class' => 'user__videos u-window-box--medium u-wind
       echo Html::tag('div',
 
         # Video image
-        ElementsHelper::videoLink($video['hash'], Html::img($video['video_img'], ['class' => 'o-image user__videothumbnail'])).
+        ElementsHelper::videoLink($video['hash'], Html::img($video['video_img'], ['class' => 'o-image u-full-width user__videothumbnail'])).
 
         # Video title and link
         ElementsHelper::videoLink($video['hash'], $video['video_title']).

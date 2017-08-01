@@ -9,7 +9,6 @@ jQuery("body").on("commentDelete", function(event, data) {
 
 /* COMMENT ADD */
 jQuery("body").on("commentAdd", function(event, data) {
-
     setTimeout(function(){
         if (jQuery.type(data) === "number") {
 
@@ -72,3 +71,26 @@ function commentsInit() {
     });
 
 }
+
+/* COMMENTS SHOW FORM */
+jQuery("body").on("comments", function(event, data) {
+
+    /* @see: CommentsController -> actionShow */
+    if (data.elem == 'board') {
+      var appendTo = jQuery('#'+data.target).closest('.post');
+      jQuery(".post").removeClass('active-post');
+      appendTo.addClass('active-post');
+
+      jQuery(".show-comment-form-link").show();
+      appendTo.find('.show-comment-form-link').hide();
+      jQuery(".post__comments").empty();
+      jQuery("#comments_section").hide().detach().appendTo(appendTo).slideDown(300);
+
+      setTimeout(function(){
+        window.scroll(0,jQuery(".active-post").position().top );
+        autosize.update(jQuery('#comments_message'));
+      },50);
+
+    }
+
+});

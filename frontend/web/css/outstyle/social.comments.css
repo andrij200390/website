@@ -1,45 +1,59 @@
 /* --- COMMENTS ---- */
-#comments_section .c-comments i.zmdi {
+.c-comments i.zmdi {
   font-size: 19px;
 }
-#comments_section .comment__info {
+.comment__info {
   padding-top:10px;
 }
-#comments_section .comment__username {
+.comment__username {
   color:#606d75;
 }
-#comments_section .comment {
+.comment {
   border-bottom: 1px solid #d5d7d8;
 }
-#comments_section .comment__avatar,
-#comments_section .comment__wrap {
+.comment__avatar,
+.comment__wrap {
   padding-top:1.5em;
 }
-#comments_section .comment__body,
-#comments_section .comment__actions,
-#comments_section .comment__info {
+.comment__body,
+.comment__actions,
+.comment__info {
   padding-right: 1em;
 }
-#comments_section .comment__time,
-#comments_section .comment__body {
+.comment__time,
+.comment__body {
   font-size:12px;
 }
-#comments_section .comment__wrap {
+.comment__wrap {
   position: relative;
 }
-#comments_section .comment__avatar .avatar {
+.comment__avatar .avatar {
   border-width: 2px;
   border-style: solid;
 }
-#comments_section .comment__delete {
+.comment__delete {
   position: absolute;
   right: 0px;
   top: 10px;
   display:none;
+  margin:0;
 }
-#comments_section .comment__deleted {
+.comment__deleted {
   background: #f5f5df;
 }
-#comments_section .comment__highlight {
+.comment__highlight {
   background: #f5f5df;
+}
+.c-comments {
+  padding: 0 6em 0 6em;
+}
+.comments_options {
+  background: #f9f9f9;
+}
+#comments_message {
+  border: 0;
+  padding: 0;
+}
+#comments_section {
+  border-top: 1px solid #dadada;
 }

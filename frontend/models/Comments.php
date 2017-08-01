@@ -49,8 +49,9 @@ class Comments extends \yii\db\ActiveRecord
                 'range' => ElementsHelper::$allowedElements
             ],
             [
-                ['elem_id', 'user_id'],
-                'integer'
+                ['elem_id'],
+                'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number',
+                'message' => 'COMMENT_NO_ELEMENT'
             ],
             [
                 'created',
@@ -208,10 +209,9 @@ class Comments extends \yii\db\ActiveRecord
           'likes' => function ($query) {
               $query->andWhere(['elem_type' => 'comments']);
           }
-        ])->where($where)->orderBy('id desc');
+        ])->where($where)->orderBy('id asc');
 
         $comments = $commentsQuery->all();
-
 
         /* If we don't have any comments found, we won't populate comments model */
         if (!$comments) {

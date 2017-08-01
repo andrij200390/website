@@ -13,21 +13,25 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use frontend\widgets\WidgetComments;
 
 /* @see @frontend/widgets/UserBoardPost for vars */
 /* @var $posts */
 
-echo
-Html::beginTag('div', [
+echo Html::beginTag('div', [
     'id' => 'posts_section',
-    'class' => 'o-grid o-grid--no-gutter'
+    'class' => 'o-grid o-grid--wrap'
   ]
 );
 
   # POST
-  echo $this->render('../../views/board/_boardpost',
+  echo $this->render('../../views/board/post/view',
     ['posts' => $posts ?? '']
   );
+
+
+  # COMMENTS
+  echo WidgetComments::widget();
 
 echo Html::endTag('div');
 

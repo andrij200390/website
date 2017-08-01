@@ -24,14 +24,13 @@ class WidgetComments extends Widget
      * Element ID for comments to be shown
      * @var int
      */
-    public $elem_id;
+    public $elem_id = 568;
 
     /**
      * Comments array
      * @var array
      */
     public $comments = [];
-
 
     /**
      * @inheritdoc
@@ -40,13 +39,12 @@ class WidgetComments extends Widget
     {
         parent::init();
 
-        if (isset($this->elem_id)) {
-            $comments = Comments::getComments([
-              'elem_type' => Yii::$app->controller->id,
-              'elem_id' => $this->elem_id
-            ]);
-            $this->comments = $comments;
-        }
+        $comments = Comments::getComments([
+          'elem_type' => Yii::$app->controller->id,
+          'elem_id' => $this->elem_id
+        ]);
+
+        $this->comments = $comments;
     }
 
 
@@ -56,7 +54,7 @@ class WidgetComments extends Widget
     public function run()
     {
         return $this->render('widgetComments', [
-            'comments' => $this->comments ?? '',
+            'comments' => (Yii::$app->controller->id != 'board') ? $this->comments : '',
             'elem_id' => $this->elem_id
         ]);
     }

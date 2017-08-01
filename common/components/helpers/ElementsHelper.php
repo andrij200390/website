@@ -122,13 +122,11 @@ class ElementsHelper extends Html
      */
     public static function commentAddButton($elem_type = '', $elem_id = 0)
     {
-        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-send"));
+        $class = preg_replace('!\s+!', ' ', trim("c-button u-small i-send u-pull-right"));
 
         return
         Html::button(
-          Html::tag('i', '', [
-            'class' => 'zmdi zmdi-arrow-right zmdi-hc-2x',
-          ]),
+          Yii::t('app', 'Send'),
         [
           'class' => $class,
           'title' => Yii::t('app', 'Send'),
@@ -137,7 +135,7 @@ class ElementsHelper extends Html
           'ic-trigger-delay' => '200ms',
           'ic-target' => '#outstyle_comments .comments_body',
           'ic-get-from' => Url::toRoute(['comments/add']),
-          'ic-prepend-from' => Url::toRoute(['comments/add']),
+          'ic-append-from' => Url::toRoute(['comments/add']),
           'ic-push-url' => 'false',
           'ic-select-from-response' => '#new_comment'
         ]);
@@ -193,6 +191,7 @@ class ElementsHelper extends Html
 
           case 'views':
             $elem_title = Yii::t('app', 'Views');
+            $elem_name .= ' innactive';
             break;
 
           case 'repost':
@@ -252,7 +251,7 @@ class ElementsHelper extends Html
         $attr = [];
 
         /*
-         * If our link has actual URL (href)
+         * If our link has actual URL (href) or else
          */
         if ($url && strpos($url, "#") === false) {
             $attr['ic-get-from'] = $url;
@@ -264,11 +263,14 @@ class ElementsHelper extends Html
 
         if (!$url) {
             $url = 'javascript:void(0)';
-            $elem_name .= ' innactive';
         }
 
         $attr['class'] = $elem_name;
         $attr['title'] = Html::encode(Yii::t('app', $elem_title));
+
+        /*
+          Separate actions handling
+         */
 
         return Html::a($elem_text, $url, $attr);
     }
@@ -419,7 +421,7 @@ class ElementsHelper extends Html
         return Html::tag('div',
           '',
           [
-            'class' => "box box__shadow--effect{$effect} box--{$style}"
+            'class' => "box box__shadow box__shadow--effect{$effect} box--{$style}"
           ]);
     }
 
@@ -432,6 +434,33 @@ class ElementsHelper extends Html
     public static function widgetButton($style = 'edit')
     {
         $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-widgetbutton i-widgetbutton--topleft i-{$style}"));
+
+        return
+        Html::button(
+          Html::tag('i', '', [
+            'class' => "zmdi zmdi-{$style} zmdi-hc-lg",
+          ]),
+        [
+          'class' => $class,
+          'title' => Yii::t('app', ucfirst($style)),
+          'ic-indicator' => self::DEFAULT_AJAX_LOADER,
+          'ic-target' => '#outstyle_comments .comments_body',
+          'ic-get-from' => Url::toRoute(['comments/add']),
+          'ic-prepend-from' => Url::toRoute(['comments/add']),
+          'ic-push-url' => 'false',
+          'ic-select-from-response' => '#new_comment'
+        ]);
+    }
+
+    /**
+     * Post settings button
+     * @param   string $style Icon name
+     * @see:    http://zavoloklom.github.io/material-design-iconic-font/icons.html for icon name
+     * @return  html
+     */
+    public static function postSettingsButton($style = 'more')
+    {
+        $class = preg_replace('!\s+!', ' ', trim("zmdi-icon--hoverable i-postbutton i-postbutton--right i-{$style}"));
 
         return
         Html::button(
