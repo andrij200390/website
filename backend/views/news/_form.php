@@ -40,17 +40,16 @@ echo
     $form->field($model, 'small')->textarea(['rows' => 8]),
 
     /**
-     * Main big text. Using imperavi widget: imperavi\Widget
-     * @see: https://imperavi.com/redactor/docs/
+     * CKEditor
+     * @see: https://github.com/MihailDev/yii2-ckeditor
+     * @see: http://docs.ckeditor.com/#!/guide/dev_toolbar
      */
     $form->field($model, 'text', ['options' => ['class' => 'textarea--enhanced']])->textarea([
-      'rows' => 12,
       'id' => Yii::$app->controller->id.'-textarea', ])->widget(CKEditor::className(), [
-          'editorOptions' => ElFinder::ckeditorOptions(['elfinder', 'path' => 'some/sub/path'], [
-              'preset' => 'full',
-              'height' => 460,
-              'inline' => false,
-          ]),
+          'editorOptions' => ElFinder::ckeditorOptions([
+              'elfinder',
+              'path' => '/'.Yii::$app->controller->id.'/'.$model->primaryKey
+          ], Yii::$app->params['ckeditor']),
       ]);
 
     /* News main photo */
