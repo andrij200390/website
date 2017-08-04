@@ -44,20 +44,23 @@ div.comment {
 .comment__highlight {
   background: #f5f5df;
 }
-.c-comments {
+.comments_video {
   padding: 0 6em 0 6em;
 }
 .comments_options {
   background: #f9f9f9;
 }
-#comments_message {
+.comments_add__body textarea {
   border: 0;
   padding: 0;
 }
-#comments_section {
+.board__comments {
   border-top: 1px solid #dadada;
 }
 .comments_add__avatar .u-c .avatar {
   display: block;
   margin: 0 auto;
+}
+#comments_section__board {
+  display:none;
 }

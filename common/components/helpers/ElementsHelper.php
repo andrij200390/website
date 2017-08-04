@@ -133,7 +133,7 @@ class ElementsHelper extends Html
           'ic-indicator' => self::DEFAULT_AJAX_LOADER,
           'ic-include' => '{"elem_type":"'.$elem_type.'","elem_id":'.(int) $elem_id.'}',
           'ic-trigger-delay' => '200ms',
-          'ic-target' => '#outstyle_comments .comments_body',
+          'ic-target' => '#'.$elem_type.'_comments .comments_body',
           'ic-get-from' => Url::toRoute(['comments/add']),
           'ic-append-from' => Url::toRoute(['comments/add']),
           'ic-push-url' => 'false',

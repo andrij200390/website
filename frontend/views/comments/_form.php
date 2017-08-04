@@ -44,7 +44,6 @@ if (!Yii::$app->user->isGuest) {
             Html::tag('textarea',
               '',
               [
-                'id' => 'comments_message',
                 'name' => 'comments_message',
                 'class' => 'c-field u-xsmall c-field--ordinary',
                 'placeholder' => Yii::t('app', 'Enter your comment...')
@@ -91,7 +90,7 @@ if (!Yii::$app->user->isGuest) {
       ),
 
       [
-        'way-data' => 'comment',
+        'way-data' => Yii::$app->controller->id.'comment',
         'way-persistent' => true
       ]
     );

@@ -2,9 +2,6 @@
   margin-left: -1px;
   border-left: 1px solid #dadada;
 }
-#posts_section #comments_section {
-  display:none;
-}
 .post {
   border-bottom: 1px solid #dadada;
   padding-bottom:0;
