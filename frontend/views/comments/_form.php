@@ -74,7 +74,8 @@ if (!Yii::$app->user->isGuest) {
 
         # COMMENTS ATTACHMENT BUTTONS
         Html::tag('div',
-          '',
+          ElementsHelper::attachmentAddButton().
+          ElementsHelper::attachmentAddButton(1),
           ['class' => 'o-grid__cell o-grid__cell--width-50']
         ).
 
