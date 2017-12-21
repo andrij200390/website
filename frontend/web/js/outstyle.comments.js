@@ -24,7 +24,7 @@ jQuery("body").on("commentAdd", function(event, data) {
 
             /**
              * Working with localstorage
-             * - Removing stored comment conents to clear the comments_message form
+             * - Removing stored comment contents to clear the comments_message form
              * - Removing stored attachments
              */
             way.restore();
@@ -32,8 +32,11 @@ jQuery("body").on("commentAdd", function(event, data) {
             way.remove('attachments'); /* TODO: separate types .5 .6 */
             way.backup();
 
-            jQuery('#comments_section__'+data.elem_id+' .comments_add__body textarea').html(); /* Clearing message textarea */
-            jQuery('#comments_section__'+data.elem_id+' .comments_add__body #board_attachments').empty(); /* Clearing attachments textarea */
+            /* Visual stuff after comment was added */
+            jQuery('#comments_section__'+data.elem_type+' .comments_add__body textarea').html(); /* Clearing message textarea */
+            jQuery('#comments_section__'+data.elem_type+' .comments_add__body #'+data.elem_type+'_attachments').empty(); /* Clearing attachments area */
+            jQuery('#comments_section__'+data.elem_type+' .comments_add__attachments button').show(); /* Showing attachment buttons again */
+
             jQuery('#ohsnap').empty();
 
             ohSnap('Dev debug: commentAdd triggered', {'color':'blue'});
@@ -87,8 +90,6 @@ function commentsInit(controllerId) {
               settings.data = settings.data+'&attachments='+comment_attachments;
           }
 
-          /* Clearing attachments container */
-          jQuery('#comments_section__'+controllerId+' .comments_add__body #board_attachments').empty(); /* Clearing attachments textarea */
       }
 
     });

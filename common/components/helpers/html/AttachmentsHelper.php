@@ -83,7 +83,8 @@ class AttachmentsHelper extends ElementsHelper
     }
 
     /**
-     * Div for handling attachments list
+     * Div for handling attachments list (i.e. in single comment)
+     *
      * Because an attachment entity counts as a child element of any other entity and it can't be listed by itself,
      * ic-trigger-on is a must have attr, since it will trigger attachment list only from other elements
      * @param  string   $elem_type        Element type (i.e. comments)   @see: self::$allowedElements

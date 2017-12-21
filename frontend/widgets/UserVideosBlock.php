@@ -47,7 +47,7 @@ class UserVideosBlock extends Widget
         if (isset($this->videos)) {
             foreach ($this->videos as $k => $video) {
                 $videos[$k] = $video;
-                $videos[$k]['hash'] = CryptoHelper::hash($video['id']);
+                $videos[$k]['hash'] = $video['id'];
                 $videos[$k]['service_id'] = VideoServices::getVideoServiceNameByServiceId($video['service_id']);
                 $videos[$k]['service_link'] = VideoServices::generateServiceLink($video['video_id'], $video['service_id']);
             }

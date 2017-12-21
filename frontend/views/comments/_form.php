@@ -9,7 +9,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 use app\models\UserAvatar;
-use common\components\helpers\ElementsHelper;
+use common\components\helpers\html\CommentsHelper;
 use common\components\helpers\html\AttachmentsHelper;
 
 /* @var $modelElemId */
@@ -85,7 +85,7 @@ if (!Yii::$app->user->isGuest) {
 
         # COMMENTS SEND BUTTON
         Html::tag('div',
-          ElementsHelper::commentAddButton(Yii::$app->controller->id, $modelElemId),
+          CommentsHelper::commentAddButton(Yii::$app->controller->id, $modelElemId),
           ['class' => 'o-grid__cell o-grid__cell--width-50']
         ),
 

@@ -149,34 +149,6 @@ class ElementsHelper extends Html
     }
 
     /**
-     * Generates an active button element to send API requests for comments.
-     *
-     * @param string     $elem_type    elem_type from DB (see self::$allowedElements)
-     * @param int        $elem_id      elem_id from DB (taxonomy/relations)
-     *
-     * @return html the generated HTML button tag
-     */
-    public static function commentAddButton($elem_type = '', $elem_id = 0)
-    {
-        $class = preg_replace('!\s+!', ' ', trim("c-button u-small i-send u-pull-right"));
-
-        return
-        Html::button(
-          Yii::t('app', 'Send'),
-        [
-          'class' => $class,
-          'title' => Yii::t('app', 'Send'),
-          'ic-indicator' => self::DEFAULT_AJAX_LOADER,
-          'ic-include' => '{"elem_type":"'.$elem_type.'","elem_id":'.(int) $elem_id.'}',
-          'ic-target' => '#'.$elem_type.'_comments .comments_body',
-          'ic-get-from' => Url::toRoute(['comments/add']),
-          'ic-append-from' => Url::toRoute(['comments/add']),
-          'ic-push-url' => 'false',
-          'ic-select-from-response' => '#new_comment'
-        ]);
-    }
-
-    /**
      * Generates an active video link
      * @param  string $video_hash
      * @param  string $video_title

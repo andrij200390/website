@@ -22,7 +22,6 @@ use app\models\AuthAssignment;
 use app\models\UserDescription;
 
 use frontend\components\ParentController;
-use common\components\helpers\CryptoHelper;
 
 class VideoController extends ParentController
 {
@@ -63,18 +62,20 @@ class VideoController extends ParentController
     /**
      * Single video view
      * Checks videohash, decrypts it, and if it has valid data - renders the view
+     * NOTE: Currently hash is UNHASHED and is simply a video ID from DB
      *
      * @param  string $videoHash Hashed video ID
      * @return array
      */
     public function actionView($videoHash)
     {
-        $videoId = CryptoHelper::unhash($videoHash);
-        if (!$videoId && !is_int($videoId)) {
-            throw new NotFoundHttpException();
+        $videoId = $videoHash;
+        $video = Video::getById($videoId);
+
+        if (!$video) {
+            throw new NotFoundHttpException('Video not found');
         }
 
-        $video = Video::getById($videoId);
         return $this->render('view', [
             'video' => $video
         ]);

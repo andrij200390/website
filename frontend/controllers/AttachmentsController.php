@@ -81,6 +81,10 @@ class AttachmentsController extends Controller
             $model = Video::getByUserId();
         }
 
+        if ($type == 'photo') {
+            $model = Video::getByUserId();
+        }
+
         return $this->render($type, [
             'model' => $model,
             'elem_type' => Yii::$app->request->get('elem_type'), /* Check is already performed in 'beforeAction' event */
