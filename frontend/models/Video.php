@@ -31,6 +31,21 @@ class Video extends \common\models\Video
         return self::find()->where(['user' => $userId])->orderBy("id desc")->asArray()->all();
     }
 
+    /**
+     * Gets user videos from DB and returns an array of data
+     * @param  int $userId    User ID (defaults to active user ID)
+     * @return array
+     *
+     * TODO: make it same functionality as getPhotos
+     */
+    public static function getVideos($userId = 0)
+    {
+        if (!$userId) {
+            $userId = Yii::$app->user->id;
+        }
+        return self::find()->where(['user' => $userId])->orderBy("id desc")->asArray()->all();
+    }
+
     /* RELATIONS */
     public function getComments()
     {

@@ -28,6 +28,11 @@ class User extends \common\models\User
         return $this->hasMany(Video::className(), ['user' => 'id']);
     }
 
+    public function getPhoto()
+    {
+        return $this->hasMany(Photo::className(), ['user' => 'id']);
+    }
+
     public function getFriend()
     {
         return $this->hasMany(Friend::className(), ['user1' => 'id']);

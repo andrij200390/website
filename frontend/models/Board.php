@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 
-/**
+/*
  * This is the model class for table "{{%board}}".
  *
  * @property bigint(20) $id
@@ -76,6 +76,9 @@ class Board extends \yii\db\ActiveRecord
           'userDescription',
           'userPrivacy',
           'video' => function (\yii\db\ActiveQuery $query) {
+              $query->orderBy(self::$boardOrderBy)->limit(2)->asArray()->all();
+          },
+          'photo' => function (\yii\db\ActiveQuery $query) {
               $query->orderBy(self::$boardOrderBy)->limit(2)->asArray()->all();
           },
           'friend' => function (\yii\db\ActiveQuery $query) {

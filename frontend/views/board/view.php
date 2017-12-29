@@ -8,6 +8,7 @@ use common\components\helpers\SEOHelper;
 use frontend\widgets\UserProfileBlock;
 use frontend\widgets\UserFriendsBlock;
 use frontend\widgets\UserVideosBlock;
+use frontend\widgets\UserPhotosBlock;
 use frontend\widgets\UserBoardPost;
 
 /* @var $this yii\web\View */
@@ -33,6 +34,16 @@ echo Html::beginTag('section', ['id' => 'leftBlock']);
       'videos' => $user->video,
       'options' => [
           'title' => Yii::t('app', 'Videos'),
+          'class' => 'user__videos u-window-box--medium u-window-box--shadowed',
+          'cell_class' => 'u-letter-box--medium',
+      ]
+    ]);
+
+    # PHOTOS widget | @frontend/widgets/UserPhotosBlock.php
+    echo UserPhotosBlock::widget([
+      'photos' => $user->photo,
+      'options' => [
+          'title' => Yii::t('app', 'Photos'),
           'class' => 'user__videos u-window-box--medium u-window-box--shadowed',
           'cell_class' => 'u-letter-box--medium',
       ]

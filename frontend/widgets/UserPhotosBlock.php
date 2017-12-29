@@ -5,11 +5,10 @@ namespace frontend\widgets;
 use Yii;
 use yii\base\Widget;
 use common\components\helpers\CryptoHelper;
-use app\models\Video;
-use app\models\VideoServices;
+use common\models\Photo;
 
 /**
- * Handles User -> Videos block, showing videos of user
+ * Handles User -> Photos block, showing photos of user
  * Part of Outstyle network
  *
  * @author [SC]Smash3r <scsmash3r@gmail.com>
@@ -19,14 +18,14 @@ use app\models\VideoServices;
  * @link https://github.com/Outstyle/website
  * @license Beerware
  */
-class UserVideosBlock extends Widget
+class UserPhotosBlock extends Widget
 {
 
     /**
-     * User videos array
+     * User photos array
      * @var array
      */
-    public $videos = [];
+    public $photos = [];
 
     /**
      * Widget options
@@ -41,19 +40,6 @@ class UserVideosBlock extends Widget
     {
         parent::init();
 
-        $videos = [];
-
-        # Hashing video URLs for later use
-        if (isset($this->videos)) {
-            foreach ($this->videos as $k => $video) {
-                $videos[$k] = $video;
-                $videos[$k]['hash'] = $video['id'];
-                $videos[$k]['service_id'] = VideoServices::getVideoServiceNameByServiceId($video['service_id']);
-                $videos[$k]['service_link'] = VideoServices::generateServiceLink($video['video_id'], $video['service_id']);
-            }
-            $this->videos = $videos;
-        }
-
         # Working with default options
         if (!isset($this->options['titleTag'])) {
             $this->options['titleTag'] = 'h4';
@@ -64,7 +50,7 @@ class UserVideosBlock extends Widget
         }
 
         if (!isset($this->options['view'])) {
-            $this->options['view'] = 'userVideosBlock';
+            $this->options['view'] = 'userPhotosBlock';
         }
 
         # Widget button settings
@@ -101,7 +87,7 @@ class UserVideosBlock extends Widget
     public function run()
     {
         return $this->render($this->options['view'], [
-          'videos' => $this->videos,
+          'photos' => $this->photos,
           'options' => $this->options,
         ]);
     }

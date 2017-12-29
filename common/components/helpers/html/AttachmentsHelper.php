@@ -50,13 +50,14 @@ class AttachmentsHelper extends ElementsHelper
      * Generates an active link element to send API requests for adding an attachment to element
      * For the first parameter we are passing object, that will tell us, what type/kind of entity we are working with.
      * We also need to return our active token to reach route.
+     * NOTE: type check can be splitted up into separate pieces to decrease complexity, if there will be more attachment types
      *
      * @param  object   $model              What element we are working with?
      * @param  string   $elem_type          Element type (i.e. comments) @see: self::$allowedElements
      * @param  integer  $elem_id
      * @return HTML <a> tag
      */
-    public static function attachmentAddLink($model = [], $elem_type = '', $elem_id = 0)
+    public static function attachmentAddLink($model = [], $elem_type = '', $elem_id = 0, $elem_type_parent = false)
     {
         if (!isset($model['id']) || !$elem_type) {
             return;
@@ -69,6 +70,13 @@ class AttachmentsHelper extends ElementsHelper
             $attachment_title = Html::img($model['video_img'], ['class' => 'o-image u-full-width u-pull-left user__videothumbnail']).'<i class="zmdi zmdi-check-circle zmdi-hc-5x"></i><div class="clearfix"></div>';
         }
 
+        /* Type check: PHOTO */
+        if (isset($model['img']) && isset($model['id'])) {
+            $attachment_type = 'photo';
+            $attachment_link = Url::toRoute('/photo-'.$model['id'], true);
+            $attachment_title = Html::img($model['img'], ['class' => 'o-image u-full-width u-pull-left user__photothumbnail']).'<i class="zmdi zmdi-check-circle zmdi-hc-5x"></i><div class="clearfix"></div>';
+        }
+
         return Html::a($attachment_title, $attachment_link,
           [
             'class' => 'user__addattachment',
@@ -76,7 +84,7 @@ class AttachmentsHelper extends ElementsHelper
             'ic-action' => 'userHideAttachmentsModal',
             'ic-include' => '{"'.Yii::$app->request->csrfParam.'":"'.self::getCSRFToken().'","type":"'.$attachment_type.'","id":'.(int)$model['id'].',"elem_type":"'.$elem_type.'","elem_id":'.(int)$elem_id.'}',
             'ic-target' => '#board_attachments',
-            'ic-indicator' => self::DEFAULT_AJAX_LOADER,
+            'ic-indicator' => '#board_attachments_loader',
             'ic-push-url' => 'false',
           ]
         );
@@ -86,26 +94,31 @@ class AttachmentsHelper extends ElementsHelper
      * Div for handling attachments list (i.e. in single comment)
      *
      * Because an attachment entity counts as a child element of any other entity and it can't be listed by itself,
-     * ic-trigger-on is a must have attr, since it will trigger attachment list only from other elements
+     * ic-trigger-on is a must have attr (for existing ID), since it will trigger attachment list only from other elements
      * @param  string   $elem_type        Element type (i.e. comments)   @see: self::$allowedElements
      * @param  integer  $elem_id
      * @return HTML <div> tag
      */
     public static function attachmentsArea($elem_type = '', $elem_id = 0)
     {
+
         /* If $elem_id is already set, that means we are getting an attachments for already existing entity (i.e. comment) */
         if ($elem_id) {
             $include = ',"elem_id":'.(int)$elem_id.',"elem_type":'.self::getElementIdByControllerId($elem_type);
             $elem_type = $elem_type.'-'.$elem_id;
             $trigger_on = 'scrolled-into-view';
-            $indicator = $elem_type.' .loader';
+            $indicator = '#'.$elem_type.'_attachments_loader';
             $loader = '<div class="loader--small"></div>';
         } else {
-            $include = '';
+            /*
+              If element is not existing, that means we are working with not yet sent attachments on comments form
+              Therefore, we need to pass parent element, so we could know what type of entity we are working with
+             */
+            $include = ',"elem_type_parent":'.self::getElementIdByControllerId($elem_type);
+            $loader = '';
             $elem_type = $elem_type.'_attachments';
             $trigger_on = $elem_type;
-            $indicator = self::DEFAULT_AJAX_LOADER;
-            $loader = '';
+            $indicator = '';
         }
 
         return Html::tag('div', $loader, [
@@ -116,6 +129,25 @@ class AttachmentsHelper extends ElementsHelper
           'ic-include' => '{"'.Yii::$app->request->csrfParam.'":"'.self::getCSRFToken().'"'.$include.'}',
           'ic-indicator' => $indicator,
           'ic-push-url' => 'false'
+        ]);
+    }
+
+    /**
+     * Loader spinner for attachments
+     *
+     * @param  string   $elem_type        Element type (i.e. comments)   @see: self::$allowedElements
+     * @return HTML <div> tag
+     */
+    public static function attachmentsLoader($elem_type = '')
+    {
+        if (!$elem_type) {
+            return;
+        }
+
+        $loader = '<div class="loader--smallest"></div>';
+
+        return Html::tag('div', $loader, [
+          'id' => $elem_type.'_attachments_loader'
         ]);
     }
 }

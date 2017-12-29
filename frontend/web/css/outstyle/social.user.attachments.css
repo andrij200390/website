@@ -5,7 +5,8 @@
   margin-bottom: 0.5em;
   background: #000;
 }
-.attachments_video .user__video i {
+.attachments_video .user__video i,
+.attachments_photo .user__photo i {
   display: block;
   color: #FFF;
   position: absolute;
@@ -14,18 +15,21 @@
   top:20%;
   opacity:0;
 }
-.attachments_video .user__video:hover i {
+.attachments_video .user__video:hover i,
+.attachments_photo .user__photo:hover i {
   opacity: 1;
   -webkit-transition: all .9s ease-in-out;
 	transition: all .9s ease-in-out;
 }
-.attachments_video .user__video:hover {
+.attachments_video .user__video:hover,
+.attachments_photo .user__photo:hover {
   -webkit-transition: all .5s ease-in-out;
 	transition: all .5s ease-in-out;
   background: #fff;
   color: #000;
 }
-.attachments_video .user__video:hover img {
+.attachments_video .user__video:hover img,
+.attachments_photo .user__photo:hover img {
   opacity: 0.4;
 }
 .attachments_area {

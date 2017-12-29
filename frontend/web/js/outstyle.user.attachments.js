@@ -1,6 +1,7 @@
 var attachments = '';
 var attachments_container = '#userattachments';
-var attachments_allowed_elements = [5,6];
+var attachments_main_loader = '#outstyle_loader';
+var attachments_allowed_elements = [5,6]; /* board, comments */
 
 /**
  * Fires on attachments choose modal window
@@ -32,7 +33,7 @@ jQuery(attachments_container).on('closeModal', function(e) {
  */
 function getAttachmentsLimit(key) {
     if (key == 6) {
-      return 2;
+      return 2; /* Attachments limit for comments */
     }
     return 0;
 }
@@ -59,6 +60,7 @@ function attachmentDelete(elt) {
 
     if (typeof lc_key !== "undefined" && typeof lc_elem !== "undefined") {
         var attachments = way.get('attachments.'+lc_key);
+
         if (attachments) {
             var attachmentToRemove = attachments[lc_elem];
 
@@ -115,9 +117,11 @@ jQuery("body").on("attachmentPrepareAdd", function(event, data) {
         way.backup();
     }
 
+    jQuery(attachments_main_loader).show();
     Intercooler.triggerRequest(event.target, function (html) {
         jQuery(event.target).html(html);
         Intercooler.processNodes(event.target);
+        jQuery(attachments_main_loader).hide();
     });
 
 });

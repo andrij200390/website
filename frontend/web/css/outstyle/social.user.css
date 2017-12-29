@@ -39,7 +39,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-/* --- SOCIAL USER VIDEOS --- */
+/* --- SOCIAL USER VIDEOS + PHOTOS --- */
 .user__videos {
   position: relative;
 }
@@ -47,13 +47,19 @@
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
-.user__videotitle {
+.user__videotitle,
+.user__phototitle {
   display: block;
   font-size: .8em;
   text-align:left;
 }
-.user__videodate {
+.user__videodate,
+.user__photodate {
   font-size: .7em;
   text-align:left;
   color: #bcbcbc;
+}
+.user__photothumbnail,
+.user__videothumbnail {
+  background: #eee;
 }

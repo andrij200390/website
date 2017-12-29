@@ -176,6 +176,11 @@ class Attachments extends \yii\db\ActiveRecord
     {
         switch ($attachment_type) {
 
+            # Photo
+            case 7:
+              $activeAttachments = Photo::find()->where(['id' => $attachment_id])->asArray()->one();
+              break;
+
             # Video
             case 8:
               $activeAttachments = Video::find()->where(['id' => $attachment_id])->asArray()->one();

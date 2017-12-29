@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\helpers\Json;
 
 use app\models\Video;
+use app\models\Photo;
 use app\models\Attachments;
 use common\components\helpers\html\AttachmentsHelper;
 
@@ -78,17 +79,16 @@ class AttachmentsController extends Controller
     public function actionGet($type)
     {
         if ($type == 'video') {
-            $model = Video::getByUserId();
+            $model = Video::getVideos();
         }
 
         if ($type == 'photo') {
-            $model = Video::getByUserId();
+            $model = Photo::getPhotos();
         }
 
         return $this->render($type, [
             'model' => $model,
-            'elem_type' => Yii::$app->request->get('elem_type'), /* Check is already performed in 'beforeAction' event */
-            'elem_type_parent' => Yii::$app->request->get('elem_type_parent')
+            'elem_type' => Yii::$app->request->get('elem_type') /* Check is already performed in 'beforeAction' event */
         ]);
     }
 
@@ -143,13 +143,15 @@ class AttachmentsController extends Controller
     }
 
     /**
-     * Lists an attachments from localstorage, based on element ID and element type
+     * Lists an attachments from localstorage or DB, based on element ID and element type
      * @return mixed
      */
     public function actionList()
     {
         $data = Yii::$app->request->get();
         $activeAttachments = [];
+        $elem_type = $data['elem_type'] ?? false; /* TODO: make elem check */
+        $elem_type_parent = $data['elem_type_parent'] ?? false; /* TODO: make elem check */
 
         /* List attachments from localstorage */
         if (isset($data) && !isset($data['elem_id']) && !isset($data['elem_type'])) {
@@ -157,26 +159,31 @@ class AttachmentsController extends Controller
                 if (is_int($elem_type)) {
                     foreach ($attachments as $key => $attachment) {
                         $attachment = Attachments::parseStringForAttachment($attachment);
-                        $activeAttachments[$key] = Attachments::getAttachmentByTypeAndId($attachment[0], $attachment[1]);
+                        if ($attachment[0]) {
+                            $activeAttachments[$attachment[0]][] = Attachments::getAttachmentByTypeAndId($attachment[0], $attachment[1]);
+                        }
                     }
                 }
             }
+        /* List attached, but not yet sent attachments */
         } else {
             $attachments = Attachments::find()->where([
-              'elem_type' => $data['elem_type'],
+              'elem_type' => $elem_type,
               'elem_id' => $data['elem_id']
             ])->asArray()->all();
+            
+            $elem_type_parent = $elem_type;
 
-
-            /* Attachment type check to get atual model of the attached element */
+            /* Attachment type check to get actual model of the attached element */
             foreach ($attachments as $key => $attachment) {
-                $activeAttachments[$key] = Attachments::getAttachmentByTypeAndId($attachment['attachment_type'], $attachment['attachment_id']);
+                $activeAttachments[$attachment['attachment_type']][] = Attachments::getAttachmentByTypeAndId($attachment['attachment_type'], $attachment['attachment_id']);
             }
         }
 
         return $this->render('view', [
-            'model' => $activeAttachments,
-            'elem_type' => $elem_type ?? false
+            'attachments' => $activeAttachments ?? [],
+            'elem_type' => $elem_type,
+            'elem_type_parent' => $elem_type_parent ? AttachmentsHelper::$allowedElements[$elem_type_parent] : false
         ]);
     }
 }

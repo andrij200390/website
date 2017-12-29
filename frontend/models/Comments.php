@@ -19,6 +19,8 @@ use common\components\helpers\ElementsHelper;
  */
 class Comments extends \yii\db\ActiveRecord
 {
+    const SCENARIO_DEFAULT = 'default';
+    const SCENARIO_WITH_ATTACHMENT = 'attachment';
 
     /**
      * @inheritdoc
@@ -26,6 +28,27 @@ class Comments extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%comments}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => [
+              'comment',
+              'elem_type',
+              'elem_id',
+              'user_id'
+            ],
+            self::SCENARIO_WITH_ATTACHMENT => [
+              'comment',
+              'elem_type',
+              'elem_id',
+              'user_id'
+            ],
+        ];
     }
 
     /**
@@ -41,7 +64,8 @@ class Comments extends \yii\db\ActiveRecord
             [
                 'comment',
                 'required',
-                'message' => 'COMMENT_EMPTY'
+                'message' => 'COMMENT_EMPTY',
+                'on' => self::SCENARIO_DEFAULT
             ],
             [
                 'elem_type',
@@ -60,7 +84,10 @@ class Comments extends \yii\db\ActiveRecord
             [
                 'comment',
                 'string',
-                'min' => 1,
+                'message' => 'COMMENT_SYMBOLS_LIMIT',
+                'tooLong' => 'COMMENT_SYMBOLS_TOO_LONG',
+                'tooShort' => 'COMMENT_SYMBOLS_TOO_SHORT',
+                'min' => 5,
                 'max' => 5000
             ],
             [
@@ -75,12 +102,6 @@ class Comments extends \yii\db\ActiveRecord
                 'elem_type',
                 'string',
                 'max' => 255
-            ],
-            [
-                ['user_id', 'elem_id', 'comment', 'elem_type'],
-                'unique',
-                'targetAttribute' => ['user_id', 'elem_id', 'comment', 'elem_type'],
-                'message' => 'COMMENT_DUPLICATE'
             ]
         ];
     }
@@ -107,9 +128,36 @@ class Comments extends \yii\db\ActiveRecord
  * @param string    $elem_type  Which type of element does this comment represents (i.e. news, school, board)
  * @param int       $elem_id    Element's id
  * @param string    $text       Comment's text (body)
+ * @param string    $scenario   Scenario to use (i.e. comment with attachments)
  * @return int      Added comment ID
  */
-    public static function addComment($elem_type, $elem_id, $text)
+    public static function addComment($elem_type, $elem_id, $text, $scenario = self::SCENARIO_DEFAULT)
+    {
+        $comment = new self(['scenario' => $scenario]);
+        $comment->elem_type = $elem_type;
+        $comment->elem_id = $elem_id;
+        $comment->user_id = Yii::$app->user->id;
+        $comment->comment = $text;
+
+        /* If our comment passes validation rules and is not a duplicate... */
+        if ($comment->validate()) {
+            $comment->save();
+        } else {
+            return $comment->errors;
+        }
+
+        return $comment->id;
+    }
+
+/**
+ * Adds a comment to DB
+ *
+ * @param string    $elem_type  Which type of element does this comment represents (i.e. news, school, board)
+ * @param int       $elem_id    Element's id
+ * @param string    $text       Comment's text (body)
+ * @return int      Added comment ID
+ */
+    public static function addCommentWithAttachments($elem_type, $elem_id, $text)
     {
         $comment = new Comments;
         $comment->elem_type = $elem_type;

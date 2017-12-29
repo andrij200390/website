@@ -172,6 +172,28 @@ class ElementsHelper extends Html
     }
 
     /**
+     * Generates an active photo link
+     * @param  string $photo_id
+     * @param  string $photo_title
+     * @return HTML <a> tag
+     */
+    public static function photoLink($photo_id = '', $photo_title = '')
+    {
+        return
+        Html::a($photo_title, Url::toRoute('/photo-'.$photo_id, true),
+          [
+            'class' => 'user__phototitle',
+            'ic-action' => 'userShowPhotoModal',
+            'ic-get-from' => Url::toRoute('/photo-'.$photo_id),
+            'ic-select-from-response' => '#'.self::DEFAULT_TARGET_ID,
+            'ic-target' => '#userphoto .modal__iframe',
+            'ic-indicator' => self::DEFAULT_AJAX_LOADER,
+            'ic-push-url' => 'true',
+          ]
+        );
+    }
+
+    /**
      * Generates an active 'a' tag element with given type
      * ZMDI icons: http://zavoloklom.github.io/material-design-iconic-font/icons.html#comment.
      *
@@ -440,8 +462,12 @@ class ElementsHelper extends Html
      * @see:    http://zavoloklom.github.io/material-design-iconic-font/icons.html for icon name
      * @return  html
      */
-    public static function widgetButton($action = 'edit', $position = 'topleft', $size = 'lg')
-    {
+    public static function widgetButton(
+      $action = 'edit',
+      $position = 'topleft',
+      $size = 'lg',
+      $indicator = self::DEFAULT_AJAX_LOADER
+    ) {
         /*
          * Setting params for button, based on action
          * For more names, please add manually here
@@ -472,7 +498,7 @@ class ElementsHelper extends Html
         [
           'class' => $class,
           'title' => $title,
-          'ic-indicator' => self::DEFAULT_AJAX_LOADER,
+          'ic-indicator' => $indicator,
           'ic-get-from' => Url::toRoute([Yii::$app->controller->id.'/'.$action]),
           'ic-push-url' => 'false'
         ]);

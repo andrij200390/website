@@ -45,9 +45,30 @@ class CommentsController extends Controller
  */
     public function actionAdd()
     {
-        $data = Yii::$app->request->get();
+        $attachments = ''; /* Initially we take comment attachments as none */
+        $scenario = Comments::SCENARIO_DEFAULT;
 
-        $newCommentId = Comments::addComment($data['elem_type'], $data['elem_id'], $data['comments_message'] ?? ''); // Returns comment ID
+        $data = Yii::$app->request->get();
+        $comments = new Comments();
+
+        # First let's check if our comments has an attachment
+        if (isset($data['attachments'])) {
+            $attachments = Attachments::parseStringForAttachments($data['attachments']);
+
+            # If we do have at least one attachment, we need to set default message as a space
+            if ($attachments[0]) {
+                $scenario = Comments::SCENARIO_WITH_ATTACHMENT;
+            }
+        }
+
+        # Returns comment ID in case of success
+        $newCommentId = Comments::addComment(
+          $data['elem_type'] ?? '',
+          $data['elem_id'] ?? '',
+          $data['comments_message'] ?? '',
+          $scenario
+        );
+
         $headerResponse = $newCommentId;
 
         if (is_numeric($newCommentId)) {
@@ -56,16 +77,15 @@ class CommentsController extends Controller
             $headerResponse['parent_id'] = (int)$data['elem_id'];
             $headerResponse['elem_id'] = $newCommentId;
 
-            # Adds an attachment to comment, if valid data is present
-            if (isset($data['attachments'])) {
-                $attachments = Attachments::parseStringForAttachments($data['attachments']);
+            # Adds an attachment to comment, if check was succesfully passed earlier
+            if ($attachments) {
                 foreach ($attachments as $attachment) {
                     $added_attachments[] = Attachments::addAttachment($attachment[0], $attachment[1], $data['elem_type'], $newCommentId);
                 }
                 $headerResponse['attachments'] = $added_attachments;
             }
         }
-
+        dd($headerResponse);
         $headers = Yii::$app->response->headers;
         $headers->add('X-IC-Trigger', '{"commentAdd":['.Json::encode($headerResponse).']}');
 

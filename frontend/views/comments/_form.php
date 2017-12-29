@@ -64,7 +64,7 @@ if (!Yii::$app->user->isGuest) {
         ).
 
         Html::tag('div',
-          '',
+          AttachmentsHelper::attachmentsLoader(Yii::$app->controller->id),
           ['class' => 'o-grid__cell o-grid__cell--no-gutter o-grid__cell--width-10 u-c']
         ),
 
