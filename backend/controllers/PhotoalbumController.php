@@ -94,18 +94,18 @@ class PhotoalbumController extends Controller
         /* Data init: getting $_POST data */
         $data = Yii::$app->request->post();
 
-        $model = new Photoalbum();
-        $model->create($controllerId, $modelId);
+        $photoalbum = new Photoalbum();
+        $photoalbum->createFor($controllerId, $modelId);
 
-        if ($model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
+        if ($photoalbum->save()) {
+            return $this->redirect(['update', 'id' => $photoalbum->id]);
         }
 
         /* Default response in JSON */
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         return [
-            'errors' => $model->errors,
+            'errors' => $photoalbum->errors,
         ];
     }
 

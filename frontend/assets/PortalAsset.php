@@ -22,7 +22,8 @@ class PortalAsset extends AssetBundle
         'css/owlcarousel/owl.theme.default.min.css',
         'css/fancybox/jquery.fancybox.min.css',
         'css/fancybox/jquery.fancybox.min.css',
-
+        'css/misc/OverlayScrollbars.min.css',
+        
         'css/portal.css',
         'css/outstyle/base.layout.css',
         'css/outstyle/base.boxes.css',
@@ -33,12 +34,12 @@ class PortalAsset extends AssetBundle
         'css/outstyle/social.comments.css',
     ];
     public $js = [
-        'js/jquery.easyModal.js',
-        'js/packery.pkgd.min.js',
-        'js/intercooler-1.0.3.min.js',
-        'js/select2/select2.full.min.js',
-        'js/owlcarousel/owl.carousel.min.js',
-        'js/fancybox/jquery.fancybox.min.js',
+        'js/misc/jquery.easyModal.js',
+        'js/misc/packery.pkgd.min.js',
+        'js/misc/intercooler-1.2.1.min.js',
+        'js/misc/select2/select2.full.min.js',
+        'js/misc/owlcarousel/owl.carousel.min.js',
+        'js/misc/fancybox/jquery.fancybox.min.js',
 
         'js/misc/autosize.min.js',
         'js/misc/ohsnap.min.js',

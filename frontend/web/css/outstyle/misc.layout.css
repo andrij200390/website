@@ -259,6 +259,16 @@ ul {
   top: 0;
   left:0;
 }
+.i-widgetbutton--bottomright {
+  position: absolute;
+  bottom: 0;
+  right:0;
+}
+.i-widgetbutton--bottomleft {
+  position: absolute;
+  bottom: 0;
+  left:0;
+}
 
 /* ZMDI package: http://zavoloklom.github.io/material-design-iconic-font/icons.html */
 .i-icon.views i.zmdi.zmdi-eye {

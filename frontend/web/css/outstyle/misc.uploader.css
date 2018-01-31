@@ -1,0 +1,58 @@
+/*
+	Uploader:
+	- These styles are the ones used on the examples. No needed to use it by any means.
+	- It disables user selection to avoid some weird visuals in some browsers
+	- It masks/hides the the file input behind a button
+ */
+
+.dm-uploader {
+	cursor: default;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.dm-uploader {
+	position: relative;
+	overflow: hidden;
+}
+
+.dm-uploader input[type="file"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	border: solid transparent;
+	width: 100%;
+	opacity: .0;
+	filter: alpha(opacity= 0);
+	cursor: pointer;
+  height: 6em;
+}
+
+.dm-uploader .u-center-block__content {
+  width: 100%;
+}
+
+.preview-img {
+	width: 64px;
+	height: 64px;
+}
+
+form .progress {
+	height: 38px;
+}
+.dm-uploader {
+	border: 0.15rem dashed #A5A5C7;
+}
+.dm-uploader.active {
+	border-color: #0072bc;
+	border-style: solid;
+}
+.dm-uploader.active .messagebox {
+	background: #fff;
+}

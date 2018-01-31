@@ -27,7 +27,7 @@ Spaceless::begin();
 <?php $this->head(); ?>
 <?php echo Html::csrfMetaTags(); ?>
 <link rel="shortcut icon" type="image/png" href="<?=Url::toRoute('/css/favicon.png');?>">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body class="social user<?php echo (Yii::$app->user->id) ? '-registered' : '-guest'; ?>">
 <?php
@@ -91,8 +91,8 @@ echo Html::beginTag('div', ['class' => 'wrap-fix']);
                 ],
                 [
                   'label' => '<i class="icons icons--photos"></i>'.Yii::t('app', 'Photos'),
-                  'url' => ['/'],
-                  'active' => $checkController('messages')
+                  'url' => ['/photos'],
+                  'active' => $checkController('photo')
                 ],
                 [
                   'label' => '<i class="icons icons--videos"></i>'.Yii::t('app', 'Videos'),
@@ -135,6 +135,7 @@ echo Html::beginTag('div', ['class' => 'wrap-fix']);
   */
   echo $this->render('@modals/userVideo');
   echo $this->render('@modals/userAttachments');
+  echo $this->render('@modals/userPhotoalbum');
 
 echo Html::endTag('div');
 echo Html::endTag('div');

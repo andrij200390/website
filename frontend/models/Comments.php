@@ -150,32 +150,6 @@ class Comments extends \yii\db\ActiveRecord
     }
 
 /**
- * Adds a comment to DB
- *
- * @param string    $elem_type  Which type of element does this comment represents (i.e. news, school, board)
- * @param int       $elem_id    Element's id
- * @param string    $text       Comment's text (body)
- * @return int      Added comment ID
- */
-    public static function addCommentWithAttachments($elem_type, $elem_id, $text)
-    {
-        $comment = new Comments;
-        $comment->elem_type = $elem_type;
-        $comment->elem_id = $elem_id;
-        $comment->user_id = Yii::$app->user->id;
-        $comment->comment = $text;
-
-        /* If our comment passes validation rules and is not a duplicate... */
-        if ($comment->validate()) {
-            $comment->save();
-        } else {
-            return $comment->errors;
-        }
-
-        return $comment->id;
-    }
-
-/**
  * Delete comment
  *
  * @param  int          $id         Comment ID
@@ -254,7 +228,7 @@ class Comments extends \yii\db\ActiveRecord
           },
           'userDescription',
           'attachments' => function ($query) use ($where) {
-              $query->andWhere(['elem_type' => 5]);
+              $query->andWhere(['elem_type' => 5]); /* 5 is an ID for comments element type @see: helpers/ElementsHelper */
           },
           'likes' => function ($query) {
               $query->andWhere(['elem_type' => 'comments']);

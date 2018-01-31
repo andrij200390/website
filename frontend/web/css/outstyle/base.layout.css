@@ -22,10 +22,12 @@ body {
   margin: 0 0 0 142px;
   padding: 45px 0 0 0;
 }
-.portal #content {
-
+textarea {
+  resize: none;
 }
-
+select {
+  font-family: 'OsnovaPro', sans-serif;
+}
 /* LINKS */
 a {
   color: #428bca;
@@ -52,6 +54,10 @@ a.c-nav__item:not(:disabled):focus {
 .form-group {
   margin: 5px 0 5px 0;
   clear:both;
+}
+.form-group .hint-block {
+  font-size: 0.8em;
+  color:#bcbcbc;
 }
 .form-separate {
   margin-top: 20px;
@@ -97,6 +103,23 @@ a.c-nav__item:not(:disabled):focus {
 .form-group.has-error input {
   border: 1px solid #ed1f24;
   box-shadow: 0 0 3px #ed1f24;
+}
+.form-group .control-label {
+  line-height: 1.6em;
+}
+.form-group--small {
+  font-size: 0.9em;
+}
+.form-group--small .control-label {
+  line-height: 1.4em;
+}
+.form-group--transparent .form-control {
+  border: 0;
+  background: transparent;
+  font-size: 1em;
+}
+.form-group--separated {
+  padding-top: 1em;
 }
 
 /* ELEMENTS */

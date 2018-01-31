@@ -19,19 +19,39 @@ use common\components\helpers\ElementsHelper;
 /* @var $photos */
 /* @var $options */
 
+# Widget wrapper
+if (isset($options['class'])) {
+    echo Html::beginTag('div', ['class' => $options['class']]);
+}
+
+# Widget buttons for title
+if (isset($options['title']) && isset($options['titleButtons'])) {
+    foreach ($options['titleButtons'] as $titlebutton) {
+
+        # Add new photoalbum button
+        if ($titlebutton == 'addNewPhotoalbum') {
+            $options['title'] .= Html::button(
+              '<i class="zmdi zmdi-plus-circle zmdi-hc-lg"></i>&nbsp;'.Yii::t('app', 'New album'),
+            [
+              'class' => 'c-button u-small i-newphotoalbum u-pull-right',
+              'title' => Yii::t('app', 'New album'),
+              'ic-indicator' => '#outstyle_loader',
+              'ic-action' => 'userShowPhotoalbumModal', /* @see: outstyle.user.photoalbums.js ->userShowPhotoalbumModal() */
+            ]);
+        }
+    }
+}
+
+# Widget title
+if (isset($options['title'])) {
+    echo Html::tag(
+      $options['titleTag'],
+      $options['title']
+    );
+}
+
+# Working with each image
 if (!empty($photos)) {
-
-    # Widget wrapper
-    if (isset($options['class'])) {
-        echo Html::beginTag('div', ['class' => $options['class']]);
-    }
-
-    # Widget title
-    if (isset($options['title'])) {
-        echo Html::tag($options['titleTag'], $options['title']);
-    }
-
-    # Working with each image
     foreach ($photos as $key => $photo) {
         echo Html::tag('div',
 
@@ -68,9 +88,9 @@ if (!empty($photos)) {
           ]
         );
     }
+}
 
-    # Widget wrapper END
-    if (isset($options['class'])) {
-        echo Html::endTag('div');
-    }
+# Widget wrapper END
+if (isset($options['class'])) {
+    echo Html::endTag('div');
 }

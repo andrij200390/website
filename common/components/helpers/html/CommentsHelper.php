@@ -33,7 +33,7 @@ class CommentsHelper extends ElementsHelper
           'class' => $class,
           'title' => Yii::t('app', 'Send'),
           'ic-indicator' => self::DEFAULT_AJAX_LOADER,
-          'ic-include' => '{"elem_type":"'.$elem_type.'","elem_id":'.(int) $elem_id.'}',
+          'ic-include' => '{"'.Yii::$app->request->csrfParam.'":"'.self::getCSRFToken().'","elem_type":"'.$elem_type.'","elem_id":'.(int) $elem_id.'}',
           'ic-target' => '#'.$elem_type.'_comments .comments_body',
           'ic-get-from' => Url::toRoute(['comments/add']),
           'ic-append-from' => Url::toRoute(['comments/add']),
@@ -57,7 +57,7 @@ class CommentsHelper extends ElementsHelper
           'javascript:void(0)',
           [
             'class' => 'i-icon show-comment-form-link',
-            'ic-include' => '{"elem_type":"'.$controllerId.'","elem_id":'.(int)$elem_id.',"'.Yii::$app->request->csrfParam.'":"'.AttachmentsHelper::getCSRFToken().'"}',
+            'ic-include' => '{"elem_type":"'.$controllerId.'","elem_id":'.(int)$elem_id.',"'.Yii::$app->request->csrfParam.'":"'.self::getCSRFToken().'"}',
             'ic-target' => '#comments-'.$elem_id,
             'ic-indicator' => "#outstyle_loader",
             'ic-get-from' => Url::toRoute(['comments/show']),

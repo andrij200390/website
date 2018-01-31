@@ -12,16 +12,8 @@ use yii\filters\AccessControl;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 
-use app\models\Board;
-use app\models\Likes;
 use app\models\Photo;
-use app\models\Newsfeed;
-use app\models\Comments;
 use app\models\Photoalbum;
-use app\models\UserPrivacy;
-use app\models\Attachments;
-use app\models\AuthAssignment;
-use app\models\UserDescription;
 
 use frontend\components\ParentController;
 
@@ -59,9 +51,11 @@ class PhotoController extends ParentController
     public function actionIndex($userId = 0)
     {
         $photos = Photo::getPhotos();
+        $photoalbums = Photoalbum::getPhotoalbums();
 
         return $this->render('index', [
-           'photos' => $photos
+           'photos' => $photos,
+           'photoalbums' => $photoalbums
         ]);
     }
 

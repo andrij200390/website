@@ -37,10 +37,6 @@ jQuery("body").on("commentAdd", function(event, data) {
             jQuery('#comments_section__'+data.elem_type+' .comments_add__body #'+data.elem_type+'_attachments').empty(); /* Clearing attachments area */
             jQuery('#comments_section__'+data.elem_type+' .comments_add__attachments button').show(); /* Showing attachment buttons again */
 
-            jQuery('#ohsnap').empty();
-
-            ohSnap('Dev debug: commentAdd triggered', {'color':'blue'});
-
         } else {
           /* --- If we encounter an error --- */
           ohSnap(data[Object.keys(data)[0]], {'color':'red'});
@@ -118,7 +114,7 @@ jQuery("body").on("commentsShow", function(event, data) {
           .slideDown(284)
           .find('.comments_options .i-send')
           .attr({
-            'ic-include': '{"elem_type":"'+data.elem_type+'","elem_id":'+data.elem_id+'}',
+            'ic-include': '{"elem_type":"'+data.elem_type+'","elem_id":'+data.elem_id+',"_csrf":"'+data._csrf+'"}',
             'ic-target': '#comments-'+data.elem_id+' .comments_body',
           });
 

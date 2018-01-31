@@ -20,32 +20,43 @@ class AttachmentsController extends Controller
     /**
      * @inheritdoc
      */
-    // public function beforeAction($event)
-    // {
-    //     /* Since we don't want direct access to content, we should perform token check every time we access the controller */
-    //     $csrf_token = Yii::$app->request->headers->get('x-csrf-token');
-    //     $user_token = Yii::$app->request->get('_csrf');
-    //
-    //     if (!$user_token) {
-    //         throw new HttpException(400, Yii::t('err', 'Token empty!'));
-    //     }
-    //     if ($user_token != $csrf_token) {
-    //         throw new HttpException(400, Yii::t('err', 'Token is invalid!'));
-    //     }
-    //
-    //     /* Checking for allowed elements being represented as attachments */
-    //     $elem_type = Yii::$app->request->get('elem_type');
-    //
-    //     if (is_numeric($elem_type)) {
-    //         $elem_type = AttachmentsHelper::$allowedElements[$elem_type];
-    //     }
-    //
-    //     if (!in_array($elem_type, AttachmentsHelper::$allowedElements) && $elem_type) {
-    //         throw new HttpException(400, Yii::t('err', 'Element type is not supported!'));
-    //     }
-    //
-    //     return parent::beforeAction($event);
-    // }
+    public function beforeAction($event)
+    {
+        /* Since we don't want direct access to content, we should perform token check every time we access the controller */
+        $csrf_token = Yii::$app->request->headers->get('x-csrf-token');
+        $user_token = Yii::$app->request->get('_csrf');
+
+        if (!$user_token) {
+            throw new HttpException(400, Yii::t('err', 'Token empty!'));
+        }
+        if ($user_token != $csrf_token) {
+            throw new HttpException(400, Yii::t('err', 'Token is invalid!'));
+        }
+
+        /* Checking for allowed elements being represented as attachments */
+        $elem_type = Yii::$app->request->get('elem_type');
+
+        if (is_numeric($elem_type)) {
+            $elem_type = AttachmentsHelper::$allowedElements[$elem_type];
+        }
+
+        if (!in_array($elem_type, AttachmentsHelper::$allowedElements) && $elem_type) {
+            throw new HttpException(400, Yii::t('err', 'Element type is not supported!'));
+        }
+
+        /* Checking for allowed elements being represented as attachments -- PARENT */
+        $elem_type_parent = Yii::$app->request->get('elem_type_parent');
+
+        if (is_numeric($elem_type_parent)) {
+            $elem_type_parent = AttachmentsHelper::$allowedElements[$elem_type_parent];
+        }
+
+        if (!in_array($elem_type_parent, AttachmentsHelper::$allowedElements) && $elem_type_parent) {
+            throw new HttpException(400, Yii::t('err', 'Parent element type is not supported!'));
+        }
+
+        return parent::beforeAction($event);
+    }
 
     /**
      * @inheritdoc
@@ -171,7 +182,7 @@ class AttachmentsController extends Controller
               'elem_type' => $elem_type,
               'elem_id' => $data['elem_id']
             ])->asArray()->all();
-            
+
             $elem_type_parent = $elem_type;
 
             /* Attachment type check to get actual model of the attached element */

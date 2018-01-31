@@ -4,7 +4,6 @@ namespace frontend\widgets;
 
 use Yii;
 use yii\base\Widget;
-use common\components\helpers\CryptoHelper;
 use common\models\Photo;
 
 /**

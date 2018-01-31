@@ -55,14 +55,25 @@ class ElementsHelper extends Html
 
     /**
      * Generates CSRF toekn for AJAX requests, where needed
+     * TODO: Check if this leads to any trouble with AJAX requests
+     *
      * @return string
      */
     public static function getCSRFToken()
     {
+        # Checking for token from GET request
         $csrf_token = Yii::$app->request->get('_csrf');
+
+        # If empty, checking for token from POST request
+        if (!$csrf_token) {
+            $csrf_token = Yii::$app->request->post('_csrf');
+        }
+
+        # If no token found, getting fresh one from the page itself
         if (!$csrf_token) {
             $csrf_token = Yii::$app->request->csrfToken;
         }
+
         return $csrf_token;
     }
 
@@ -759,5 +770,39 @@ class ElementsHelper extends Html
             echo Html::ul([strtoupper($field_name).': '.$error[0]], ['class' => 'alert alert-red']);
         }
         echo Html::endTag('div');
+    }
+
+    /**
+     * Generates a block for message displaying from $model->errors array.
+     *
+     * @param string $message Message to display
+     *
+     * @return html Generated HTML output
+     */
+    public static function uploadBox($message = '')
+    {
+        echo
+        Html::tag('div',
+          '<div class="u-center-block__content">'.$message.'</div>',
+          ['class' => 'messagebox u-center-block']
+        );
+    }
+
+    /**
+     * Generates an img tag for showing a praticular loader
+     * TODO: [?] Make routes to be in config file
+     *
+     * @param string Loader type/style
+     * @param string img tag class
+     *
+     * @return html IMG tag with predefined image
+     */
+    public static function loaderImage($image = '', $class = '')
+    {
+        if ($image == 'breakdance') {
+            return '<img src="/frontend/web/images/images/breakdance_loader.gif" class="'.$class.'">';
+        }
+
+        return '<img src="/frontend/web/images/images/breakdance_loader.gif">';
     }
 }

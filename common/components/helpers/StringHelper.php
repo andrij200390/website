@@ -110,6 +110,16 @@ class StringHelper
     }
 
     /**
+     * Cuts all unwanted chars from a string
+     * @param  string $string String to replace
+     * @return string
+     */
+    public static function clearString($string)
+    {
+        return preg_replace('/[^a-z0-9\-\. _]/i', '', strip_tags($string));
+    }
+
+    /**
      * Converts timestamp to human readable string
      * Using 'datetime.php' messages translations.
      * TODO: Break this up into separate funcs

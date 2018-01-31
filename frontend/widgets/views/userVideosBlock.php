@@ -31,6 +31,11 @@ if (!empty($videos)) {
         echo Html::tag($options['titleTag'], $options['title']);
     }
 
+    # Videos wrapper
+    if (isset($options['cell_wrap'])) {
+        echo Html::beginTag('div', ['class' => $options['cell_wrap']]);
+    }
+
     # Working with each video
     foreach ($videos as $key => $video) {
         echo Html::tag('div',
@@ -44,10 +49,16 @@ if (!empty($videos)) {
           ).
 
           # Video image
-          ElementsHelper::videoLink($video['hash'], Html::img($video['video_img'], ['class' => 'o-image u-full-width user__videothumbnail'])).
+          ElementsHelper::videoLink(
+            $video['hash'],
+            Html::img($video['video_img'], ['class' => 'o-image u-full-width user__videothumbnail'])
+          ).
 
           # Video title and link
-          ElementsHelper::videoLink($video['hash'], $video['video_title']).
+          ElementsHelper::videoLink(
+            $video['hash'],
+            $video['video_title']
+          ).
 
           # Video date and provider
           Html::tag('div',
@@ -68,6 +79,11 @@ if (!empty($videos)) {
             'data-lc-elem' => $options['attachment']['elem_key']+$key /* Data for working with localstorage attachment */
           ]
         );
+    }
+
+    # Videos wrapper END
+    if (isset($options['cell_wrap'])) {
+        echo Html::endTag('div');
     }
 
     # Widget wrapper END

@@ -24,6 +24,12 @@ echo UserVideosBlock::widget([
     'title' => Yii::t('app', 'Videos'),
     'titleTag' => 'h1',
     'class' => 'o-grid o-grid--wrap '.Yii::$app->controller->id.'__videos',
-    'cell_class' => 'o-grid__cell o-grid__cell--width-33',
+    'cell_wrap' => 'o-grid o-grid--wrap u-window-box--small '.Yii::$app->controller->id.'__wrap',
+    'cell_class' => 'o-grid__cell o-grid__cell--width-33 u-window-box--small',
+    'widgetButton' => [
+      'action' => 'delete',
+      'position' => 'bottomright',
+      'size' => '2x'
+    ],
   ]
 ]);

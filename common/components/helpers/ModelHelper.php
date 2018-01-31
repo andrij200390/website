@@ -29,7 +29,7 @@ class ModelHelper
                 if ($model->album && $photoalbum) {
                     throw new ForbiddenHttpException(Yii::$app->controller->id.' '.$model->album.' already exists');
                 }
-
+                
                 /* If we have some validation errors on the School model side, we won't create our photoalbum */
                 if (!$model->validate()) {
                     throw new ForbiddenHttpException('model cannot be validated');

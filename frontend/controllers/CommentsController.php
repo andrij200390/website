@@ -49,6 +49,7 @@ class CommentsController extends Controller
         $scenario = Comments::SCENARIO_DEFAULT;
 
         $data = Yii::$app->request->get();
+
         $comments = new Comments();
 
         # First let's check if our comments has an attachment
@@ -85,7 +86,7 @@ class CommentsController extends Controller
                 $headerResponse['attachments'] = $added_attachments;
             }
         }
-        dd($headerResponse);
+
         $headers = Yii::$app->response->headers;
         $headers->add('X-IC-Trigger', '{"commentAdd":['.Json::encode($headerResponse).']}');
 
@@ -157,6 +158,7 @@ class CommentsController extends Controller
             $headerResponse['target'] = $data['ic-target-id'];
             $headerResponse['elem_type'] = $data['elem_type'];
             $headerResponse['elem_id'] = $data['elem_id'];
+            $headerResponse['_csrf'] = $data['_csrf'];
             $headers->add('X-IC-Trigger', '{"commentsShow":['.Json::encode($headerResponse).']}');
 
             return $this->renderPartial('_commentblock', [
