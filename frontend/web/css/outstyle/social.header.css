@@ -1,0 +1,17 @@
+/* --- SOCIAL HEADER --- */
+.social__header {
+  width: 1013px;
+  height: 45px;
+  background: #374045;
+  border-left: 1px solid #475359;
+  border-right: 1px solid #475359;
+  position: fixed;
+  z-index: 1337;
+}
+.social__header #logo{
+  background: url('../img/logo.png');
+  width: 58px;
+  height: 53px;
+  display: block;
+  margin: 12px 0 0 39px;
+}

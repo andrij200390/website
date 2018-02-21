@@ -1,0 +1,267 @@
+@import url("/frontend/web/css/font/fonts.css");
+@import url("/frontend/web/css/portal.css");
+html,
+body {
+    height: 100%;
+    background:#fff;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+    background: transparent;
+}
+
+.wrap > .container {
+    padding: 0;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+.modal {
+    z-index: 1337;
+}
+.modal-backdrop {
+    z-index: 1336;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+    z-index: 1054;
+}
+.navbar-brand {
+    padding: 9px 0 0 30px;
+}
+.uploaded-image-preview {
+    width:80%;
+    max-width:80%;
+}
+h1 {
+    font-size: 18px;
+}
+
+.navbar {
+    border-radius: 0px;
+}
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1013px;
+    }
+}
+
+/* --- TABLES ---*/
+.table.table-notdborder > td,
+.table.table-notdborder > tbody > tr > td {
+  border:0px;
+}
+.table.table-mini,
+.table.table-mini td {
+  font-size:12px;
+  line-height:1;
+}
+
+/* --- NEWS BACKEND --- */
+.redactor-editor {
+    width:100%;
+    overflow:hidden;
+    max-height:640px;
+}
+
+.textarea--enhanced .redactor-editor {
+    padding-left: 3em;
+    padding-right: 3em;
+    background: #edeff0;
+    color: #63676b;
+    font-size: 18px;
+    font-family: 'OsnovaProLight';
+    text-shadow: 0 0 1px rgba(0,0,0,0.2);
+}
+.textarea--enhanced .redactor-editor div,
+.textarea--enhanced .redactor-editor p,
+.textarea--enhanced .redactor-editor ul,
+.textarea--enhanced .redactor-editor ol,
+.textarea--enhanced .redactor-editor table,
+.textarea--enhanced .redactor-editor dl,
+.textarea--enhanced .redactor-editor blockquote,
+.textarea--enhanced .redactor-editor pre {
+    font-size: 18px;
+    line-height: 1.25em;
+}
+.textarea--enhanced label.control-label {
+    float:none;
+}
+.site-index h4 {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 15px;
+  color:#999;
+}
+
+/* STATUSES */
+.status_0 {
+  text-decoration:line-through;
+}
+/* --- CUSTOM BACKEND STYLES [SOURCE: http://v4-alpha.getbootstrap.com/examples/dashboard/ ] --- */
+/*
+ * Base structure
+ */
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+  margin-top: 20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+.sidebar h6 {
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.site-index .nav > li > a {
+  padding:0 10px 0 15px;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+/*
+ * MISC
+ */
+#errors_container {
+  clear:both;
+  min-height: 43px;
+}

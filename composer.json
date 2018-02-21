@@ -1,0 +1,59 @@
+{
+    "name": "outstyle/website",
+    "description": "Outstyle social network, based on Yii2 AT",
+    "keywords": ["yii2", "framework", "advanced", "application template", "social network", "hip-hop"],
+    "homepage": "https://outstyle.org",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "source": "https://github.com/outstyle"
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/scsmash3r/yii2-image-uploader"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/scsmash3r/yii2-cropper"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "yurkinx/yii2-image": "dev-master",
+        "demi/image": "dev-master",
+        "demi/cropper": "dev-master",
+        "developeruz/yii2-db-rbac": "*",
+        "vova07/yii2-imperavi-widget": "*",
+        "dragonjet/yii2-opengraph": "dev-master",
+        "fg/multiplayer": "dev-master",
+        "mihaildev/yii2-elfinder": "*",
+        "sadovojav/yii2-ckeditor": "dev-master",
+        "se/selenium-server-standalone": "dev-master",
+        "fzaninotto/faker": "1.4.0",
+        "aalaap/faker-youtube": "dev-master"
+
+
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*",
+        "codeception/codeception": "dev-master"
+
+
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}

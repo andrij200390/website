@@ -1,0 +1,80 @@
+/* --- COMMENTS ---- */
+.comment__info {
+  padding-top:10px;
+}
+.comment__username {
+  color:#606d75;
+}
+div.comment {
+  border-bottom: 1px solid #d5d7d8;
+}
+.comments_body .comment {
+  padding-top: 1em;
+}
+.comment__body,
+.comment__actions,
+.comment__info {
+  padding-right: 1em;
+}
+.comment__time,
+.comment__body {
+  font-size:12px;
+}
+.comment__wrap {
+  position: relative;
+}
+.comment__avatar .avatar {
+  border-width: 2px;
+  border-style: solid;
+}
+.comment__delete {
+  position: absolute;
+  right: 0px;
+  top: -2px;
+  display:none;
+  margin:0;
+}
+.comment:hover .comment__delete {
+  display: block;
+}
+.comment:hover .comment__time {
+  display: none;
+}
+.comment__delete i {
+  margin: 0;
+}
+.comment__deleted {
+  background: #f5f5df;
+}
+.comment__highlight {
+  background: #f5f5df;
+}
+.comments_video {
+  padding: 0 6em 0 6em;
+}
+.comments_options {
+  background: #f9f9f9;
+}
+.comments_add__body textarea {
+  border: 0;
+  padding: 0;
+}
+.board__comments {
+  border-top: 1px solid #dadada;
+}
+.comments_add__avatar.u-c .avatar {
+  display: block;
+  margin: 0 auto;
+}
+#comments_section__board {
+  display:none;
+}
+.comments_options .zmdi-icon--hoverable i {
+  color:#428bca;
+}
+.comments_options .zmdi-icon--hoverable:hover i {
+  color:#42729a;
+}
+.comment__actions .i-icon {
+  font-size: 0.9em;
+}
