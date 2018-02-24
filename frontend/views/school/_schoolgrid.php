@@ -55,6 +55,7 @@ if ($categories) {
 <script>
 jQuery(document).ready(function () {
 
+
   function init_school() {
 
     way.restore(); // https://github.com/gwendall/way.js - We need to restore our values for page TODO: Do we need to use it here?
@@ -124,6 +125,12 @@ jQuery(document).ready(function () {
   }
 
   init_school();
+  /*function windowSize from add padding to filter geolocation schools*/
+    function windowSize(){
+        jQuery('#outstyle_school').addClass('padding-mobile');
+
+    }
+    windowSize();
 
   /* School geolocation stuff */
   function init_school_geolocation() {
@@ -227,18 +234,6 @@ jQuery(document).ready(function () {
   /* off.on is necessary to prevent event duplicate, when getting from another page to this one and back and so on */
   jQuery("body").off("school").on("school", function(event, data) {
     jQuery('#outstyle_school').css({'min-height':data.page_height+'px'});
-    /*function windowSize from add padding to filter geolocation schools*/
-    function windowSize(){
-
-        if(jQuery(window).width()<='764'){
-            jQuery('#outstyle_school').css({'padding-top':230+'px'});
-        }
-        else{
-            jQuery('#outstyle_school').css({'padding-top':0+'px'});
-        }
-      }
-     jQuery(window).on('load resize',windowSize);
-
     if (data.page) {
       jQuery('#page').val(data.page);
     }

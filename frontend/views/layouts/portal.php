@@ -116,19 +116,32 @@ $this->endBody();
  */
 ?>
 <script>
-
-jQuery(document).ready(function () {
-
+    /*Only for mobile menu (close menu)*/
+    jQuery(document).mouseup(function (e) {
+        var container = $(".c-nav");
+        if (container.has(e.target).length === 0){
+            //container.hide();
+            if(jQuery('.c-nav').hasClass('menu_state_open')){
+                jQuery('.c-nav').removeClass('menu_state_open');
+                jQuery('.menu__icon').closest('.c-nav');
+            }
+        }
+    });
+    jQuery(document).ready(function () {
 
     jQuery("a.c-nav__item").on("click", function() {
         var activeClass = 'c-text--loud';
         jQuery('#outstyle_loader').show();
         jQuery('nav span').removeClass(activeClass);
         jQuery(this).parent().addClass(activeClass);
+        /*For mobile menu*/
+        jQuery('.menu__icon').closest('.c-nav').toggleClass('menu_state_open');
     });
+    /*For mobile menu*/
     jQuery('.menu__icon').on('click', function() {
         jQuery(this).closest('.c-nav').toggleClass('menu_state_open');
     });
+
 
 
 
