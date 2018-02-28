@@ -6,20 +6,12 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use common\components\helpers\ElementsHelper;
-use common\models\Photoalbum;
 
 /**
  * Modal ID
  * @var string
  */
 $modal_id = 'userphotoalbum';
-
-/**
- * Model for form to work with
- * @var object $model
- */
-$model = new Photoalbum();
 
 echo Html::beginTag('div', [
         'id' => $modal_id,
@@ -65,4 +57,4 @@ echo Html::endTag('div');
 
 /* JS: @see js/outstyle.modal.js */
 ?>
-<script>jQuery(document).ready(function(){modalInit();});</script>
+<script>jQuery(document).ready(function(){modalInit('#<?=$modal_id;?>');});</script>

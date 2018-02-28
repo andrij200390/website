@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @link https://github.com/Outstyle/website
+ * @copyright Copyright (c) 2018 Outstyle Network
+ * @license Beerware
+ */
 namespace frontend\controllers;
 
 use Yii;
@@ -22,7 +26,10 @@ class PhotoalbumController extends Controller
      */
     public function beforeAction($event)
     {
-        /* Since we don't want direct access to content, we should perform token check every time we access the controller */
+        /**
+         * Since we don't want direct access to content, we should perform token check every time we access the controller
+         * TODO: move this to separate component and set on every action?
+         */
         $csrf_token = Yii::$app->request->headers->get('x-csrf-token');
         $user_token = Yii::$app->request->post('_csrf');
 
@@ -68,10 +75,17 @@ class PhotoalbumController extends Controller
      */
     public function actionView()
     {
+
         /* WHERE clause - @see: Photo::getPhotos parameters */
-        $where = Yii::$app->request->post('album_id') ? ['album' => Yii::$app->request->post('album_id')] : [];
+        $where = Yii::$app->request->post('album_id') ? ['album' => (int)Yii::$app->request->post('album_id')] : [];
 
         $photos = Photo::getPhotos($where);
+
+        /* If it's an Intercooler request, also sending headers for photoalbum open event to fire */
+        if (Yii::$app->request->post('ic-request')) {
+            $headers = Yii::$app->response->headers;
+            $headers->add('X-IC-Trigger', '{"photoalbumOpen":['.Json::encode($where).']}');
+        }
 
         return $this->renderPartial('view', [
             'photos' => $photos,
@@ -85,12 +99,7 @@ class PhotoalbumController extends Controller
      * Creates a new Photoalbum model.
      * Renders: photoalbum creation form
      *
-     * @see: route @frontend/urls.php -> photoalbum/create
-     *
-     * @param string $controllerId
-     * @param int    $modelId
-     *
-     * @return mixed
+     * @return HTML|JSON
      */
     public function actionCreate()
     {

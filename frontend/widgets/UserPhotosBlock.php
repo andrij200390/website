@@ -40,6 +40,10 @@ class UserPhotosBlock extends Widget
         parent::init();
 
         # Working with default options
+        if (!isset($this->options['class'])) {
+            $this->options['class'] = 'o-grid o-grid--wrap '.Yii::$app->controller->id.'__photos';
+        }
+
         if (!isset($this->options['titleTag'])) {
             $this->options['titleTag'] = 'h4';
         }

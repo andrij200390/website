@@ -1,0 +1,25 @@
+/* --- TOOLTIPS | see original file at /misc/tooltipster.bundle.min.css | http://iamceege.github.io/tooltipster --- */
+.tooltipster-sidetip .tooltipster-box {
+  background: #fbfbfb;
+  border: 1px solid #c7c7c7;
+  border-radius: 4px;
+}
+.tooltipster-sidetip.tooltipster-bottom .tooltipster-arrow-background {
+  border-bottom-color: #fbfbfb;
+  left: 0;
+  top: 1px;
+}
+.tooltipster-sidetip.tooltipster-bottom .tooltipster-arrow-border {
+  border-bottom-color: #c7c7c7;
+}
+.tooltipster-sidetip.tooltipster-bottom .tooltipster-box {
+  margin-top: 9px;
+}
+.tooltipster-sidetip a {
+  font-size:0.9em;
+  color:#aaa;
+  display:block;
+}
+.tooltip_templates {
+  display:none;
+}

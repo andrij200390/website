@@ -22,9 +22,7 @@ echo Html::tag('div',
       'options' => [
         'title' => $album_name ? $album_name : Yii::t('app', 'Photos'),
         'titleTag' => 'h1',
-        'titleButtons' => [
-          'addNewPhotoalbum'
-        ],
+        'titlePlusButton' => true,
         'class' => 'o-grid o-grid--wrap '.Yii::$app->controller->id.'__photos',
         'cell_wrap' => 'o-grid o-grid--wrap u-window-box--small '.Yii::$app->controller->id.'__wrap',
         'cell_class' => 'o-grid__cell o-grid__cell--width-33 u-window-box--small',
@@ -37,10 +35,12 @@ echo Html::tag('div',
     ]).
 
     # PHOTOS ADD FORM
+    # We also need to pass $album_id, cause photo can not be added without being tied to photoalbum
     Html::tag('div',
 
       $this->render('../photo/_form', [
         'photos' => $photos,
+        'album_id' => $album_id,
       ]),
 
     [

@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 
+use common\components\helpers\StringHelper;
+
 /**
  * This is the model class for table "{{%photo}}".
  *
@@ -16,6 +18,8 @@ use Yii;
  */
 class Photo extends \yii\db\ActiveRecord
 {
+    const ALLOWED_FILE_TYPES = 'jpg,jpeg,gif,png';
+
     /**
      * imageUploaderBehavior - https://github.com/demisang/yii2-image-uploader
      * Needed for 'Photo' image uploading.
@@ -46,7 +50,7 @@ class Photo extends \yii\db\ActiveRecord
             'imageRequire' => false,
             'uploadMultiple' => 3,
             'deleteRow' => true,
-            'fileTypes' => 'jpg,jpeg,gif,png',
+            'fileTypes' => self::ALLOWED_FILE_TYPES,
             'maxFileSize' => 3145728,
             'backendSubdomain' => 'admin.',
           ],
@@ -74,7 +78,7 @@ class Photo extends \yii\db\ActiveRecord
             [['name'], 'filter', 'filter' => 'trim'],
             [['created'], 'safe'],
             [['name'], 'string', 'max' => 255],
-            [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 3],
+            [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => self::ALLOWED_FILE_TYPES, 'maxFiles' => 3],
         ];
     }
 
@@ -91,6 +95,18 @@ class Photo extends \yii\db\ActiveRecord
             'img' => Yii::t('app', 'Image'),
             'created' => Yii::t('app', 'Created'),
         ];
+    }
+
+    /**
+     * Working with userdata before validation process
+     * @return object
+     */
+    public function beforeValidate()
+    {
+        /* Carefully sanitize photo name */
+        $this->name = StringHelper::clearString($this->name);
+
+        return parent::beforeValidate();
     }
 
     /**
@@ -149,5 +165,4 @@ class Photo extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Photoalbum::className(), ['id' => 'album']);
     }
-
 }

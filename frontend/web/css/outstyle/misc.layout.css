@@ -159,7 +159,7 @@ ul {
   background: #d8d8d8;
   color: #555;
   font-size: 0.9em;
-  border-radius: 13px;
+  border-radius: 1.5em;
   text-transform: none;
 }
 .c-button:hover {
@@ -172,6 +172,19 @@ ul {
 .c-button--large {
   padding: .5em 2em;
 }
+.c-button--withrightmargin {
+  margin-right:1em;
+}
+.c-button--white {
+  padding: .3em;
+  width: 1.95em;
+  background: #fff;
+}
+.c-button--white:hover,
+.c-button--white:focus {
+  background: #d8d8d8;
+}
+
 
 /* --- MISC --- Custom Outstyle CSS workarounds here, please */
 .o-field{position:relative}.o-field .c-field--success~.c-icon{color:#4caf50}.o-field .c-field--error~.c-icon{color:#f44336}.o-field .c-field:disabled~.c-icon{color:#96a8b2}.o-field .c-icon{position:absolute;top:50%;transform:translateY(-50%);color:#96a8b2}.o-field--icon-right .c-field+.c-icon{right:.5em}.o-field--icon-right .c-field{padding-right:2em}.o-field--icon-left .c-icon:first-child{left:.5em}.o-field--icon-left .c-field{padding-left:2em}
@@ -268,6 +281,18 @@ ul {
   position: absolute;
   bottom: 0;
   left:0;
+}
+
+/* --- MISC: OverlayScrollbars --- */
+.os-theme-dark>.os-scrollbar, .os-theme-light>.os-scrollbar {
+  padding: 0px 1px 0px 1px;
+  background: #f4f4f4;
+  border-left: 1px solid #dadada;
+  border-right: 1px solid #dadada;
+}
+.os-theme-dark>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle {
+  background: #606D75;
+  opacity: 1;
 }
 
 /* ZMDI package: http://zavoloklom.github.io/material-design-iconic-font/icons.html */

@@ -43,9 +43,7 @@ echo ElementsHelper::ajaxGridWrap(Yii::$app->controller->id, 'o-grid--no-gutter'
         'options' => [
           'title' => Yii::t('app', 'Photos'),
           'titleTag' => 'h1',
-          'titleButtons' => [
-            'addNewPhotoalbum'
-          ],
+          'titlePlusButton' => true,
           'class' => 'o-grid o-grid--wrap '.Yii::$app->controller->id.'__photos',
           'cell_wrap' => 'o-grid o-grid--wrap u-window-box--small '.Yii::$app->controller->id.'__wrap',
           'cell_class' => 'o-grid__cell o-grid__cell--width-33 u-window-box--small',
@@ -64,7 +62,3 @@ echo ElementsHelper::ajaxGridWrap(Yii::$app->controller->id, 'o-grid--no-gutter'
 
     ['class' => 'photos__container']
 );
-
-/* JS: @see js/outstyle.user.photoalbums.js */
-?>
-<script>jQuery(document).ready(function(){photoalbumsInit()});</script>

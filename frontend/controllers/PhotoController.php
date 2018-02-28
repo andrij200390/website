@@ -44,7 +44,7 @@ class PhotoController extends ParentController
     }
 
     /**
-     * All user photos page
+     * User photos page
      * @param  integer $userId Logged user ID (Default: 0)
      * @return array
      */
@@ -57,6 +57,23 @@ class PhotoController extends ParentController
            'photos' => $photos,
            'photoalbums' => $photoalbums
         ]);
+    }
+
+    /**
+     * [API] Photos uploading
+     * @return JSON
+     */
+    public function actionUpload()
+    {
+        $photo = new Photo();
+        $photo->album = Yii::$app->request->post('album_id');
+
+        if ($photo->validate()) {
+            $photo->save();
+        } else {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return $photo->errors;
+        }
     }
 
     public function actionAlbumlist()

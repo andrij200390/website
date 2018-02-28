@@ -14,32 +14,28 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\components\helpers\ElementsHelper;
+use common\components\helpers\TooltipsHelper;
 
 /* @see @frontend/widgets/UserPhotosBlock for vars */
 /* @var $photos */
 /* @var $options */
 
 # Widget wrapper
-if (isset($options['class'])) {
-    echo Html::beginTag('div', ['class' => $options['class']]);
-}
+echo Html::beginTag('div', ['class' => $options['class']]);
 
-# Widget buttons for title
-if (isset($options['title']) && isset($options['titleButtons'])) {
-    foreach ($options['titleButtons'] as $titlebutton) {
+# Widget "+" button for title
+if (isset($options['titlePlusButton'])) {
+    $options['title'] .= Html::button(
+      '<i class="zmdi zmdi-plus zmdi-hc-lg"></i>',
+    [
+      'id' => 'photo__editbutton',
+      'class' => 'c-button c-button--white c-button--large tooltip u-pull-right',
+      'data-tooltip-content' => '#photos_edit_tooltip_content',
+      'title' => Yii::t('app', 'Edit'),
+    ]);
 
-        # Add new photoalbum button
-        if ($titlebutton == 'addNewPhotoalbum') {
-            $options['title'] .= Html::button(
-              '<i class="zmdi zmdi-plus-circle zmdi-hc-lg"></i>&nbsp;'.Yii::t('app', 'New album'),
-            [
-              'class' => 'c-button u-small i-newphotoalbum u-pull-right',
-              'title' => Yii::t('app', 'New album'),
-              'ic-indicator' => '#outstyle_loader',
-              'ic-action' => 'userShowPhotoalbumModal', /* @see: outstyle.user.photoalbums.js ->userShowPhotoalbumModal() */
-            ]);
-        }
-    }
+    # Widget "+" tooltip container, shown on click (binds via 'data-tooltip-content')
+    echo TooltipsHelper::tooltipContainerForPhotoalbum();
 }
 
 # Widget title
@@ -91,6 +87,9 @@ if (!empty($photos)) {
 }
 
 # Widget wrapper END
-if (isset($options['class'])) {
-    echo Html::endTag('div');
-}
+echo Html::endTag('div');
+
+
+/* JS: @see js/outstyle.user.photoalbums.js */
+?>
+<script>jQuery(document).ready(function(){photoalbumsInit()});</script>

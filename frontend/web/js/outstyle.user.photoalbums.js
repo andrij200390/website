@@ -1,4 +1,5 @@
 var photoalbum_container = '#userphotoalbum';
+var photoalbum_delete_container = '#userphotoalbumdelete';
 var photoalbum_area = '#albums_area';
 var photoalbum_form = '#form-create-photo';
 var photoalbum_upload = '#form-upload-to-photoalbum';
@@ -20,7 +21,32 @@ function photoalbumsInit() {
       .remove();
   }, 75);
 
+  /* Activating tooltip on "+" button */
+  /* @see: http://iamceege.github.io/tooltipster/ */
+  jQuery('#photo__editbutton').tooltipster({
+      trigger: 'click',
+      side: 'bottom',
+      distance: -3,
+      contentAsHTML: true,
+      interactive: true
+  });
+
+  sidebarHighlightActiveMenuItem('#menu__item-photo');
+
 }
+
+/* On succesfull opening of album, when clicking the album div */
+jQuery("body").on("photoalbumOpen", function(event, data) {
+
+  var activeOpenedAlbum = jQuery("#album-"+data.album);
+  jQuery(photoalbum_area)
+    .find('.album')
+    .parent()
+    .removeClass('album-active');
+  activeOpenedAlbum
+    .parent()
+    .addClass('album-active');
+});
 
 /* Photoalbums history.back() events */
 jQuery(document).on("beforeHistorySnapshot.ic", function(evt, target) {
@@ -43,13 +69,23 @@ function userShowPhotoalbumModal() {
 function userHidePhotoalbumModal() {
     jQuery(photoalbum_container).trigger('closeModal');
 }
-
-/**
- * Fires on attachments modal close
- */
 jQuery(photoalbum_container).on('closeModal', function(e) {
     removeNotification(photoalbum_container); /* outstyle.notifications.js */
 });
+
+/**
+ * Fires on photoalbum delete modal window
+ */
+function userShowPhotoalbumDeleteModal(albumId) {
+    var activeAlbum = jQuery("#album-"+albumId);
+    var activeAlbumTitle = activeAlbum.find('.album__title span').html();
+
+    jQuery(photoalbum_delete_container).trigger('openModal');
+    jQuery(photoalbum_delete_container).find('h3').html(activeAlbumTitle);
+}
+function userHidePhotoalbumDeleteModal() {
+    jQuery(photoalbum_delete_container).trigger('closeModal');
+}
 
 /* Create new photoalbum event */
 jQuery(photoalbum_form).on('beforeSubmit', function(event, jqXHR, settings) {
@@ -78,12 +114,25 @@ jQuery(photoalbum_form).on('beforeSubmit', function(event, jqXHR, settings) {
 
         success: function(data) {
 
+            /* Prevent any actions if albums limit reached - show notice instead */
+            if (data.photoalbumsLimit) {
+              ohSnapX();
+              ohSnap(data.photoalbumsLimit[0], {'color':'red'});
+              return;
+            }
+
             /* Clearing the form itself */
             form.find('#photoalbum-name').val('');
             form.find('#photoalbum-text').val('');
 
             /* Hiding photoalbum creation modal window */
             userHidePhotoalbumModal();
+
+            /* Moving scrollbar of albums list to top, so we could see new album appearance */
+            jQuery(photoalbum_area)
+              .overlayScrollbars({})
+              .overlayScrollbars()
+              .scroll({x:0,y:0});
 
             /* Appending new album into the albums area + flickering effect */
             jQuery(data)

@@ -1,16 +1,30 @@
 <?php
-
+/**
+ * @link https://github.com/Outstyle/website
+ * @copyright Copyright (c) 2018 Outstyle Network
+ * @license Beerware
+ */
 namespace app\models;
 
 use Yii;
 
+/**
+ * This is the model class for table "{{%photoalbum}}".
+ * This model serves as a frontend one and should always extend common model.
+ *
+ * Only custom methods are stored here.
+ *
+ * @author [SC]Smash3r <scsmash3r@gmail.com>
+ * @since 1.0
+ */
 class Photoalbum extends \common\models\Photoalbum
 {
 
     /**
-     * @var $defaultPageSize  How much photoalbums per request to get
+     * @var int $defaultPageSize        How much photoalbums per request to get
      */
     public static $defaultPageSize = 15;
+
 
     /**
      * Gets user photoalbums from DB and returns an array of data

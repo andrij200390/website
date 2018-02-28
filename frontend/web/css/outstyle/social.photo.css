@@ -2,14 +2,17 @@
 .photo__photos h1,
 #photos_area h1 {
     width: 100%;
-    padding: 0.5em;
+    padding: 0.3em;
+    line-height: 1.7em;
     margin: 0;
     background: #edeff0;
+    font-size:1.6em;
+    color: #606D75;
 }
 .photos__albums .album {
     background: #f9f9f9;
     width:100%;
-    height:120px;
+    height:112px;
     position: relative;
     cursor: pointer;
 }
@@ -63,4 +66,49 @@
 }
 .albums_area--loader {
   margin-top: 1.5em;
+}
+
+
+.album-wrap {
+  padding: .25em .6em .25em .25em;
+  position: relative;
+}
+.album-wrap:hover {
+  background: #edeff0;
+}
+.album-wrap:hover .i-widgetbutton {
+  display: block;
+  z-index: 2;
+  border-radius: 50%;
+  background: #fff;
+  padding: 0.2em;
+  width: 24px;
+  height: 24px;
+  border:1px solid rgba(0,0,0,.2);
+}
+.album-wrap:hover .i-widgetbutton .zmdi {
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  font-size: 12px;
+  color: rgba(0,0,0,.5);
+  vertical-align: middle;
+}
+.album-wrap:hover .i-widgetbutton--topright {
+  top:.8em;
+  right:1em;
+}
+.album-wrap:hover .album {
+  border:1px solid #edeff0;
+}
+
+.album {
+  border:1px solid #fff;
+}
+.album-active .album,
+.album-active:hover .album {
+  border:1px solid rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px 0px 20px -1px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 20px -1px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 20px -1px rgba(0,0,0,0.3);
 }

@@ -1,6 +1,5 @@
 /*
 	Uploader:
-	- These styles are the ones used on the examples. No needed to use it by any means.
 	- It disables user selection to avoid some weird visuals in some browsers
 	- It masks/hides the the file input behind a button
  */
@@ -38,11 +37,6 @@
   width: 100%;
 }
 
-.preview-img {
-	width: 64px;
-	height: 64px;
-}
-
 form .progress {
 	height: 38px;
 }
@@ -55,4 +49,50 @@ form .progress {
 }
 .dm-uploader.active .messagebox {
 	background: #fff;
+}
+
+/* --- Progressbar --- */
+.bg-success {
+  background-color: #28a745!important;
+}
+.bg-primary {
+  background-color: #007bff!important;
+}
+.progress-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  background-color: #007bff;
+  transition: width .6s ease;
+  font-size: 0.65em;
+}
+.files__media .preview-content {
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+.files__media .preview-img {
+  width: 32px;
+  height: 32px;
+}
+.files__media .text-danger {
+  color: #f20;
+}
+
+/* --- Media Files --- */
+.files__media {
+  border-bottom: 1px solid #dadada;
+}
+
+/* Forms with upload */
+#form-upload-to-photoalbum {
+  display: none;
 }

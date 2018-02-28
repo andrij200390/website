@@ -17,14 +17,27 @@ foreach ($photoalbums as $photoalbum) {
 
     echo Html::tag('div',
 
+      # Album delete button
+      Html::button(
+          Html::tag('i', '', [
+            'class' => "zmdi zmdi-close zmdi-hc-lg",
+          ]),
+        [
+          'class' => 'zmdi-icon--hoverable i-widgetbutton i-widgetbutton--topright',
+          'title' => Yii::t('app', 'Delete'),
+          'ic-action' => 'userShowPhotoalbumDeleteModal:'.$photoalbum['id'],
+        ]
+      ).
+
       # Album container
       Html::tag('div',
 
+        # Album image
         $photoalbum['cover'].
 
         # Album title
         Html::tag('div',
-          StringHelper::cutString($photoalbum['name'], 26).
+          '<span>'.StringHelper::cutString($photoalbum['name'], 26).'</span>'.
           '<div><i class="zmdi zmdi-collection-folder-image zmdi-hc-lg"></i>&nbsp;<span>'.$photos_count.'</span></div>',
         [
           'class' => 'album__title',
@@ -32,17 +45,21 @@ foreach ($photoalbums as $photoalbum) {
         ]),
 
       [
+        'id' => 'album-'.$photoalbum['id'],
         'class' => 'album',
         'ic-indicator' => '#outstyle_loader',
         'ic-target' => '#photos_area',
         'ic-trigger-delay' => '200ms',
-        'ic-include' => '{"'.Yii::$app->request->csrfParam.'":"'.ElementsHelper::getCSRFToken().'","album_name":"'.$photoalbum['name'].'","album_id":'.$photoalbum['id'].',"album_count":'.$photos_count.'}',
+        'ic-include' => '{"album_name":"'.$photoalbum['name'].'","album_id":'.$photoalbum['id'].',"album_count":'.$photos_count.'}',
         'ic-post-to' => Url::toRoute(['photoalbum/view']),
         'ic-push-url' => 'false',
         'ic-select-from-response' => '#photos_list'
       ]),
 
 
-      ['class' => 'u-window-box--small']
+      ['class' => 'album-wrap']
     );
 }
+
+echo $this->render('@modals/userPhotoalbum');
+echo $this->render('@modals/userPhotoalbumDelete');

@@ -54,7 +54,7 @@ class ElementsHelper extends Html
     }
 
     /**
-     * Generates CSRF toekn for AJAX requests, where needed
+     * Generates CSRF token for AJAX requests, where needed
      * TODO: Check if this leads to any trouble with AJAX requests
      *
      * @return string
@@ -770,22 +770,6 @@ class ElementsHelper extends Html
             echo Html::ul([strtoupper($field_name).': '.$error[0]], ['class' => 'alert alert-red']);
         }
         echo Html::endTag('div');
-    }
-
-    /**
-     * Generates a block for message displaying from $model->errors array.
-     *
-     * @param string $message Message to display
-     *
-     * @return html Generated HTML output
-     */
-    public static function uploadBox($message = '')
-    {
-        echo
-        Html::tag('div',
-          '<div class="u-center-block__content">'.$message.'</div>',
-          ['class' => 'messagebox u-center-block']
-        );
     }
 
     /**

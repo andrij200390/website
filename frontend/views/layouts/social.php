@@ -11,6 +11,7 @@ use yii\widgets\Menu;
 use yii\widgets\Spaceless;
 
 use frontend\assets\SocialAsset;
+use common\components\helpers\ElementsHelper;
 
 SocialAsset::register($this);
 
@@ -29,8 +30,14 @@ Spaceless::begin();
 <link rel="shortcut icon" type="image/png" href="<?=Url::toRoute('/css/favicon.png');?>">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-<body class="social user<?php echo (Yii::$app->user->id) ? '-registered' : '-guest'; ?>">
 <?php
+
+$bodyClass = (Yii::$app->user->id) ? '-registered' : '-guest';
+
+echo Html::beginTag('body', [
+  'class' => 'social user'.$bodyClass,
+  'ic-global-include' => '{"'.Yii::$app->request->csrfParam.'":"'.ElementsHelper::getCSRFToken().'"}'
+]);
 $this->beginBody();
 
 # Fixed width wrapper
@@ -75,34 +82,40 @@ echo Html::beginTag('div', ['class' => 'wrap-fix']);
             'linkTemplate' => '<a href="{url}" ic-get-from="{url}" ic-select-from-response="#content" ic-target="#content" ic-trigger-delay="200ms" ic-indicator="#outstyle_loader" class="c-nav__item">{label}</a>',
             'items' => [
                 [
+                  'options' => ['id' => 'menu__item-users'],
                   'label' => '<i class="icons icons--wall"></i>'.Yii::t('app', 'Wall'),
                   'url' => ['/id'.Yii::$app->user->id],
                   'active' => $checkController('users')
                 ],
                 [
+                  'options' => ['id' => 'menu__item-messages'],
                   'label' => '<i class="icons icons--messages"></i>'.Yii::t('app', 'Messages'),
                   'url' => ['/id'.Yii::$app->user->id],
                   'active' => $checkController('messages')
                 ],
                 [
+                  'options' => ['id' => 'menu__item-friends'],
                   'label' => '<i class="icons icons--friends"></i>'.Yii::t('app', 'Friends'),
                   'url' => ['/'],
-                  'active' => $checkController('messages')
+                  'active' => $checkController('friends')
                 ],
                 [
+                  'options' => ['id' => 'menu__item-photo'],
                   'label' => '<i class="icons icons--photos"></i>'.Yii::t('app', 'Photos'),
                   'url' => ['/photos'],
                   'active' => $checkController('photo')
                 ],
                 [
+                  'options' => ['id' => 'menu__item-video'],
                   'label' => '<i class="icons icons--videos"></i>'.Yii::t('app', 'Videos'),
                   'url' => ['/videos'],
                   'active' => $checkController('video')
                 ],
                 [
+                  'options' => ['id' => 'menu__item-settings'],
                   'label' => '<i class="icons icons--settings"></i>'.Yii::t('app', 'Settings'),
                   'url' => ['/'],
-                  'active' => $checkController('messages')
+                  'active' => $checkController('settings')
                 ],
             ],
         ]
@@ -135,7 +148,7 @@ echo Html::beginTag('div', ['class' => 'wrap-fix']);
   */
   echo $this->render('@modals/userVideo');
   echo $this->render('@modals/userAttachments');
-  echo $this->render('@modals/userPhotoalbum');
+
 
 echo Html::endTag('div');
 echo Html::endTag('div');
