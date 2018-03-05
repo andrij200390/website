@@ -33,12 +33,13 @@ if (isset($model)) {
         $page_height = $page_height-500;
       }
       if ($page == 1) {
-        $page_height = 500;
+        $page_height = 10;
       }
+      /*for mobile not visible school top:{$page_height}px;*/
         echo
         Html::tag('div',
           ElementsHelper::loadMore(Url::toRoute('school/show'), '#outstyle_school .school', '{"page":'.(int) $page.',"category":'.(int) $category.'}'),
-          ['style' => "top:{$page_height}px;position:absolute;z-index:10000;"]
+          ['style' => "position:absolute;z-index:10000;"]
         );
     }
 
