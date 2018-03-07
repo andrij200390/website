@@ -115,6 +115,7 @@ $this->endBody();
  * Little exception: we need to get back original 'height' of the #content element with every new page request
  */
 ?>
+
 <script>
     /*Only for mobile menu (close menu)*/
     jQuery(document).mouseup(function (e) {
@@ -267,6 +268,7 @@ if(browser.opera_mini){
     link.href = '/css/outstyle/portal.media.operamini.css';
     link.media = 'all';
     head.appendChild(link);
+    alert('Рекомендуем воспользоваться другим браузером: Chrome или Safari. В Opera Mini сайт может отображаться некорректно');
 }
 </script>
 

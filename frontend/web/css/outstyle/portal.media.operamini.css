@@ -266,6 +266,15 @@
         width: 316px;
         max-width: 316px;
     }
+    #outstyle_news-single blockquote.twitter-tweet{
+        max-width:95%;
+        height: auto;
+    }
+    #oustyle_news-single iframe, #outstyle_news-single iframe.twitter-tweet{
+        max-width: 95%;
+        width: 220px;
+        height: auto;
+    }
     /*articles*/
     #outstyle_articles span h1{
         font-size: 9px;

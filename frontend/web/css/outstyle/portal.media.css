@@ -1,4 +1,5 @@
 @media (max-width: 1027px) {
+
     /*Wrap*/
     .wrap {
         width: 765px;
@@ -76,6 +77,9 @@
     }
     #outstyle_events-single .recommended-bottom-wrap .c-diamond .c-diamond--small{
         left:38%;
+    }
+    #outstyle_events .in_mobile_event_desc{
+        display: none;
     }
 
     /*School*/
@@ -429,10 +433,22 @@
     #outstyle_events .o-grid__cell--width-35.event__description{
         flex: 0 0 50%;
         max-width: 50%;
+        display: none;
     }
     #outstyle_events .o-grid__cell--width-15.event__price{
         flex: 0 0 50%;
         max-width: 50%;
+        display: none;
+    }
+    #outstyle_events .in_mobile_event_desc{
+        display: block;
+    }
+    #outstyle_events .in_mobile_event_desc .datebox__city{
+        padding:0 0.5em;
+        margin: 0.5em 0;
+    }
+    #outstyle_events .c-text__color--redshadow.event__price{
+        color:#ed1f24;
     }
     #outstyle_events .event__title span{
         font-size:22px;
@@ -458,6 +474,7 @@
     .event__filter-button{
         z-index: 7;
     }
+
 
 }
 @media (max-width: 540px){
@@ -615,6 +632,14 @@
     #outstyle_events .events__category span{
         font-size: 1em;
     }
+    #outstyle_events .o-grid__cell--width-35.event__image {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    #outstyle_events .o-grid__cell--width-15.event__datetime {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
     #outstyle_events-single .o-grid__cell--width-25.datebox__date{
         -ms-flex: 0 0 50%;
         flex: 0 0 50%;
@@ -740,7 +765,9 @@
         font-size: 15px;
     }
 
-
+    #outstyle_news-single blockquote.twitter-tweet{
+        margin:0.3em;
+    }
 
     /*School*/
 
