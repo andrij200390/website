@@ -53,7 +53,7 @@ class SEOHelper
      * Set canonical link for page
      *
      */
-    public static function setCanonicalForPage(){
+    public static function setCanonicalForPage($model){
         $url = '';
         /**
          * For page news and are not home
@@ -62,7 +62,8 @@ class SEOHelper
             (Yii::$app->controller->action->id=='index') &&
             (Yii::$app->request->url != Yii::$app->homeUrl)){
             $url = Url::home(true);
+            $model->registerLinkTag(['rel' => 'canonical', 'href' => $url]);
         }
-        return $url;
+        return $model;
     }
 }
