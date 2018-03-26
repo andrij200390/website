@@ -6,7 +6,7 @@ use yii\widgets\Breadcrumbs;
 use common\components\helpers\ElementsHelper;
 use common\components\helpers\StringHelper;
 use common\models\geolocation\Geolocation;
-
+use frontend\widgets\WidgetCommentsDisqus;
 use frontend\widgets\WidgetComments;
 
 /* Registering GoogleMaps JS file for map to be shown only on this pages */
@@ -332,6 +332,7 @@ echo WidgetComments::widget([
   'elem_id' => $modelEvents[0]['id'] ?? ''
 ]);
 
+echo  WidgetCommentsDisqus::widget();
 
 /* JS: @see js/outstyle.portal.event.js */
 ?>
