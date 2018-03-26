@@ -231,17 +231,16 @@ echo
 Html::tag('div',
 
   # Comments
-  WidgetComments::widget([
+  /*WidgetComments::widget([
     'elem_id' => $school[0]['id'] ?? ''
-  ]),
-
+  ]),*/
+  WidgetCommentsDisqus::widget(),
 
 
 [
   'class' => 'o-grid o-grid__cell--width-100 o-grid--wrap o-grid--no-gutter comments',
 ]
 );
-echo WidgetCommentsDisqus::widget();
 /* JS: @see js/outstyle.portal.school.js */
 ?>
 <script>

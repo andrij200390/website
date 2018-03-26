@@ -328,9 +328,9 @@ Html::tag('div',
 );
 
 # Comments
-echo WidgetComments::widget([
+/*echo WidgetComments::widget([
   'elem_id' => $modelEvents[0]['id'] ?? ''
-]);
+]);*/
 
 echo  WidgetCommentsDisqus::widget();
 
