@@ -49,7 +49,7 @@ return [
     'news.title' => 'Портал Хип-Хоп культуры. Статьи, новости и новинки на портале - Outstyle.org',
     'news.h1' => 'Портал Хип-Хоп культуры',
 
-    'news.breaking.description' => 'Новости, последние события о Breakdance на портале - Outstyle.org',
+    'news.breaking.description' => 'Новости, последние события о Break-dance на портале outstyle.org',
     'news.breaking.title' => 'Новости брейк-данс культуры. Свежи статьи на тему Breakdance - Outstyle.org',
     'news.breaking.h1' => 'Новости Breakdance',
 
@@ -61,7 +61,7 @@ return [
     'news.graffiti.title' => 'Новости уличного искусства граффити на портале - Outstyle.org',
     'news.graffiti.h1' => 'Новости граффити',
 
-    'news.rap.description' => 'Новости русского и зарубежного репа (rap). Последние события и новости рэп индустрии на портале - Outstyle.org',
+    'news.rap.description' => 'Новости русского и зарубежного рэпа (rap). Последние события и новости рэп индустрии на портале - Outstyle.org',
     'news.rap.title' => 'Новости зарубежного и русского Рэпа, новости rap культуры на портале - Outstyle.org',
     'news.rap.h1' => 'Новости рэпа',
 
