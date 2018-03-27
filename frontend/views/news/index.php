@@ -2,6 +2,7 @@
 
 use common\components\helpers\ElementsHelper;
 use common\components\helpers\SEOHelper;
+use frontend\widgets\CategorySeoText;
 
 /**
  * Main news grid, that must be wrapped by #ajax for Intercooler
@@ -29,3 +30,5 @@ echo ElementsHelper::ajaxGridWrap(Yii::$app->controller->id, 'o-grid--no-gutter'
       'category' => $category ?? '',
     ])
  );
+
+echo CategorySeoText::widget(['category'=> $category ?? '']);
