@@ -1184,3 +1184,8 @@ filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><
 .in_mobile_event_desc {
   display: none;
 }
+/*For disqus*/
+#disqus_thread{
+  width:97%;
+  margin: 0 auto;
+}
