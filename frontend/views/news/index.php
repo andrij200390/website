@@ -2,7 +2,6 @@
 
 use common\components\helpers\ElementsHelper;
 use common\components\helpers\SEOHelper;
-use frontend\widgets\CategorySeoText;
 
 /**
  * Main news grid, that must be wrapped by #ajax for Intercooler
@@ -31,4 +30,20 @@ echo ElementsHelper::ajaxGridWrap(Yii::$app->controller->id, 'o-grid--no-gutter'
     ])
  );
 
-echo CategorySeoText::widget(['category'=> $category ?? '']);
+ /**
+ * Output seo_text from category news
+ * See in common/messages/ru/seo
+ */
+
+if(empty($category)){
+    echo '<div class="news_seotext">'.Yii::t('seo', Yii::$app->controller->id.'.seo_text').'</div>';
+}
+else{
+    foreach ($newsCategories as $c) {
+        if ($c->id == $category) {
+            echo '<div  class="news_seotext">'.Yii::t('seo', Yii::$app->controller->id.'.'.$c->url.'.seo_text').'</div>';
+        }
+    }
+}
+
+
