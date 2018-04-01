@@ -103,20 +103,17 @@ if (isset($modelNews)) {
     }
 
     if ($page) {
-      if ($outstyle_news_height) {
-          /*For responsive edit to -50 (after -500)*/
-        $outstyle_news_height = $outstyle_news_height-50;
-
+      if($outstyle_news_height) {
+        $outstyle_news_height = $outstyle_news_height-1300;
       }
       if ($page == 1) {
-          /*For responsive edit to =50 (after =500)*/
-        $outstyle_news_height=50;
+            $outstyle_news_height=10;
       }
         echo
         Html::tag('div',
           ElementsHelper::loadMore(Url::toRoute('news/show'), '#outstyle_news .news', '{"page":'.(int) $page.',"category":'.(int) $category.'}'),
           ['style' => "top:{$outstyle_news_height}px;position:absolute;z-index:10000;"]
         );
-      echo  $outstyle_news_height;
     }
+
 }
