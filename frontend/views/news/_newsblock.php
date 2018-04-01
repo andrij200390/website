@@ -104,9 +104,12 @@ if (isset($modelNews)) {
 
     if ($page) {
       if ($outstyle_news_height) {
-        $outstyle_news_height = $outstyle_news_height-500;
+          /*For responsive edit to -50 (after -500)*/
+        $outstyle_news_height = $outstyle_news_height-50;
+
       }
       if ($page == 1) {
+          /*For responsive edit to =50 (after =500)*/
         $outstyle_news_height=50;
       }
         echo
@@ -114,5 +117,6 @@ if (isset($modelNews)) {
           ElementsHelper::loadMore(Url::toRoute('news/show'), '#outstyle_news .news', '{"page":'.(int) $page.',"category":'.(int) $category.'}'),
           ['style' => "top:{$outstyle_news_height}px;position:absolute;z-index:10000;"]
         );
+      echo  $outstyle_news_height;
     }
 }
