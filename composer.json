@@ -35,7 +35,8 @@
         "sadovojav/yii2-ckeditor": "dev-master",
         "se/selenium-server-standalone": "dev-master",
         "fzaninotto/faker": "1.4.0",
-        "aalaap/faker-youtube": "dev-master"
+        "aalaap/faker-youtube": "dev-master",
+        "himiklab/yii2-sitemap-module": "*"
 
 
     },
