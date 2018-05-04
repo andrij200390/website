@@ -147,7 +147,7 @@ class Events extends ActiveRecord
                 },
                 'dataClosure' => function ($model) {
                     return [
-                        'loc' => Url::to('/events/'.$model->id, true),
+                        'loc' => Url::to('/events/'.$model->id, 'https'),
                         'lastmod' => strtotime($model->created),
                         'changefreq' => SitemapBehavior::CHANGEFREQ_DAILY,
                         'priority' => 0.8

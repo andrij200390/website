@@ -118,7 +118,7 @@ class School extends ActiveRecord
                 },
                 'dataClosure' => function ($model) {
                     return [
-                        'loc' => Url::to('/school/'.$model->id, true),
+                        'loc' => Url::to('/school/'.$model->id, 'https'),
                         'lastmod' => strtotime($model->created),
                         'changefreq' => SitemapBehavior::CHANGEFREQ_DAILY,
                         'priority' => 0.8

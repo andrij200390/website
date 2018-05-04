@@ -105,10 +105,10 @@ class News extends ActiveRecord
                 },
                 'dataClosure' => function ($model) {
                     if($model->article == 1){
-                        $model_url = Url::to('/article/'.$model->url, true);
+                        $model_url = Url::to('/article/'.$model->url, 'https');
                     }
                     else{
-                        $model_url = Url::to('/news/'.$model->url, true);
+                        $model_url = Url::to('/news/'.$model->url, 'https');
                     }
                     return [
                         'loc' => $model_url,
