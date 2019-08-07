@@ -16,6 +16,7 @@
 		},
         {
             "type": "vcs",
+
             "url": "https://github.com/scsmash3r/yii2-image-uploader"
         },
         {
@@ -38,7 +39,9 @@
         "fg/multiplayer": "dev-master",
         "mihaildev/yii2-elfinder": "dev-master",
         "sadovojav/yii2-ckeditor": "dev-master",
-        "himiklab/yii2-sitemap-module": "dev-master"
+        "himiklab/yii2-sitemap-module": "dev-master",
+        "andrij200390/yii2-subscribe": "dev-master"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
