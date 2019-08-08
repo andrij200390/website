@@ -75,6 +75,7 @@ class RssController extends ParentController
                 'z_news.img',
                 'z_news.date_redact',
                 'z_news.status',
+				'z_news.article',
                 'z_category.name as catName',
                 'z_user.username']
             )
@@ -83,6 +84,7 @@ class RssController extends ParentController
             ->leftJoin('z_user','z_news.user = z_user.id')
             ->where(['in', 'z_news.id', $idsUniq])
             ->andWhere(['=','z_news.status','1'])
+			->andWhere(['!=','z_news.article','1'])
             ->orderBy(['z_news.created' => SORT_DESC])
             ->limit($this->limitItems)
             ->all();
