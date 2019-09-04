@@ -55,7 +55,8 @@ foreach ($model as $item){
     if($png){$typeImg = 'image/png';}
     //change category name
     $catName = '';
-    if($item['catName'] == 'Rap'){
+
+    if($item['catName'] == 'Рэп'){
         $catName = 'Музыка';
     }
     else{
