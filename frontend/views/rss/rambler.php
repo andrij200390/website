@@ -78,10 +78,11 @@ foreach ($model as $item){
         ->addItemDescription(strip_tags($item['small']));
     $feed
         ->addItemLink(Url::toRoute(['news/' . $item['url']], true))
-        ->addItemAuthor($item['username'].'@outstyle.org')
+        ->addItemAuthor($item['username'].'@outstyle.org'. '('.$item['username'].')')
         ->addItemCategory($catName)
         ->addItemPubDate($pubDate);
     $feed->addItemElement('rambler:fulltext', $fullText);
+    $feed->addItemElement('guid', Url::toRoute(['news/' . $item['url']], true));
     if(!empty($item['img']))
     $feed->addItemElement('enclosure','',[
         'url'=>$srcImg,
